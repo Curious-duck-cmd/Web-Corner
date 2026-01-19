@@ -23,7 +23,10 @@ function App() {
           <nav>
             <a href="#"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></a>
             <a href="#"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></a>
-            <a href="#"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></a>
+            <Link to="/projects" className="nav-item">
+            <img src="/image/made.png" className="nav-icon" alt="Projects Icon" style={{ verticalAlign: 'middle', width: '20px', height: '20px' }}  /> 
+                        <span>Stuff I Made</span>
+               </Link>
             <Link to="/portfolio" className="nav-item-link">
              <img src="/image/me.png" className="nav-icon" alt="" /> 
              <span>Portfolio</span>
@@ -31,7 +34,7 @@ function App() {
             <a href="#"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></a>
            <Link to="/chat" style={{ textDecoration: 'none', marginRight: '15px' }}>
               <img src="/image/babble.png" style={{ verticalAlign: 'middle', width: '20px', height: '20px' }} alt="" /> 
-              <span style={{ verticalAlign: 'middle' }}>Chat</span>
+              <span>Chat</span>
             </Link> 
           </nav>
         </div>
