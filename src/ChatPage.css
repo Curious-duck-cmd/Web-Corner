@@ -1,0 +1,167 @@
+/* 1. Global Reset & Typography */
+.chat-page-root * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: monospace; 
+}
+
+/* 2. Body Styling - Scoped to the Chat Page */
+.chat-page-root {
+    background-color: #1a1b26; 
+    background-image: radial-gradient(circle at 2px 2px, #292e42 2px, transparent 0);
+    background-size: 32px 32px;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 3. The Main Window Container - Strict size to prevent "wide" look */
+.master-container {
+    width: 900px; 
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 4. Window Header */
+.windowTop {
+    background: #50B6D1; 
+    color: #000;
+    border: 2px solid #000;
+    border-bottom: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.windowCircle {
+    display: flex;
+}
+
+.circle {
+    height: 18px;
+    width: 18px;
+    background-color: #FFA0A0; 
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin-left: 8px;
+}
+
+/* 5. Main App Body */
+.windowContent.main-app-body {
+    background: #e1e2e7; 
+    border: 2px solid #000;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 10px 10px 0px #000; 
+    flex-grow: 1;
+    display: flex;
+    padding: 20px; 
+    overflow: hidden;
+}
+
+/* 6. Layout: Sidebar + Chat Area */
+.app-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+.side-panel {
+    width: 220px;
+    border-right: 2px solid #000;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 7. Chat Interface */
+.chat-messages {
+    flex-grow: 1;
+    background-color: #cfd3da; 
+    border: 2px solid #000;
+    padding: 15px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 8. Inputs */
+.chat-footer {
+    display: flex;
+    gap: 10px;
+}
+
+.input-msg {
+    flex-grow: 1;
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: 10px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: inset 2px 2px 0px #ddd;
+}
+
+/* 9. Retro Buttons */
+.loginBtn {
+    padding: 10px 20px;
+    background: #fff;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #50B6D1; 
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.loginBtn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #50B6D1;
+}
+
+/* 10. GIF and Sidebar Navigation */
+.side-info h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.side-info p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.divider {
+    margin: 15px 0;
+    border: 0;
+    border-top: 2px solid #000;
+}
+
+.gif-link {
+    margin-top: auto; 
+    display: block;
+    text-align: center;
+}
+
+#blinkies {
+    image-rendering: pixelated;
+    width: 100%;
+    max-width: 180px;
+}
