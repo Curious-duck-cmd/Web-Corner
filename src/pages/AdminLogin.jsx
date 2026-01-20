@@ -22,25 +22,38 @@ function AdminLogin() {
   }, [navigate]);
 
   const handleSignIn = async () => {
-    if (!email || !password) {
-      setMessage({ text: 'Please fill in all fields', type: 'error' });
-      return;
-    }
+  if (!email || !password) {
+    setMessage({ text: 'Please fill in all fields', type: 'error' });
+    return;
+  }
 
-    setIsLoading(true);
-    setMessage({ text: '', type: '' });
+  setIsLoading(true);
+  setMessage({ text: '', type: '' });
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    
+  // 1. Authenticate with Supabase
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  
+  if (error) {
     setIsLoading(false);
+    setMessage({ text: error.message, type: 'error' });
+    return;
+  }
 
-    if (error) {
-      setMessage({ text: error.message, type: 'error' });
-    } else {
-      setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
-      setTimeout(() => navigate('/dashboard'), 1000);
-    }
-  };
+  // 2. Check if the logged-in user is the specific admin
+  const ADMIN_EMAIL = 'admin@gmail.com'; // Change this to your actual email
+
+  if (data.user?.email !== ADMIN_EMAIL) {
+    // If it's the wrong user, sign them out and show error
+    await supabase.auth.signOut();
+    setIsLoading(false);
+    setMessage({ text: 'Access Denied: You are not authorized.', type: 'error' });
+  } else {
+    // If it's the right user, proceed
+    setIsLoading(false);
+    setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
+    setTimeout(() => navigate('/dashboard'), 1000);
+  }
+};
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !isLoading) {
@@ -88,7 +101,7 @@ function AdminLogin() {
           <input 
             type="email" 
             className="auth-input" 
-            placeholder="admin@example.com"
+            placeholder="....@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyPress={handleKeyPress}
