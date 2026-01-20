@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from './supabaseClient';
-import './ChatPage.css';
+import { supabase } from '../supabaseClient';
+import '../ChatPage.css';
 
 function ChatPage() {
   const [messages, setMessages] = useState([]);

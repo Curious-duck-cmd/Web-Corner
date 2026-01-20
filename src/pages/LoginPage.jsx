@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { supabase } from './supabaseClient';
-import './LoginPage.css';
+import { supabase } from '../supabaseClient';
+import '../LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
