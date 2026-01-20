@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1a1b26; /* Matches your background color */
+  background-color: #1a1b26;
 }
 
 #root {
@@ -22,15 +22,28 @@ input, button, select, textarea {
 
 /* Overall Style */
 body {
-    background-color: #1a1b26; /* Deep charcoal navy */
+    background-color: #1a1b26;
     background-image: radial-gradient(circle at 2px 2px, #292e42 2px, transparent 0);
     background-size: 32px 32px;
     background-attachment: fixed;
     min-height: 100vh;
 }
 
+/* Page Fade In Animation */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
 .portfolio-wrapper {
     padding: 2% 4%;
+    animation: fadeIn 0.6s ease-out;
 }
 
 /* --- LINKS & TEXT --- */
@@ -38,6 +51,7 @@ main a {
     font-size: 1.5rem;
     text-decoration: none;
     color: #000;
+    transition: color 0.3s ease;
 }
 
 main a:hover {
@@ -92,14 +106,19 @@ main h1, main h2 {
     border: 2px solid #000;
     border-radius: 50%;
     margin: 4px;
+    transition: transform 0.2s ease;
+}
+
+.circle:hover {
+    transform: scale(1.1);
 }
 
 .windowContent {
     padding: 40px;
-    background: #e1e2e7; /* Soft grey-white */
+    background: #e1e2e7;
     border: 2px solid #000;
     border-radius: 0 0 10px 10px;
-    box-shadow: 10px 10px 0px #000; /* Sharp retro shadow */
+    box-shadow: 10px 10px 0px #000;
 }
 
 .windowContent p {
@@ -115,23 +134,33 @@ main h1, main h2 {
     max-height: 600px;
     overflow-y: auto;
     border: 1px solid #000;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 #blinkies {
     width: 200px;
+    transition: transform 0.1s ease;
 }
 
 #blinkies:hover {
-    transition: transform 0.1s;
-    transform: translate(8px);
+    transform: translateX(8px);
 }
 
 /* --- NAVIGATION & HEADER --- */
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
 
@@ -143,19 +172,20 @@ nav a {
     padding: 0.8rem;
     border: 2px solid #000;
     border-radius: 5px;
-    width: 210px;
     box-shadow: 6px 6px 0px #50B6D1;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
 }
 
 nav a:hover {
     color: #50B6D1;
     background-color: #fff;
-    transition: transform 0.3s;
-    transform: rotate(3deg);
+    transform: rotate(3deg) translateY(-2px);
+    box-shadow: 8px 8px 0px #50B6D1;
 }
 
 .nav-icon {
@@ -166,15 +196,14 @@ nav a:hover {
 
 /* --- LAYOUT GRID --- */
 .container {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(350px, 450px) 1fr;
     gap: 30px;
     margin-top: 20px;
 }
 
 .sidecontent {
     min-width: 350px;
-    max-width: 450px;
 }
 
 .sidecontent .windowTop {
@@ -219,6 +248,13 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: width 0.8s ease-in-out;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
 }
 
 .progress p {
@@ -245,25 +281,45 @@ footer p {
     text-decoration: underline;
     font-size: 1.2rem;
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.login-trigger:hover {
+    color: #FFA0A0;
 }
 
 /* --- OVERLAY POPUP (REACT FIXES) --- */
 .overlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
     background: rgba(0, 0, 0, 0.7); 
     backdrop-filter: blur(4px);
     z-index: 9999;
-    display: flex; /* React controls visibility via rendering, not display:none */
+    display: flex;
     justify-content: center;
     align-items: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .popupContainer {
     width: 320px;
     display: flex;
     flex-direction: column;
+    animation: popIn 0.4s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .popupBox {
@@ -282,6 +338,13 @@ footer p {
     border: 2px solid #000;
     font-size: 1.2rem;
     text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.popupBox input:focus {
+    outline: none;
+    border-color: #50B6D1;
+    box-shadow: 0 0 0 2px rgba(80, 182, 209, 0.3);
 }
 
 .popupButtons {
@@ -296,6 +359,13 @@ footer p {
     background: #fff;
     border: 2px solid #000;
     box-shadow: 4px 4px 0px #000;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.loginBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #000;
 }
 
 .loginBtn:active {
@@ -308,41 +378,37 @@ footer p {
 }
 
 /* --- BOOKSHELF --- */
-/* The shelf container */
 .bookshelf {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;       /* FORCES them into one row */
-    justify-content: space-evenly; 
-    align-items: flex-end;   /* Keeps them sitting on the shelf */
-    gap: 10px;               /* Tighter gap to fit all 5 */
-    margin: 30px auto;
-    width: 100%;
-    position: relative;
-    padding-bottom: 10px;    /* Space for the shelf line */
-}
-
-/* The long shelf line under ALL 5 books */
-.bookshelf {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around; /* Evenly spaces the 3 books */
+    justify-content: space-around;
     align-items: flex-end;
     gap: 20px;
     margin: 20px auto;
     width: 100%;
-    max-width: 600px; /* Prevents them from getting too huge on big screens */
+    max-width: 600px;
     position: relative;
     padding-bottom: 15px;
 }
-
 
 .book-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1; /* Each book takes up equal width */
-    max-width: 140px; /* Prevents them from stretching too wide */
+    flex: 1;
+    max-width: 140px;
+    animation: bookSlide 0.6s ease-out;
+}
+
+@keyframes bookSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .book-card {
@@ -351,8 +417,8 @@ footer p {
     padding: 8px;
     box-shadow: 5px 5px 0px #000;
     width: 100%; 
-    aspect-ratio: 2 / 3; /* Keeps the rectangular book shape */
-    transition: transform 0.2s;
+    aspect-ratio: 2 / 3;
+    transition: all 0.3s ease;
     z-index: 2;
 }
 
@@ -364,7 +430,7 @@ footer p {
 }
 
 .book-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) rotate(-2deg);
     box-shadow: 8px 8px 0px #FFA0A0;
 }
 
@@ -379,21 +445,103 @@ footer p {
 .project-link {
     display: inline-block;
     margin-top: 10px;
-    color: #03274B; /* Starting color */
+    color: #03274B;
     text-decoration: none;
     font-weight: bold;
     font-family: monospace;
     font-size: 14px;
-    
-    /* THE FADE EFFECT */
-    transition: color 0.3s ease, padding-left 0.3s ease, background-color 0.3s ease; 
+    transition: all 0.3s ease;
     padding: 5px 10px;
     border-radius: 4px;
 }
 
 .project-link:hover {
     text-decoration: none;
-    color: #FFA0A0; /* The color it fades into */
-    background-color: rgba(255, 160, 160, 0.1); /* Optional: light glow effect */
-    padding-left: 15px; /* Slides slightly to the right */
+    color: #FFA0A0;
+    background-color: rgba(255, 160, 160, 0.1);
+    padding-left: 15px;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 968px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    nav {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    
+    .sidecontent {
+        min-width: 100%;
+    }
+    
+    .content {
+        min-width: 100%;
+    }
+    
+    .bookshelf {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .book-item {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portfolio-wrapper {
+        padding: 4% 2%;
+    }
+    
+    .windowContent {
+        padding: 20px;
+    }
+    
+    nav {
+        grid-template-columns: 1fr;
+    }
+    
+    .windowTop {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+    }
+    
+    main a, main ul {
+        font-size: 1.2rem;
+    }
+    
+    .windowContent p {
+        font-size: 1.2rem;
+    }
+    
+    .popupContainer {
+        width: 90%;
+    }
+}
+
+/* --- SMOOTH SCROLLING --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1b26;
+    border: 1px solid #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #50B6D1;
+    border: 2px solid #000;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FFA0A0;
 }

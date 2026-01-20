@@ -21,12 +21,18 @@ function App() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <a href="#"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></a>
-            <a href="#"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></a>
-            <Link to="/projects" className="nav-item">
-            <img src="/image/made.png" className="nav-icon" alt="Projects Icon" style={{ verticalAlign: 'middle', width: '20px', height: '20px' }}  /> 
-                        <span>Stuff I Made</span>
-               </Link>
+            <Link to="/">
+    <img src="/image/home.png" className="nav-icon" alt="" /> 
+    <span>Home</span>
+  </Link>
+  <Link to="#">
+    <img src="/image/life.png" className="nav-icon" alt="" /> 
+    <span>Life Blog</span>
+  </Link>
+  <Link to="/projects">
+    <img src="/image/made.png" className="nav-icon" alt="" /> 
+    <span>Stuff I Made</span>
+  </Link>
             <Link to="/portfolio" className="nav-item-link">
              <img src="/image/me.png" className="nav-icon" alt="" /> 
              <span>Portfolio</span>

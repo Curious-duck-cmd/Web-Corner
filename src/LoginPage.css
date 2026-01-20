@@ -1,13 +1,24 @@
 /* Center the login window on the screen */
 .auth-page-wrapper {
-    background-color: #1a1b26; /* Tokyo Night Background */
+    background-color: #1a1b26;
     background-image: radial-gradient(circle at 2px 2px, #292e42 2px, transparent 0);
     background-size: 32px 32px;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Ensure the login window doesn't stretch too wide */
@@ -15,6 +26,18 @@
     width: 400px;
     display: flex;
     flex-direction: column;
+    animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 /* Retro styles to match your chat */
@@ -23,6 +46,7 @@
     border: 2px solid #000;
     box-shadow: 10px 10px 0px #000;
     padding: 30px;
+    border-radius: 0 0 10px 10px;
 }
 
 .auth-input {
@@ -33,4 +57,241 @@
     font-family: monospace;
     font-size: 1rem;
     background: #fff;
+    transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #50B6D1;
+    box-shadow: 0 0 0 3px rgba(80, 182, 209, 0.3);
+    transform: translateY(-2px);
+}
+
+.auth-input::placeholder {
+    color: #999;
+}
+
+/* Window header styling */
+.auth-window .windowTop {
+    background: #03274B;
+    border: 2px solid #000;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.auth-window .windowTop p {
+    color: #fff;
+    padding: 5px 15px;
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: monospace;
+}
+
+.windowCircle {
+    display: flex;
+}
+
+.circle {
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+}
+
+.circle:hover {
+    transform: scale(1.15);
+}
+
+/* Button Container */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Login Button Styles */
+.loginBtn {
+    flex: 1;
+    padding: 12px;
+    cursor: pointer;
+    background: #fff;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.loginBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #000;
+}
+
+.loginBtn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+/* Primary button (login) */
+.loginBtn.primary {
+    background: #50B6D1;
+    color: #000;
+}
+
+.loginBtn.primary:hover {
+    background: #60c6e1;
+    box-shadow: 6px 6px 0px #000;
+}
+
+/* Label Styling */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #000;
+    font-family: monospace;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #03274B;
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Footer text */
+.auth-footer {
+    font-size: 0.7rem;
+    margin-top: 20px;
+    opacity: 0.6;
+    text-align: center;
+    font-family: monospace;
+}
+
+/* Return Link */
+.return-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.return-link a {
+    color: #000;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-family: monospace;
+    transition: color 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.return-link a:hover {
+    color: #50B6D1;
+    background: rgba(80, 182, 209, 0.1);
+}
+
+/* Error/Success Messages */
+.auth-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    text-align: center;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-message.error {
+    background: #FFA0A0;
+    color: #000;
+}
+
+.auth-message.success {
+    background: #50B6D1;
+    color: #000;
+}
+
+/* Loading State */
+.loginBtn.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.loginBtn.loading::after {
+    content: '...';
+    position: absolute;
+    right: 10px;
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 640px) {
+    .auth-window {
+        width: 95%;
+    }
+    
+    .auth-content {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.2rem;
+    }
+    
+    .auth-input {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .loginBtn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-page-wrapper {
+        padding: 10px;
+    }
+    
+    .auth-buttons {
+        flex-direction: column;
+    }
+    
+    .loginBtn {
+        width: 100%;
+    }
 }

@@ -17,14 +17,38 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
+    animation: fadeIn 0.6s ease-out;
 }
 
-/* 3. The Main Window Container - Strict size to prevent "wide" look */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 3. The Main Window Container */
 .master-container {
     width: 900px; 
     height: 600px;
     display: flex;
     flex-direction: column;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 4. Window Header */
@@ -53,6 +77,11 @@
     border: 2px solid #000;
     border-radius: 50%;
     margin-left: 8px;
+    transition: transform 0.2s ease;
+}
+
+.circle:hover {
+    transform: scale(1.15);
 }
 
 /* 5. Main App Body */
@@ -82,12 +111,36 @@
     padding-right: 20px;
     display: flex;
     flex-direction: column;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .chat-area {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* 7. Chat Interface */
@@ -101,6 +154,30 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+/* Message Bubble Animation */
+.msg-bubble {
+    animation: messageSlide 0.3s ease-out;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.msg-bubble:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 /* 8. Inputs */
@@ -117,6 +194,12 @@
     font-size: 1rem;
     outline: none;
     box-shadow: inset 2px 2px 0px #ddd;
+    transition: all 0.3s ease;
+}
+
+.input-msg:focus {
+    box-shadow: inset 2px 2px 0px #50B6D1, 0 0 0 2px rgba(80, 182, 209, 0.3);
+    border-color: #50B6D1;
 }
 
 /* 9. Retro Buttons */
@@ -129,6 +212,12 @@
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.loginBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #50B6D1;
 }
 
 .loginBtn:active {
@@ -164,4 +253,159 @@
     image-rendering: pixelated;
     width: 100%;
     max-width: 180px;
+    transition: transform 0.2s ease;
+}
+
+#blinkies:hover {
+    transform: translateY(-5px);
+}
+
+/* Auth Section Styling */
+#auth-section {
+    margin-top: 20px;
+}
+
+#guest-view {
+    padding: 15px;
+    background: rgba(255, 160, 160, 0.2);
+    border: 2px dashed #000;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#user-info {
+    padding: 15px;
+    background: rgba(80, 182, 209, 0.2);
+    border: 2px solid #000;
+    border-radius: 5px;
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(80, 182, 209, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(80, 182, 209, 0.5);
+    }
+}
+
+/* Locked Channel View */
+.locked-channel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1b26;
+    border: 2px solid #000;
+    border-radius: 5px;
+}
+
+.locked-content {
+    text-align: center;
+    color: white;
+    opacity: 0.5;
+    animation: lockPulse 2s infinite;
+}
+
+@keyframes lockPulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Custom Scrollbar for Chat */
+.chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #e1e2e7;
+    border: 1px solid #000;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #50B6D1;
+    border: 2px solid #000;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #FFA0A0;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 968px) {
+    .master-container {
+        width: 95vw;
+        height: 80vh;
+    }
+    
+    .app-layout {
+        flex-direction: column;
+    }
+    
+    .side-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #000;
+        padding-right: 0;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .windowTop {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 640px) {
+    .chat-page-root {
+        padding: 10px;
+    }
+    
+    .master-container {
+        width: 100%;
+        height: 85vh;
+    }
+    
+    .windowContent.main-app-body {
+        padding: 15px;
+    }
+    
+    .chat-messages {
+        padding: 10px;
+    }
+    
+    .input-msg {
+        font-size: 0.9rem;
+    }
+    
+    .loginBtn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smooth scroll for chat messages */
+.chat-messages {
+    scroll-behavior: smooth;
+}
+
+/* Loading state animation */
+@keyframes typing {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.typing-indicator {
+    display: inline-block;
+    animation: typing 1.5s infinite;
 }
