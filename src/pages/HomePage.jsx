@@ -21,31 +21,14 @@ function HomePage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <Link to="/">
-              <img src="/image/home.png" className="nav-icon" alt="" /> 
-              <span>Home</span>
-            </Link>
-            <Link to="/blog">
-              <img src="/image/life.png" className="nav-icon" alt="" /> 
-              <span>Life Blog</span>
-            </Link>
-            <Link to="/projects">
-              <img src="/image/made.png" className="nav-icon" alt="" /> 
-              <span>Stuff I Made</span>
-            </Link>
-            <Link to="/portfolio">
-              <img src="/image/me.png" className="nav-icon" alt="" /> 
-              <span>Portfolio</span>
-            </Link>
-            <Link to="/view-gallery">
-              <img src="/image/frame.png" className="nav-icon" alt="" /> 
-              <span>Gallery</span>
-            </Link>
-            <Link to="/chat">
-              <img src="/image/babble.png" className="nav-icon" alt="" /> 
-              <span>Chat</span>
-            </Link>
-          </nav>
+                      <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+                      <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
+                      <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
+                      <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
+                      <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+                      <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
+                      <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+                    </nav>
         </div>
       </header>
 
@@ -160,17 +143,17 @@ function HomePage() {
               <div className="separate">
                 <h1>Darshan's Go-To Music</h1>
                 <div className="separate">
-                  <iframe 
-                    style={{ borderRadius: '12px' }} 
-                    src="https://open.spotify.com/embed/playlist/37i9dQZF1E37j9pT6fT8v3?utm_source=generator" 
-                    width="100%" 
-                    height="352" 
-                    frameBorder="0" 
-                    allowFullScreen="" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="lazy"
-                    title="Spotify Playlist"
-                  ></iframe>
+                <iframe
+      data-testid="embed-iframe"
+      style={{ borderRadius: '12px' }}
+      src="https://open.spotify.com/embed/artist/3yY2gUcIsjMr8hjo51PoJ8?utm_source=generator&theme=0"
+      width="100%"
+      height="352"
+      frameBorder="0"
+      allowFullScreen
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+    ></iframe>
                 </div>
               </div>
             </div>
@@ -195,42 +178,84 @@ function HomePage() {
             fontStyle: 'normal'
           }}
         >
-          LOGIN ?
+          ADMIN LOGIN 🔑
         </button>
       </footer>
-
-      {/* REACT POPUP LOGIC */}
+{/* LOGIN POPUP */}
       {isLoginOpen && (
-        <div className="overlay">
-          <div className="popupContainer">
-            <div className="windowTop">
-              <p>Access_Panel.exe</p>
-              <div className="windowCircle">
-                <div className="circle"></div>
-                <div className="circle"></div>
-                <div 
-                  onClick={() => setLoginOpen(false)} 
-                  className="circle" 
-                  style={{ cursor: 'pointer' }}
-                ></div>
-              </div>
-            </div>
-            <div className="windowContent popupBox">
-              <h1>Login</h1>
-              <p>Enter Password:</p>
-              <input type="password" id="passInput" placeholder="••••••••" />
-              <div className="popupButtons">
-                <Link to="/login" className="loginBtn" style={{ textDecoration: 'none', textAlign: 'center' }}>
-                  UNLOCK
-                </Link>
-                <button onClick={() => setLoginOpen(false)} className="loginBtn cancel">
-                  CANCEL
-                </button>
-              </div>
-            </div>
-          </div>
+  <div className="overlay">
+    <div className="popupContainer" style={{ width: '450px' }}>
+      
+      {/* HEADER - Matches your Sidebar/Content headers */}
+      <div className="windowTop" style={{ background: '#f96a6a' }}>
+        <p style={{ color: 'white' }}>
+          <span style={{ marginRight: '8px' }}></span> 
+          System_Alert.exe
+        </p>
+        <div className="windowCircle">
+          <div className="circle" style={{ background: '#fff' }}></div>
+          <div className="circle" style={{ background: '#fff' }}></div>
+          <div className="circle" style={{ background: '#fff' }}></div>
         </div>
-      )}
+      </div>
+
+      {/* BODY - Matches your .windowContent and .post style */}
+      <div className="windowContent popupBox">
+        <div className="warning-blink" style={{ fontSize: '4rem', marginBottom: '10px' }}>⚠️</div>
+        
+        <h1 style={{ fontSize: '1.8rem', color: '#000' }}>RESTRICTED ACCESS</h1>
+
+        <div className="admin-status-box" style={{ 
+          background: '#03274B', 
+          border: '2px solid #000', 
+          padding: '15px', 
+          margin: '20px 0',
+          boxShadow: '4px 4px 0px #000'
+        }}>
+          <p style={{ color: '#50B6D1', margin: 0, fontWeight: 'bold' }}>
+            [ ! ADMIN PRIVILEGES REQUIRED ! ]
+          </p>
+        </div>
+
+        <p style={{ fontSize: '1.1rem', marginBottom: '30px' }}>
+          This sector is encrypted. Please provide credentials or return to the terminal.
+        </p>
+        
+        <div className="popupButtons" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <Link 
+            to="/AdminLogin" 
+            onClick={() => setLoginOpen(false)} 
+            className="nav-a-style" /* Uses your existing nav styling logic */
+            style={{ 
+              background: '#50B6D1', 
+              color: '#000', 
+              padding: '15px', 
+              border: '2px solid #000',
+              boxShadow: '6px 6px 0px #000',
+              textDecoration: 'none',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}
+          >
+            PROCEED TO LOGIN
+          </Link>
+          <button 
+            onClick={() => setLoginOpen(false)} 
+            className="loginBtn cancel"
+            style={{ 
+              width: '100%', 
+              padding: '12px',
+              fontSize: '1rem',
+              backgroundColor: '#FFA0A0'
+            }}
+          >
+            BACK TO SAFETY
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

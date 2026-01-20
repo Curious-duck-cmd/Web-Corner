@@ -545,3 +545,88 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #FFA0A0;
 }
+
+/* Retro Button Styling */
+/* --- UPDATED POPUP ELEMENTS --- */
+
+/* Change from Beveled to Chunky Flat Shadow */
+.retro-button {
+  text-decoration: none;
+  text-align: center;
+  padding: 12px;
+  font-weight: bold;
+  font-family: monospace;
+  cursor: pointer;
+  background: #e1e2e7; /* Matches your window background */
+  color: #000;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px #000; /* Flat shadow matching your nav */
+  transition: all 0.2s ease;
+}
+
+.retro-button.primary {
+  background: #50B6D1; /* Your signature blue */
+  color: #000;
+}
+
+.retro-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #000;
+  background: #fff;
+}
+
+.retro-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+/* Redesigned Close Button to match your header circles */
+.close-btn-retro {
+  background: #000;
+  border: 2px solid #000;
+  border-radius: 50%; /* Makes it a circle like your others */
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.close-btn-retro:hover {
+  transform: scale(1.2);
+  background: #FFA0A0; /* Matches your circle hover color */
+}
+
+/* Status Box - Changed to your dark blue/cyan combo */
+.admin-status-box {
+  background: #03274B; /* Your sidebar blue */
+  padding: 15px;
+  margin: 20px 0;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.admin-status-box p {
+  color: #50B6D1; /* Your site's bright blue */
+  font-family: monospace;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Warning Icon Pulse - Made it slightly more aggressive */
+.warning-blink {
+  animation: warningScale 1.5s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes warningScale {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 69, 69, 0)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #FF4545); }
+}

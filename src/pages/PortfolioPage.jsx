@@ -32,24 +32,15 @@ const PortfolioPage = () => {
         </div>
         
         <div className="windowContent">
-          <nav>
-            <Link to="/">
-              <img src="/image/home.png" className="nav-icon" alt="" /> 
-              <span>Home</span>
-            </Link>
-            <Link to="/projects">
-              <img src="/image/made.png" className="nav-icon" alt="" /> 
-              <span>Projects</span>
-            </Link>
-            <Link to="/portfolio">
-              <img src="/image/me.png" className="nav-icon" alt="" /> 
-              <span>Portfolio</span>
-            </Link>
-            <Link to="/chat">
-              <img src="/image/babble.png" className="nav-icon" alt="" /> 
-              <span>Chat</span>
-            </Link>
-          </nav>
+         <nav>
+                     <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+                     <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
+                     <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
+                     <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
+                     <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+                     <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
+                     <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+                   </nav>
         </div>
       </header>
 

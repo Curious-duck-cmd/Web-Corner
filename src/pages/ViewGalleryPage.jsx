@@ -47,6 +47,7 @@ function ViewGalleryPage() {
             <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
             <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
             <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
             <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
           </nav>
         </div>
@@ -54,7 +55,7 @@ function ViewGalleryPage() {
 
       <main>
         <div className="container" style={{ justifyContent: 'center' }}>
-          <section className="content" style={{ width: '100%', maxWidth: '1000px' }}>
+          <section className="content" style={{ width: '100%', maxWidth: '1400px' }}>
             <div className="windowTop" style={{ background: '#03274B' }}>
               <p style={{ color: '#fff' }}>Stored_Images.bin</p>
               <div className="windowCircle">
@@ -73,8 +74,8 @@ function ViewGalleryPage() {
               ) : (
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                  gap: '25px'
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                  gap: '30px'
                 }}>
                   {images.map((item) => (
                     <div
@@ -100,7 +101,7 @@ function ViewGalleryPage() {
                         alt="Gallery"
                         style={{
                           width: '100%',
-                          height: '250px',
+                          height: '280px',
                           objectFit: 'cover',
                           display: 'block',
                           borderBottom: '2px solid #000'
@@ -147,12 +148,6 @@ function ViewGalleryPage() {
           </section>
         </div>
       </main>
-
-      <footer style={{ textAlign: 'center', padding: '20px', marginTop: '40px' }}>
-        <Link to="/gallery" className="project-link" style={{ fontSize: '1.1rem' }}>
-          UPLOAD_NEW_IMAGE →
-        </Link>
-      </footer>
     </div>
   );
 }
