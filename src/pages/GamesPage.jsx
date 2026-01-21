@@ -15,14 +15,14 @@ function GamesPage() {
       name: 'SNAKE',
       path: '/snake',
       color: '#89A8C7',
-      image: '/image/joystick.png',
+      image: '/image/snake-game.png',
       description: 'Eat food and grow longer!'
     },
     {
       name: 'PONG',
       path: '/pong',
-      color: '#FFA0A0',
-      image: '/image/joystick.png',
+      color: '#f6b4b4',
+      image: '/image/ping-pong.png',
       description: 'Beat the AI in classic pong!'
     },
     
@@ -33,14 +33,14 @@ function GamesPage() {
       name: 'SLOT MACHINE',
       path: '/slotmachine',
       color: '#FFD700',
-      image: '/image/joystick.png',
+      image: '/image/slot-machine.png',
       description: 'Spin to win big jackpots!'
     },
     {
       name: 'ROULETTE',
       path: '/roulette',
       color: '#006400',
-      image: '/image/joystick.png',
+      image: '/image/roulette.png',
       description: 'Red or Black? Place your bets!'
     }
   ];
