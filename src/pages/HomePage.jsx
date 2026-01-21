@@ -91,8 +91,8 @@ function HomePage() {
                 <h1>What I'm working on:</h1>
                 <p>Making this website!</p>
                 <div className="progressBar">
-                  <div className="progress" style={{ width: '40%' }}>
-                    <p>40%</p>
+                  <div className="progress" style={{ width: '67%' }}>
+                    <p>67%</p>
                   </div>
                 </div>
               </div>
