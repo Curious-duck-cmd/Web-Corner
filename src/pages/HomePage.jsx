@@ -3,24 +3,23 @@ import { Link } from 'react-router-dom';
 import VisitorCounter from '../components/VisitorCounter';
 import '../App.css';
 
-// Cat GIF Easter Egg Component
+// Cat GIF Easter Egg Component with Cat Rain
 function CatGifEasterEgg() {
   const [clicks, setClicks] = useState(0);
   const [showAnimation, setShowAnimation] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleClick = (e) => {
     const newClicks = clicks + 1;
     setClicks(newClicks);
 
     if (newClicks === 5) {
-      // Trigger easter egg after 5 clicks
+      // Trigger cat rain after 5 clicks
       setShowAnimation(true);
       
-      // Create floating hearts
-      for (let i = 0; i < 10; i++) {
+      // Create cat rain
+      for (let i = 0; i < 30; i++) {
         setTimeout(() => {
-          createHeart(e.currentTarget);
+          createFallingCat();
         }, i * 100);
       }
 
@@ -28,7 +27,7 @@ function CatGifEasterEgg() {
       setTimeout(() => {
         setShowAnimation(false);
         setClicks(0);
-      }, 3000);
+      }, 4000);
     } else if (newClicks === 3) {
       // Shake animation at 3 clicks
       const img = e.currentTarget;
@@ -39,33 +38,37 @@ function CatGifEasterEgg() {
     }
   };
 
-  const createHeart = (element) => {
-    const heart = document.createElement('div');
-    heart.innerHTML = '❤️';
-    heart.style.position = 'absolute';
-    heart.style.fontSize = '2rem';
-    heart.style.pointerEvents = 'none';
-    heart.style.zIndex = '1000';
+  const createFallingCat = () => {
+    const cat = document.createElement('img');
+    cat.src = '/image/cat.gif';
+    cat.style.position = 'fixed';
+    cat.style.width = '100px';
+    cat.style.pointerEvents = 'none';
+    cat.style.zIndex = '9999';
+    cat.style.left = Math.random() * window.innerWidth + 'px';
+    cat.style.top = '-100px';
     
-    const rect = element.getBoundingClientRect();
-    heart.style.left = rect.left + rect.width / 2 + 'px';
-    heart.style.top = rect.top + rect.height / 2 + 'px';
-    
-    document.body.appendChild(heart);
+    document.body.appendChild(cat);
 
-    // Animate heart
-    const randomX = (Math.random() - 0.5) * 200;
-    const randomY = -200 - Math.random() * 100;
+    // Animate cat falling
+    const fallDuration = 2000 + Math.random() * 1000;
+    const rotation = Math.random() * 720 - 360;
     
-    heart.animate([
-      { transform: 'translate(0, 0) scale(0)', opacity: 1 },
-      { transform: `translate(${randomX}px, ${randomY}px) scale(1.5)`, opacity: 0 }
+    cat.animate([
+      { 
+        transform: 'translateY(0) rotate(0deg)', 
+        opacity: 1 
+      },
+      { 
+        transform: `translateY(${window.innerHeight + 100}px) rotate(${rotation}deg)`, 
+        opacity: 0.5 
+      }
     ], {
-      duration: 2000,
-      easing: 'ease-out'
+      duration: fallDuration,
+      easing: 'ease-in'
     });
 
-    setTimeout(() => heart.remove(), 2000);
+    setTimeout(() => cat.remove(), fallDuration);
   };
 
   return (
@@ -78,25 +81,29 @@ function CatGifEasterEgg() {
         style={{
           cursor: 'pointer',
           transition: 'transform 0.3s ease',
-          transform: showAnimation ? 'scale(1.3) rotate(360deg)' : 'scale(1)',
-          filter: showAnimation ? 'brightness(1.3) saturate(1.5)' : 'brightness(1)',
+          transform: showAnimation ? 'scale(1.2) rotate(360deg)' : 'scale(1)',
+          filter: showAnimation ? 'brightness(1.5) saturate(2)' : 'brightness(1)',
           position: 'relative'
         }}
-        title={clicks > 0 && clicks < 5 ? `Click ${5 - clicks} more times!` : 'Click me!'}
+        title={clicks > 0 && clicks < 5 ? `Click ${5 - clicks} more times for a surprise!` : 'Click me!'}
       />
       
       {showAnimation && (
         <div style={{
-          position: 'absolute',
+          position: 'fixed',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          fontSize: '3rem',
-          animation: 'bounce 1s infinite',
+          fontSize: '4rem',
+          animation: 'bounce 0.5s infinite',
           pointerEvents: 'none',
-          zIndex: 999
+          zIndex: 9998,
+          textAlign: 'center'
         }}>
-          🎉
+          <div>🎉</div>
+          <div style={{ fontSize: '2rem', marginTop: '10px', color: '#50B6D1', fontWeight: 'bold' }}>
+            CAT RAIN!
+          </div>
         </div>
       )}
 

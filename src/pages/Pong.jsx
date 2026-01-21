@@ -9,6 +9,7 @@ function Pong() {
   const [computerScore, setComputerScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState('');
+  const [wins, setWins] = useState(0);
 
   const CANVAS_WIDTH = 600;
   const CANVAS_HEIGHT = 400;
@@ -190,6 +191,12 @@ function Pong() {
     setWinner(winnerName);
     setGameOver(true);
     setGameStarted(false);
+    
+    if (winnerName === 'Player') {
+      const newWins = wins + 1;
+      setWins(newWins);
+      localStorage.setItem('pongWins', newWins.toString());
+    }
   };
 
   useEffect(() => {
@@ -296,6 +303,14 @@ function Pong() {
                   boxShadow: '4px 4px 0px #000'
                 }}>
                   <b>Computer:</b> {computerScore}
+                </div>
+                <div style={{ 
+                  padding: '10px 20px', 
+                  background: '#FFFF00', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
+                }}>
+                  <b>Total Wins:</b> {wins}
                 </div>
               </div>
 

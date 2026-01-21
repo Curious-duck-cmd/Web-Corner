@@ -8,29 +8,40 @@ function GamesPage() {
       name: 'TETRIS',
       path: '/tetris',
       color: '#50B6D1',
-      emoji: '🟦',
+      image: '/image/tetris.png',
       description: 'Stack blocks and clear lines!'
     },
     {
       name: 'SNAKE',
       path: '/snake',
       color: '#89A8C7',
-      emoji: '🐍',
+      image: '/image/joystick.png',
       description: 'Eat food and grow longer!'
     },
     {
       name: 'PONG',
       path: '/pong',
       color: '#FFA0A0',
-      emoji: '🏓',
+      image: '/image/joystick.png',
       description: 'Beat the AI in classic pong!'
     },
+    
+  ];
+
+  const casinoGames = [
     {
-      name: 'PAC-MAN',
-      path: '/pacman',
-      color: '#FFFF00',
-      emoji: '👻',
-      description: 'Eat pellets, dodge ghosts!'
+      name: 'SLOT MACHINE',
+      path: '/slotmachine',
+      color: '#FFD700',
+      image: '/image/joystick.png',
+      description: 'Spin to win big jackpots!'
+    },
+    {
+      name: 'ROULETTE',
+      path: '/roulette',
+      color: '#006400',
+      image: '/image/joystick.png',
+      description: 'Red or Black? Place your bets!'
     }
   ];
 
@@ -97,6 +108,10 @@ function GamesPage() {
                 Choose your game and try to beat the high score!
               </p>
 
+              <h2 style={{ fontSize: '1.8rem', marginBottom: '20px', color: '#03274B' }}>
+                🎮 CLASSIC ARCADE
+              </h2>
+
               <div style={{ 
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -131,8 +146,100 @@ function GamesPage() {
                         e.currentTarget.style.boxShadow = '6px 6px 0px #000';
                       }}
                     >
-                      <div style={{ fontSize: '4rem', marginBottom: '15px' }}>
-                        {game.emoji}
+                      <div style={{ marginBottom: '20px' }}>
+                        <img 
+                          src={game.image} 
+                          alt={game.name}
+                          style={{
+                            width: '80px',
+                            height: '80px',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(3px 3px 0px #000)'
+                          }}
+                        />
+                      </div>
+                      <h3 style={{ 
+                        fontSize: '1.8rem', 
+                        marginBottom: '10px',
+                        color: '#000',
+                        fontWeight: 'bold'
+                      }}>
+                        {game.name}
+                      </h3>
+                      <p style={{ 
+                        fontSize: '1rem',
+                        margin: 0,
+                        color: '#000',
+                        opacity: 0.8
+                      }}>
+                        {game.description}
+                      </p>
+                      <div style={{
+                        marginTop: '20px',
+                        padding: '10px',
+                        background: '#000',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        fontSize: '0.9rem',
+                        border: '2px solid #000'
+                      }}>
+                        CLICK TO PLAY ▶
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Casino Games Section */}
+              <h2 style={{ fontSize: '1.8rem', marginTop: '50px', marginBottom: '20px', color: '#FFD700', textShadow: '2px 2px #000' }}>
+                🎰 CASINO GAMES
+              </h2>
+
+              <div style={{ 
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '30px',
+                marginBottom: '40px'
+              }}>
+                {casinoGames.map((game, index) => (
+                  <Link 
+                    key={game.name}
+                    to={game.path} 
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div 
+                      className="post"
+                      style={{ 
+                        padding: '30px', 
+                        border: '4px solid #000', 
+                        boxShadow: '6px 6px 0px #000',
+                        background: game.color,
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        transition: 'all 0.3s ease',
+                        animation: `slideIn 0.5s ease-out ${index * 0.1}s backwards`,
+                        maxHeight: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-8px) rotate(-2deg)';
+                        e.currentTarget.style.boxShadow = '10px 10px 0px #000';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0) rotate(0deg)';
+                        e.currentTarget.style.boxShadow = '6px 6px 0px #000';
+                      }}
+                    >
+                      <div style={{ marginBottom: '20px' }}>
+                        <img 
+                          src={game.image} 
+                          alt={game.name}
+                          style={{
+                            width: '80px',
+                            height: '80px',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(3px 3px 0px #000)'
+                          }}
+                        />
                       </div>
                       <h3 style={{ 
                         fontSize: '1.8rem', 
@@ -200,11 +307,12 @@ function GamesPage() {
                     <p style={{ fontSize: '0.9rem', margin: 0 }}>Snake</p>
                   </div>
                   <div style={{ color: '#fff' }}>
-                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFFF00', margin: 0 }}>
-                      {localStorage.getItem('pacmanHighScore') || 0}
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFA0A0', margin: 0 }}>
+                      {localStorage.getItem('pongWins') || 0}
                     </p>
-                    <p style={{ fontSize: '0.9rem', margin: 0 }}>Pac-Man</p>
+                    <p style={{ fontSize: '0.9rem', margin: 0 }}>Pong Wins</p>
                   </div>
+                  
                 </div>
               </div>
 

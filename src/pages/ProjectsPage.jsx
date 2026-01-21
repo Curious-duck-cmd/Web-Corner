@@ -49,9 +49,9 @@ function ProjectsPage() {
     },
     {
       id: 5,
-      title: 'Retro Arcade - 4 Classic Games',
+      title: 'Retro Arcade - 3 Classic Games',
       tech: 'React, Canvas API, Game Logic, LocalStorage',
-      description: 'Collection of four fully functional retro games: Tetris (line-clearing puzzle), Snake (classic arcade), Pong (AI opponent), and Pac-Man (maze chase). Features smooth animations, collision detection, high score tracking, and dual control systems for desktop and mobile.',
+      description: 'Collection of four fully functional retro games: Tetris (line-clearing puzzle), Snake (classic arcade) and Pong (AI opponent). Features smooth animations, collision detection, high score tracking, and dual control systems for desktop and mobile.',
       link: '/games',
       tags: ['web', 'game', 'canvas', 'algorithms'],
       status: 'Live',
@@ -87,18 +87,9 @@ function ProjectsPage() {
       status: 'Live',
       color: '#FFA0A0'
     },
+    
     {
       id: 9,
-      title: 'Pac-Man Clone with Ghost AI',
-      tech: 'React, Canvas, Pathfinding, Animation',
-      description: 'Full Pac-Man implementation with maze navigation, four ghost enemies with independent AI, pellet collection, lives system, and animated character sprites. Features classic arcade gameplay with modern touch controls.',
-      link: '/pacman',
-      tags: ['game', 'canvas', 'ai', 'algorithms'],
-      status: 'Live',
-      color: '#FFFF00'
-    },
-    {
-      id: 10,
       title: 'Admin Authentication System',
       tech: 'Supabase Auth, Protected Routes, Role-Based Access',
       description: 'Secure admin panel with email-based authentication, role verification, session management, and protected dashboard routes. Implements access control and secure content management.',
@@ -108,7 +99,7 @@ function ProjectsPage() {
       color: '#89A8C7'
     },
     {
-      id: 11,
+      id: 10,
       title: 'Visitor Counter Component',
       tech: 'React, LocalStorage, Session Tracking, CSS Animations',
       description: 'Retro LED-style visitor counter with flip animations, session-based unique visit tracking, and persistent storage. Features cyan glow effects and 6-digit display.',
@@ -118,7 +109,7 @@ function ProjectsPage() {
       color: '#50B6D1'
     },
     {
-      id: 12,
+      id: 11,
       title: 'Interactive Easter Egg System',
       tech: 'React, DOM Manipulation, CSS Animations',
       description: 'Hidden interactive easter egg triggered by multi-click sequence. Features floating hearts animation, element transformation, and timed auto-reset functionality.',

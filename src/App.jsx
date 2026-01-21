@@ -14,8 +14,9 @@ import AdminLogin from './pages/AdminLogin';
 import Tetris from './pages/Tetris';
 import Snake from './pages/Snake';
 import Pong from './pages/Pong';
-import PacMan from './pages/PacMan';
 
+import SlotMachine from './pages/SlotMachine';
+import Roulette from './pages/Roulette';
 function App() {
   return (
     <Router>
@@ -34,7 +35,9 @@ function App() {
         <Route path="/Adminlogin" element={<AdminLogin />} />
         <Route path="/snake" element={<Snake />} />
         <Route path="/pong" element={<Pong />} />
-        <Route path="/pacman" element={<PacMan />} />
+       
+        <Route path="/slotmachine" element={<SlotMachine />} />
+        <Route path="/roulette" element={<Roulette />} />
       </Routes>
     </Router>
   );
