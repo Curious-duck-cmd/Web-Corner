@@ -191,7 +191,7 @@ function GamesPage() {
               </div>
 
               {/* Casino Games Section */}
-              <h2 style={{ fontSize: '1.8rem', marginTop: '50px', marginBottom: '20px', color: '#FFD700', textShadow: '2px 2px #000' }}>
+              <h2 style={{ fontSize: '1.8rem', marginTop: '50px', marginBottom: '20px', color: '#ff0000' }}>
                 🎰 CASINO GAMES
               </h2>
 

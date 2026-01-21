@@ -130,11 +130,11 @@ function Roulette() {
               </div>
             </div>
             
-            <div className="windowContent" style={{ textAlign: 'center', background: '#006400' }}>
-              <h1 style={{ marginBottom: '20px', fontSize: '2.5rem', color: '#FFD700' }}>
-                🎡 ROULETTE 🎡
+            <div className="windowContent" style={{ textAlign: 'center' }}>
+              <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#03274B' }}>
+                🎡 ROULETTE
               </h1>
-              <p style={{ color: '#FFD700', fontSize: '1.2rem', marginBottom: '20px' }}>
+              <p style={{ color: '#03274B', fontSize: '1.1rem', marginBottom: '20px', fontWeight: 'bold' }}>
                 Red or Black?
               </p>
 
@@ -147,37 +147,37 @@ function Roulette() {
               }}>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#FFD700', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#50B6D1', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CREDITS</div>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#006400' }}>{credits}</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#000' }}>{credits}</div>
                 </div>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#50B6D1', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#FFA0A0', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>BET</div>
                   <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{bet}</div>
                 </div>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#90EE90', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#89A8C7', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>TOTAL WON</div>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#006400' }}>{totalWon}</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#000' }}>{totalWon}</div>
                 </div>
               </div>
 
               {/* Wheel Result */}
               <div style={{
-                background: '#8B4513',
-                border: '5px solid #000',
+                background: '#cfd3da',
+                border: '4px solid #000',
                 borderRadius: '50%',
                 width: '200px',
                 height: '200px',
@@ -185,12 +185,12 @@ function Roulette() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '10px 10px 0px #000',
+                boxShadow: '8px 8px 0px #000',
                 animation: spinning ? 'spinWheel 0.2s linear infinite' : 'none'
               }}>
                 <div style={{
-                  background: result !== null ? getNumberColor(result) : '#FFD700',
-                  border: '4px solid #FFD700',
+                  background: result !== null ? getNumberColor(result) : '#e1e2e7',
+                  border: '3px solid #000',
                   borderRadius: '50%',
                   width: '140px',
                   height: '140px',
@@ -199,8 +199,8 @@ function Roulette() {
                   justifyContent: 'center',
                   fontSize: '4rem',
                   fontWeight: 'bold',
-                  color: result === 0 ? '#FFD700' : '#FFD700',
-                  boxShadow: 'inset 5px 5px 10px rgba(0,0,0,0.5)'
+                  color: '#fff',
+                  boxShadow: 'inset 4px 4px 8px rgba(0,0,0,0.3)'
                 }}>
                   {result !== null ? result : '?'}
                 </div>
@@ -209,14 +209,15 @@ function Roulette() {
               {/* Message */}
               <div style={{
                 padding: '15px',
-                background: '#000',
-                border: '3px solid #FFD700',
-                borderRadius: '10px',
-                marginBottom: '30px'
+                background: '#03274B',
+                border: '2px solid #000',
+                borderRadius: '5px',
+                marginBottom: '30px',
+                boxShadow: '4px 4px 0px #000'
               }}>
                 <p style={{ 
-                  color: '#FFD700', 
-                  fontSize: '1.3rem', 
+                  color: '#50B6D1', 
+                  fontSize: '1.2rem', 
                   fontWeight: 'bold',
                   margin: 0
                 }}>
@@ -226,7 +227,7 @@ function Roulette() {
 
               {/* Bet Amount */}
               <div style={{ marginBottom: '30px' }}>
-                <p style={{ color: '#FFD700', fontWeight: 'bold', marginBottom: '10px', fontSize: '1.1rem' }}>
+                <p style={{ color: '#03274B', fontWeight: 'bold', marginBottom: '10px', fontSize: '1.1rem' }}>
                   SELECT BET:
                 </p>
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -237,12 +238,13 @@ function Roulette() {
                       disabled={spinning}
                       className="loginBtn"
                       style={{
-                        background: bet === amount ? '#FFD700' : '#fff',
+                        background: bet === amount ? '#50B6D1' : '#fff',
                         border: '2px solid #000',
                         padding: '10px 20px',
                         fontSize: '1rem',
                         fontWeight: 'bold',
-                        color: '#000'
+                        color: '#000',
+                        boxShadow: '3px 3px 0px #000'
                       }}
                     >
                       {amount}
@@ -253,7 +255,7 @@ function Roulette() {
 
               {/* Color Selection */}
               <div style={{ marginBottom: '30px' }}>
-                <p style={{ color: '#FFD700', fontWeight: 'bold', marginBottom: '15px', fontSize: '1.1rem' }}>
+                <p style={{ color: '#03274B', fontWeight: 'bold', marginBottom: '15px', fontSize: '1.1rem' }}>
                   CHOOSE YOUR COLOR:
                 </p>
                 <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -263,14 +265,15 @@ function Roulette() {
                     className="loginBtn"
                     style={{
                       background: '#FF0000',
-                      border: selectedColor === 'red' ? '5px solid #FFD700' : '5px solid #000',
-                      padding: '30px 50px',
-                      fontSize: '1.5rem',
+                      border: selectedColor === 'red' ? '4px solid #000' : '2px solid #000',
+                      padding: '25px 40px',
+                      fontSize: '1.3rem',
                       fontWeight: 'bold',
                       color: '#fff',
                       cursor: spinning ? 'not-allowed' : 'pointer',
-                      transform: selectedColor === 'red' ? 'scale(1.1)' : 'scale(1)',
-                      transition: 'all 0.2s'
+                      transform: selectedColor === 'red' ? 'scale(1.05)' : 'scale(1)',
+                      transition: 'all 0.2s',
+                      boxShadow: selectedColor === 'red' ? '6px 6px 0px #000' : '4px 4px 0px #000'
                     }}
                   >
                     RED
@@ -281,14 +284,15 @@ function Roulette() {
                     className="loginBtn"
                     style={{
                       background: '#000',
-                      border: selectedColor === 'black' ? '5px solid #FFD700' : '5px solid #FFD700',
-                      padding: '30px 50px',
-                      fontSize: '1.5rem',
+                      border: selectedColor === 'black' ? '4px solid #50B6D1' : '2px solid #000',
+                      padding: '25px 40px',
+                      fontSize: '1.3rem',
                       fontWeight: 'bold',
                       color: '#fff',
                       cursor: spinning ? 'not-allowed' : 'pointer',
-                      transform: selectedColor === 'black' ? 'scale(1.1)' : 'scale(1)',
-                      transition: 'all 0.2s'
+                      transform: selectedColor === 'black' ? 'scale(1.05)' : 'scale(1)',
+                      transition: 'all 0.2s',
+                      boxShadow: selectedColor === 'black' ? '6px 6px 0px #50B6D1' : '4px 4px 0px #000'
                     }}
                   >
                     BLACK
@@ -302,32 +306,33 @@ function Roulette() {
                 disabled={!selectedColor || spinning || credits < bet}
                 className="loginBtn"
                 style={{
-                  fontSize: '1.5rem',
-                  padding: '20px 60px',
-                  background: !selectedColor || spinning || credits < bet ? '#ccc' : '#FFD700',
+                  fontSize: '1.3rem',
+                  padding: '15px 50px',
+                  background: !selectedColor || spinning || credits < bet ? '#ccc' : '#FFA0A0',
                   color: '#000',
-                  border: '4px solid #000',
+                  border: '3px solid #000',
                   fontWeight: 'bold',
                   cursor: !selectedColor || spinning || credits < bet ? 'not-allowed' : 'pointer',
-                  boxShadow: '6px 6px 0px #000',
+                  boxShadow: '5px 5px 0px #000',
                   marginBottom: '15px'
                 }}
               >
-                {spinning ? '🎡 SPINNING...' : '🎡 SPIN WHEEL 🎡'}
+                {spinning ? '🎡 SPINNING...' : '🎡 SPIN WHEEL'}
               </button>
 
               {credits < bet && (
                 <div style={{ marginTop: '20px' }}>
-                  <p style={{ color: '#FFD700', fontWeight: 'bold', marginBottom: '10px', fontSize: '1.2rem' }}>
+                  <p style={{ color: '#FFA0A0', fontWeight: 'bold', marginBottom: '10px', fontSize: '1.1rem' }}>
                     Not enough credits!
                   </p>
                   <button
                     onClick={resetCredits}
                     className="loginBtn"
                     style={{
-                      background: '#90EE90',
+                      background: '#50B6D1',
                       border: '2px solid #000',
-                      padding: '10px 20px'
+                      padding: '10px 20px',
+                      boxShadow: '3px 3px 0px #000'
                     }}
                   >
                     Reset Credits
@@ -338,7 +343,7 @@ function Roulette() {
               {/* History */}
               {history.length > 0 && (
                 <div className="separate" style={{ marginTop: '30px' }}>
-                  <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#FFD700' }}>
+                  <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#03274B' }}>
                     📊 RECENT SPINS
                   </h2>
                   <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -349,14 +354,15 @@ function Roulette() {
                           width: '50px',
                           height: '50px',
                           background: getNumberColor(h.number),
-                          border: '3px solid #FFD700',
+                          border: '2px solid #000',
                           borderRadius: '50%',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#FFD700',
+                          color: '#fff',
                           fontWeight: 'bold',
-                          fontSize: '1.2rem'
+                          fontSize: '1.2rem',
+                          boxShadow: '3px 3px 0px #000'
                         }}
                       >
                         {h.number}
@@ -368,11 +374,11 @@ function Roulette() {
 
               {/* Rules */}
               <div className="separate" style={{ textAlign: 'left' }}>
-                <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#FFD700' }}>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#03274B' }}>
                   📜 RULES
                 </h2>
-                <div className="post" style={{ maxHeight: 'none', background: '#000', color: '#FFD700', border: '3px solid #FFD700' }}>
-                  <ul style={{ fontSize: '1.1rem', lineHeight: '2', listStylePosition: 'inside' }}>
+                <div className="post" style={{ maxHeight: 'none' }}>
+                  <ul style={{ fontSize: '1rem', lineHeight: '1.8', listStylePosition: 'inside' }}>
                     <li>Choose Red or Black</li>
                     <li>Select your bet amount</li>
                     <li>Click "Spin Wheel"</li>

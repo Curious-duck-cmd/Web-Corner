@@ -410,7 +410,7 @@ function ProjectsPage() {
                   </div>
                   <div style={{ textAlign: 'center', color: '#fff' }}>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFFF00' }}>
-                      4
+                      5
                     </p>
                     <p style={{ fontSize: '0.9rem' }}>Games Built</p>
                   </div>

@@ -133,22 +133,26 @@ function Pong() {
 
     // Score
     if (state.ball.x < 0) {
-      const newScore = computerScore + 1;
-      setComputerScore(newScore);
-      if (newScore >= WINNING_SCORE) {
-        endGame('Computer');
-      } else {
-        resetBall();
-      }
+      setComputerScore(prev => {
+        const newScore = prev + 1;
+        if (newScore >= WINNING_SCORE) {
+          endGame('Computer');
+        } else {
+          resetBall();
+        }
+        return newScore;
+      });
     }
     if (state.ball.x > CANVAS_WIDTH) {
-      const newScore = playerScore + 1;
-      setPlayerScore(newScore);
-      if (newScore >= WINNING_SCORE) {
-        endGame('Player');
-      } else {
-        resetBall();
-      }
+      setPlayerScore(prev => {
+        const newScore = prev + 1;
+        if (newScore >= WINNING_SCORE) {
+          endGame('Player');
+        } else {
+          resetBall();
+        }
+        return newScore;
+      });
     }
 
     drawGame();

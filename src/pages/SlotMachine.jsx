@@ -150,9 +150,9 @@ function SlotMachine() {
               </div>
             </div>
             
-            <div className="windowContent" style={{ textAlign: 'center', background: '#8B0000' }}>
-              <h1 style={{ marginBottom: '20px', fontSize: '2.5rem', color: '#FFD700' }}>
-                🎰 SLOT MACHINE 🎰
+            <div className="windowContent" style={{ textAlign: 'center' }}>
+              <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#03274B' }}>
+                🎰 SLOT MACHINE
               </h1>
 
               {/* Stats */}
@@ -164,62 +164,63 @@ function SlotMachine() {
               }}>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#FFD700', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#50B6D1', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CREDITS</div>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#8B0000' }}>{credits}</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#000' }}>{credits}</div>
                 </div>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#50B6D1', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#FFA0A0', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>BET</div>
                   <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{bet}</div>
                 </div>
                 <div style={{ 
                   padding: '15px', 
-                  background: '#90EE90', 
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0px #000'
+                  background: '#89A8C7', 
+                  border: '2px solid #000',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>TOTAL WON</div>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#006400' }}>{totalWon}</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#000' }}>{totalWon}</div>
                 </div>
               </div>
 
               {/* Slot Machine */}
               <div style={{
-                background: '#FFD700',
-                border: '5px solid #000',
-                borderRadius: '20px',
+                background: '#e1e2e7',
+                border: '4px solid #000',
+                borderRadius: '10px',
                 padding: '30px',
                 marginBottom: '30px',
-                boxShadow: '10px 10px 0px #000'
+                boxShadow: '8px 8px 0px #000'
               }}>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'center',
                   gap: '20px',
-                  marginBottom: '30px'
+                  marginBottom: '30px',
+                  flexWrap: 'wrap'
                 }}>
                   {reels.map((symbol, index) => (
                     <div
                       key={index}
                       style={{
-                        width: '120px',
-                        height: '140px',
-                        background: '#fff',
-                        border: '4px solid #000',
+                        width: '100px',
+                        height: '120px',
+                        background: '#cfd3da',
+                        border: '3px solid #000',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '5rem',
-                        borderRadius: '10px',
-                        boxShadow: 'inset 5px 5px 10px rgba(0,0,0,0.3)',
+                        fontSize: '4rem',
+                        borderRadius: '5px',
+                        boxShadow: 'inset 3px 3px 5px rgba(0,0,0,0.2)',
                         animation: spinning ? 'spinReel 0.1s linear infinite' : 'none'
                       }}
                     >
@@ -231,14 +232,15 @@ function SlotMachine() {
                 {/* Message */}
                 <div style={{
                   padding: '15px',
-                  background: '#000',
-                  border: '3px solid #FFD700',
-                  borderRadius: '10px',
-                  marginBottom: '20px'
+                  background: '#03274B',
+                  border: '2px solid #000',
+                  borderRadius: '5px',
+                  marginBottom: '20px',
+                  boxShadow: '4px 4px 0px #000'
                 }}>
                   <p style={{ 
-                    color: '#FFD700', 
-                    fontSize: '1.3rem', 
+                    color: '#50B6D1', 
+                    fontSize: '1.2rem', 
                     fontWeight: 'bold',
                     margin: 0
                   }}>
@@ -248,7 +250,7 @@ function SlotMachine() {
 
                 {/* Bet Controls */}
                 <div style={{ marginBottom: '20px' }}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '10px', fontSize: '1.1rem', color: '#03274B' }}>
                     ADJUST BET:
                   </p>
                   <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -262,7 +264,8 @@ function SlotMachine() {
                           border: '2px solid #000',
                           padding: '10px 20px',
                           fontSize: '1rem',
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
+                          boxShadow: '3px 3px 0px #000'
                         }}
                       >
                         {amount}
@@ -277,32 +280,33 @@ function SlotMachine() {
                   disabled={spinning || credits < bet}
                   className="loginBtn"
                   style={{
-                    fontSize: '1.5rem',
-                    padding: '20px 50px',
-                    background: spinning || credits < bet ? '#ccc' : '#FF0000',
-                    color: '#FFD700',
-                    border: '4px solid #000',
+                    fontSize: '1.3rem',
+                    padding: '15px 40px',
+                    background: spinning || credits < bet ? '#ccc' : '#FFA0A0',
+                    color: '#000',
+                    border: '3px solid #000',
                     fontWeight: 'bold',
                     cursor: spinning || credits < bet ? 'not-allowed' : 'pointer',
-                    boxShadow: '6px 6px 0px #000',
+                    boxShadow: '5px 5px 0px #000',
                     marginBottom: '15px'
                   }}
                 >
-                  {spinning ? '🎰 SPINNING...' : '🎰 SPIN 🎰'}
+                  {spinning ? '🎰 SPINNING...' : '🎰 SPIN'}
                 </button>
 
                 {credits < bet && (
                   <div style={{ marginTop: '10px' }}>
-                    <p style={{ color: '#FF0000', fontWeight: 'bold', marginBottom: '10px' }}>
+                    <p style={{ color: '#FFA0A0', fontWeight: 'bold', marginBottom: '10px' }}>
                       Not enough credits!
                     </p>
                     <button
                       onClick={resetCredits}
                       className="loginBtn"
                       style={{
-                        background: '#90EE90',
+                        background: '#50B6D1',
                         border: '2px solid #000',
-                        padding: '10px 20px'
+                        padding: '10px 20px',
+                        boxShadow: '3px 3px 0px #000'
                       }}
                     >
                       Reset Credits
@@ -313,11 +317,11 @@ function SlotMachine() {
 
               {/* Paytable */}
               <div className="separate" style={{ textAlign: 'left' }}>
-                <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#FFD700' }}>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#03274B' }}>
                   💰 PAYTABLE
                 </h2>
-                <div className="post" style={{ maxHeight: 'none', background: '#000', color: '#FFD700', border: '3px solid #FFD700' }}>
-                  <div style={{ fontSize: '1.1rem', lineHeight: '2' }}>
+                <div className="post" style={{ maxHeight: 'none' }}>
+                  <div style={{ fontSize: '1rem', lineHeight: '1.8' }}>
                     <p><b>7️⃣ 7️⃣ 7️⃣</b> → Bet × 50 (JACKPOT!)</p>
                     <p><b>💎 💎 💎</b> → Bet × 25</p>
                     <p><b>🔔 🔔 🔔</b> → Bet × 10</p>

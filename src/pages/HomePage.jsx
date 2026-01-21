@@ -12,8 +12,8 @@ function CatGifEasterEgg() {
     const newClicks = clicks + 1;
     setClicks(newClicks);
 
-    if (newClicks === 5) {
-      // Trigger cat rain after 5 clicks
+    if (newClicks === 3) {
+      // Trigger cat rain after 3 clicks
       setShowAnimation(true);
       
       // Create cat rain
@@ -82,7 +82,7 @@ function CatGifEasterEgg() {
           cursor: 'pointer',
           transition: 'transform 0.3s ease',
           transform: showAnimation ? 'scale(1.2) rotate(360deg)' : 'scale(1)',
-          filter: showAnimation ? 'brightness(1.5) saturate(2)' : 'brightness(1)',
+         
           position: 'relative'
         }}
         title={clicks > 0 && clicks < 5 ? `Click ${5 - clicks} more times for a surprise!` : 'Click me!'}
@@ -100,7 +100,7 @@ function CatGifEasterEgg() {
           zIndex: 9998,
           textAlign: 'center'
         }}>
-          <div>🎉</div>
+          <div></div>
           <div style={{ fontSize: '2rem', marginTop: '10px', color: '#50B6D1', fontWeight: 'bold' }}>
             CAT RAIN!
           </div>
@@ -220,8 +220,8 @@ function HomePage() {
                 <h1>What I'm working on:</h1>
                 <p>Making this website!</p>
                 <div className="progressBar">
-                  <div className="progress" style={{ width: '40%' }}>
-                    <p>40%</p>
+                  <div className="progress" style={{ width: '67%' }}>
+                    <p>67%</p>
                   </div>
                 </div>
               </div>
