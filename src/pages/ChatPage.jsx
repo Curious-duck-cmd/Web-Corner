@@ -10,10 +10,12 @@ function ChatPage() {
   const [userName, setUserName] = useState("Guest");
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
+  const [showReactionPicker, setShowReactionPicker] = useState(null);
   
   const chatDisplayRef = useRef(null);
 
-  // 1. CHECK USER ON LOAD
+  const reactions = ['👍', '❤️', '😂', '😮', '😢', '🎉', '🔥', '👏'];
+
   useEffect(() => {
     const checkUser = async () => {
       setIsLoading(true);
@@ -28,13 +30,20 @@ function ChatPage() {
 
     checkUser();
 
-    // 2. REALTIME SUBSCRIPTION
     const channel = supabase
       .channel('public:messages')
       .on('postgres_changes', 
         { event: 'INSERT', schema: 'public', table: 'messages' }, 
         (payload) => {
           setMessages((prev) => [...prev, payload.new]);
+        }
+      )
+      .on('postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'messages' },
+        (payload) => {
+          setMessages((prev) => 
+            prev.map(msg => msg.id === payload.new.id ? payload.new : msg)
+          );
         }
       )
       .subscribe();
@@ -44,14 +53,12 @@ function ChatPage() {
     };
   }, []);
 
-  // Auto-scroll when messages change
   useEffect(() => {
     if (chatDisplayRef.current) {
       chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // 3. LOAD MESSAGE HISTORY
   const loadMessages = async () => {
     const { data, error } = await supabase
       .from('messages')
@@ -65,7 +72,6 @@ function ChatPage() {
     }
   };
 
-  // 4. SEND MESSAGE
   const postMessage = async () => {
     if (inputText.trim() === "" || !user || isSending) return;
 
@@ -74,7 +80,8 @@ function ChatPage() {
       .from('messages')
       .insert([{ 
         username: userName, 
-        content: inputText 
+        content: inputText,
+        reactions: {}
       }]);
     
     if (!error) {
@@ -85,18 +92,54 @@ function ChatPage() {
     setIsSending(false);
   };
 
-  // 5. LOGOUT LOGIC
+  const addReaction = async (messageId, emoji) => {
+    const message = messages.find(m => m.id === messageId);
+    if (!message) return;
+
+    const reactions = message.reactions || {};
+    const userReaction = reactions[userName];
+
+    let newReactions;
+    if (userReaction === emoji) {
+      // Remove reaction if clicking the same emoji
+      const { [userName]: removed, ...rest } = reactions;
+      newReactions = rest;
+    } else {
+      // Add or change reaction
+      newReactions = { ...reactions, [userName]: emoji };
+    }
+
+    const { error } = await supabase
+      .from('messages')
+      .update({ reactions: newReactions })
+      .eq('id', messageId);
+
+    if (error) {
+      console.error("Error updating reaction:", error);
+    }
+
+    setShowReactionPicker(null);
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     window.location.reload(); 
   };
 
-  // Format timestamp
   const formatTime = (timestamp) => {
     return new Date(timestamp).toLocaleTimeString([], { 
       hour: '2-digit', 
       minute: '2-digit' 
     });
+  };
+
+  const getReactionCounts = (reactions) => {
+    if (!reactions) return {};
+    const counts = {};
+    Object.values(reactions).forEach(emoji => {
+      counts[emoji] = (counts[emoji] || 0) + 1;
+    });
+    return counts;
   };
 
   return (
@@ -209,36 +252,120 @@ function ChatPage() {
                         <p>No messages yet. Start the conversation! 💬</p>
                       </div>
                     ) : (
-                      messages.map((msg) => (
-                        <div key={msg.id} className="msg-bubble">
-                          <div style={{ 
-                            display: 'flex', 
-                            justifyContent: 'space-between',
-                            alignItems: 'baseline',
-                            marginBottom: '4px'
-                          }}>
-                            <b style={{ 
-                              color: msg.username === userName ? '#50B6D1' : '#03274B',
-                              fontSize: '0.95rem'
+                      messages.map((msg) => {
+                        const reactionCounts = getReactionCounts(msg.reactions);
+                        const userReaction = msg.reactions?.[userName];
+                        
+                        return (
+                          <div key={msg.id} className="msg-bubble">
+                            <div style={{ 
+                              display: 'flex', 
+                              justifyContent: 'space-between',
+                              alignItems: 'baseline',
+                              marginBottom: '4px'
                             }}>
-                              {msg.username}
-                            </b>
-                            <small style={{ 
-                              opacity: 0.5,
-                              fontSize: '0.75rem'
+                              <b style={{ 
+                                color: msg.username === userName ? '#50B6D1' : '#03274B',
+                                fontSize: '0.95rem'
+                              }}>
+                                {msg.username}
+                              </b>
+                              <small style={{ 
+                                opacity: 0.5,
+                                fontSize: '0.75rem'
+                              }}>
+                                {formatTime(msg.created_at)}
+                              </small>
+                            </div>
+                            <p style={{ 
+                              margin: 0,
+                              fontSize: '0.95rem',
+                              wordWrap: 'break-word',
+                              marginBottom: '8px'
                             }}>
-                              {formatTime(msg.created_at)}
-                            </small>
+                              {msg.content}
+                            </p>
+                            
+                            {/* Reaction Display & Picker */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              {/* Show existing reactions */}
+                              {Object.entries(reactionCounts).map(([emoji, count]) => (
+                                <button
+                                  key={emoji}
+                                  onClick={() => addReaction(msg.id, emoji)}
+                                  style={{
+                                    background: userReaction === emoji ? '#50B6D1' : '#fff',
+                                    border: '1px solid #000',
+                                    borderRadius: '12px',
+                                    padding: '3px 8px',
+                                    fontSize: '0.85rem',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    transition: 'all 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+                                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                >
+                                  {emoji} {count}
+                                </button>
+                              ))}
+                              
+                              {/* Add reaction button */}
+                              <button
+                                onClick={() => setShowReactionPicker(showReactionPicker === msg.id ? null : msg.id)}
+                                style={{
+                                  background: '#e1e2e7',
+                                  border: '1px solid #000',
+                                  borderRadius: '12px',
+                                  padding: '3px 8px',
+                                  fontSize: '0.85rem',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+                                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                              >
+                                ➕
+                              </button>
+                              
+                              {/* Reaction Picker */}
+                              {showReactionPicker === msg.id && (
+                                <div style={{
+                                  display: 'flex',
+                                  gap: '4px',
+                                  padding: '6px',
+                                  background: '#fff',
+                                  border: '2px solid #000',
+                                  borderRadius: '8px',
+                                  boxShadow: '4px 4px 0px #000',
+                                  animation: 'popIn 0.2s ease-out'
+                                }}>
+                                  {reactions.map(emoji => (
+                                    <button
+                                      key={emoji}
+                                      onClick={() => addReaction(msg.id, emoji)}
+                                      style={{
+                                        background: 'transparent',
+                                        border: 'none',
+                                        fontSize: '1.2rem',
+                                        cursor: 'pointer',
+                                        padding: '4px',
+                                        transition: 'transform 0.2s ease'
+                                      }}
+                                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.3)'}
+                                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                    >
+                                      {emoji}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <p style={{ 
-                            margin: 0,
-                            fontSize: '0.95rem',
-                            wordWrap: 'break-word'
-                          }}>
-                            {msg.content}
-                          </p>
-                        </div>
-                      ))
+                        );
+                      })
                     )}
                   </div>
 
@@ -267,7 +394,6 @@ function ChatPage() {
                   </div>
                 </>
               ) : (
-                // Locked View
                 <div className="locked-channel">
                   <div className="locked-content">
                     <h1 style={{ fontSize: '3rem', margin: '0 0 20px 0' }}>🔒</h1>
@@ -309,6 +435,19 @@ function ChatPage() {
           </div>
         </div>
       </main>
+
+      <style>{`
+        @keyframes popIn {
+          from {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }

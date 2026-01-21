@@ -3,6 +3,37 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 function GamesPage() {
+  const games = [
+    {
+      name: 'TETRIS',
+      path: '/tetris',
+      color: '#50B6D1',
+      emoji: '🟦',
+      description: 'Stack blocks and clear lines!'
+    },
+    {
+      name: 'SNAKE',
+      path: '/snake',
+      color: '#89A8C7',
+      emoji: '🐍',
+      description: 'Eat food and grow longer!'
+    },
+    {
+      name: 'PONG',
+      path: '/pong',
+      color: '#FFA0A0',
+      emoji: '🏓',
+      description: 'Beat the AI in classic pong!'
+    },
+    {
+      name: 'PAC-MAN',
+      path: '/pacman',
+      color: '#FFFF00',
+      emoji: '👻',
+      description: 'Eat pellets, dodge ghosts!'
+    }
+  ];
+
   return (
     <div className="portfolio-wrapper">
       <header>
@@ -30,49 +61,181 @@ function GamesPage() {
         </div>
       </header>
 
-      <main style={{ padding: '40px', textAlign: 'center' }}>
-        <h1 style={{ 
-  marginBottom: '30px',
-  fontSize: '2rem',
-  fontWeight: '800',
-  fontFamily: 'system-ui, -apple-system, sans-serif',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '15px',
-  textAlign: 'center'
-}}>
-  <span className="floating-emoji" style={{ fontSize: '2.5rem' }}>🕹️</span> 
-  <span style={{
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    paddingBottom: '5px' // Prevents letters like 'g' from being cut off
-  }}>
-    Game Collection
-  </span>
-</h1>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-          {/* Tetris Game Launcher */}
-          <Link to="/Tetris" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="windowContent" style={{ 
-              width: '200px', 
-              padding: '20px', 
-              border: '4px solid #000', 
-              boxShadow: '8px 8px 0px #000',
-              background: '#50B6D1',
-              cursor: 'pointer'
-            }}>
-              <img src="/image/tetris.png" style={{ width: '64px' }} alt="Tetris" />
-              <h3>TETRIS</h3>
-              <p>Click to Play</p>
+      <main>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          padding: '40px 20px',
+          width: '100%'
+        }}>
+          <section style={{ width: '100%', maxWidth: '1000px' }}>
+            <div className="windowTop" style={{ background: '#03274B' }}>
+              <p style={{ color: '#fff' }}>Game_Selection.db</p>
+              <div className="windowCircle">
+                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: '#fff' }}></div>
+              </div>
             </div>
-          </Link>
+            
+            <div className="windowContent">
+              <h1 style={{ 
+                marginBottom: '30px',
+                fontSize: '2rem',
+                textAlign: 'center',
+                color: '#03274B'
+              }}>
+                🕹️ RETRO ARCADE
+              </h1>
+              
+              <p style={{ 
+                textAlign: 'center', 
+                fontSize: '1.1rem', 
+                marginBottom: '40px',
+                opacity: 0.8 
+              }}>
+                Choose your game and try to beat the high score!
+              </p>
 
-          {/* You can add more game links here in the future */}
+              <div style={{ 
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '30px',
+                marginBottom: '40px'
+              }}>
+                {games.map((game, index) => (
+                  <Link 
+                    key={game.name}
+                    to={game.path} 
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div 
+                      className="post"
+                      style={{ 
+                        padding: '30px', 
+                        border: '4px solid #000', 
+                        boxShadow: '6px 6px 0px #000',
+                        background: game.color,
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        transition: 'all 0.3s ease',
+                        animation: `slideIn 0.5s ease-out ${index * 0.1}s backwards`,
+                        maxHeight: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-8px) rotate(-2deg)';
+                        e.currentTarget.style.boxShadow = '10px 10px 0px #000';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0) rotate(0deg)';
+                        e.currentTarget.style.boxShadow = '6px 6px 0px #000';
+                      }}
+                    >
+                      <div style={{ fontSize: '4rem', marginBottom: '15px' }}>
+                        {game.emoji}
+                      </div>
+                      <h3 style={{ 
+                        fontSize: '1.8rem', 
+                        marginBottom: '10px',
+                        color: '#000',
+                        fontWeight: 'bold'
+                      }}>
+                        {game.name}
+                      </h3>
+                      <p style={{ 
+                        fontSize: '1rem',
+                        margin: 0,
+                        color: '#000',
+                        opacity: 0.8
+                      }}>
+                        {game.description}
+                      </p>
+                      <div style={{
+                        marginTop: '20px',
+                        padding: '10px',
+                        background: '#000',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        fontSize: '0.9rem',
+                        border: '2px solid #000'
+                      }}>
+                        CLICK TO PLAY ▶
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Game Stats */}
+              <div style={{
+                padding: '25px',
+                background: '#03274B',
+                border: '2px solid #000',
+                borderRadius: '5px',
+                boxShadow: '6px 6px 0px #000',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ 
+                  color: '#fff', 
+                  marginBottom: '15px',
+                  fontSize: '1.4rem'
+                }}>
+                  🏆 YOUR HIGH SCORES
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                  gap: '15px'
+                }}>
+                  <div style={{ color: '#fff' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#50B6D1', margin: 0 }}>
+                      {localStorage.getItem('tetrisHighScore') || 0}
+                    </p>
+                    <p style={{ fontSize: '0.9rem', margin: 0 }}>Tetris</p>
+                  </div>
+                  <div style={{ color: '#fff' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#89A8C7', margin: 0 }}>
+                      {localStorage.getItem('snakeHighScore') || 0}
+                    </p>
+                    <p style={{ fontSize: '0.9rem', margin: 0 }}>Snake</p>
+                  </div>
+                  <div style={{ color: '#fff' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFFF00', margin: 0 }}>
+                      {localStorage.getItem('pacmanHighScore') || 0}
+                    </p>
+                    <p style={{ fontSize: '0.9rem', margin: 0 }}>Pac-Man</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div className="separate" style={{ marginTop: '30px' }}>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#03274B' }}>
+                  🎮 ARCADE TIPS
+                </h2>
+                <div className="post" style={{ maxHeight: 'none' }}>
+                  <ul style={{ listStylePosition: 'inside', fontSize: '1rem', lineHeight: '1.8' }}>
+                    <li>All games work on both desktop and mobile devices</li>
+                    <li>Use arrow keys on desktop, touch controls on mobile</li>
+                    <li>High scores are saved automatically in your browser</li>
+                    <li>Challenge yourself to beat your personal best!</li>
+                    <li>Each game gets progressively harder as you score more points</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
+
+      <footer style={{ textAlign: 'center', padding: '40px', marginTop: '20px' }}>
+        <p style={{ color: '#565f89', fontSize: '0.9rem' }}>
+          🕹️ Retro Arcade - {games.length} Games Available
+        </p>
+        <p style={{ color: '#565f89', fontSize: '0.8rem', marginTop: '10px', opacity: 0.6 }}>
+          More games coming soon!
+        </p>
+      </footer>
     </div>
   );
 }

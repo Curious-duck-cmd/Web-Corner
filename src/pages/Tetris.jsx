@@ -477,20 +477,7 @@ function Tetris() {
                 >
                   ►
                 </button>
-                <button 
-                  onClick={dropPiece}
-                  disabled={!gameStarted || gameOver}
-                  className="loginBtn"
-                  style={{
-                    gridColumn: '2',
-                    gridRow: '3',
-                    fontSize: '1rem',
-                    padding: '15px',
-                    background: '#FFA0A0'
-                  }}
-                >
-                  DROP
-                </button>
+               
               </div>
 
               {/* Controls */}
@@ -557,7 +544,7 @@ function Tetris() {
                     <li>➡️ Right Arrow - Move Right</li>
                     <li>⬇️ Down Arrow - Move Down Faster</li>
                     <li>⬆️ Up Arrow - Rotate Piece</li>
-                    <li>Space - Drop Piece Instantly</li>
+                    
                   </ul>
                   <p style={{ fontSize: '1.1rem', marginTop: '15px' }}>
                     <b>📱 Mobile:</b> Use the on-screen buttons above

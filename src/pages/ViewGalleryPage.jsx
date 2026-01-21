@@ -6,6 +6,7 @@ import '../App.css';
 function ViewGalleryPage() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     fetchGallery();
@@ -25,6 +26,42 @@ function ViewGalleryPage() {
     }
     setIsLoading(false);
   };
+
+  const openLightbox = (image) => {
+    setLightboxImage(image);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  const navigateLightbox = (direction) => {
+    const currentIndex = images.findIndex(img => img.id === lightboxImage.id);
+    let newIndex;
+    
+    if (direction === 'next') {
+      newIndex = (currentIndex + 1) % images.length;
+    } else {
+      newIndex = (currentIndex - 1 + images.length) % images.length;
+    }
+    
+    setLightboxImage(images[newIndex]);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!lightboxImage) return;
+      
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') navigateLightbox('next');
+      if (e.key === 'ArrowLeft') navigateLightbox('prev');
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxImage]);
 
   return (
     <div className="portfolio-wrapper">
@@ -74,7 +111,7 @@ function ViewGalleryPage() {
                 🖼️ Gallery Collection
               </h1>
               <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: 0.8 }}>
-                A visual archive of moments, memories, and creative captures.
+                A visual archive of moments, memories, and creative captures. Click any image to view full size.
               </p>
 
               {isLoading ? (
@@ -104,7 +141,8 @@ function ViewGalleryPage() {
                         background: '#fff',
                         boxShadow: '5px 5px 0px #000',
                         transition: 'all 0.3s ease',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        cursor: 'pointer'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-8px) rotate(-1deg)';
@@ -114,6 +152,7 @@ function ViewGalleryPage() {
                         e.currentTarget.style.transform = 'translateY(0) rotate(0deg)';
                         e.currentTarget.style.boxShadow = '5px 5px 0px #000';
                       }}
+                      onClick={() => openLightbox(item)}
                     >
                       <img
                         src={item.image_url}
@@ -161,6 +200,14 @@ function ViewGalleryPage() {
                         }}>
                           {item.caption || ''}
                         </p>
+                        <p style={{
+                          marginTop: '10px',
+                          fontSize: '0.8rem',
+                          color: '#50B6D1',
+                          fontWeight: 'bold'
+                        }}>
+                          🔍 Click to enlarge
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -170,6 +217,162 @@ function ViewGalleryPage() {
           </section>
         </div>
       </main>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+            animation: 'fadeIn 0.3s ease-out'
+          }}
+          onClick={closeLightbox}
+        >
+          {/* Close Button */}
+          <button
+            onClick={closeLightbox}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              background: '#FFA0A0',
+              border: '2px solid #fff',
+              color: '#000',
+              fontSize: '2rem',
+              width: '50px',
+              height: '50px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              boxShadow: '4px 4px 0px #fff',
+              zIndex: 10001
+            }}
+          >
+            ✕
+          </button>
+
+          {/* Navigation Arrows */}
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigateLightbox('prev');
+                }}
+                style={{
+                  position: 'absolute',
+                  left: '20px',
+                  background: '#50B6D1',
+                  border: '2px solid #fff',
+                  color: '#000',
+                  fontSize: '2rem',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  boxShadow: '4px 4px 0px #fff'
+                }}
+              >
+                ◄
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigateLightbox('next');
+                }}
+                style={{
+                  position: 'absolute',
+                  right: '20px',
+                  background: '#50B6D1',
+                  border: '2px solid #fff',
+                  color: '#000',
+                  fontSize: '2rem',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  boxShadow: '4px 4px 0px #fff'
+                }}
+              >
+                ►
+              </button>
+            </>
+          )}
+
+          {/* Image Container */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: '90%',
+              maxHeight: '80vh',
+              background: '#fff',
+              border: '4px solid #fff',
+              boxShadow: '10px 10px 0px #000',
+              overflow: 'hidden'
+            }}
+          >
+            <img
+              src={lightboxImage.image_url}
+              alt="Full size"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                display: 'block',
+                objectFit: 'contain'
+              }}
+            />
+          </div>
+
+          {/* Image Info */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              marginTop: '20px',
+              background: '#fff',
+              border: '2px solid #fff',
+              padding: '15px 25px',
+              boxShadow: '6px 6px 0px #000',
+              maxWidth: '600px',
+              width: '90%'
+            }}
+          >
+            <p style={{
+              margin: 0,
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              color: '#50B6D1',
+              marginBottom: '5px'
+            }}>
+              @{lightboxImage.username || 'anonymous'}
+            </p>
+            {lightboxImage.caption && (
+              <p style={{
+                margin: 0,
+                fontSize: '0.95rem',
+                color: '#333'
+              }}>
+                {lightboxImage.caption}
+              </p>
+            )}
+            <p style={{
+              margin: '10px 0 0 0',
+              fontSize: '0.8rem',
+              opacity: 0.6
+            }}>
+              {new Date(lightboxImage.created_at).toLocaleDateString()} • Press ESC or click outside to close
+            </p>
+          </div>
+        </div>
+      )}
 
       <footer style={{ textAlign: 'center', padding: '40px', marginTop: '20px' }}>
         <p style={{ color: '#565f89', fontSize: '0.9rem' }}>

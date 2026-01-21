@@ -9,69 +9,131 @@ function ProjectsPage() {
   const projects = [
     {
       id: 1,
-      title: 'Personal Retro Portfolio',
-      tech: 'React, React Router, CSS3',
-      description: 'A 90s-inspired personal portfolio website featuring retro OS aesthetics, window-based UI components, and pixel-perfect styling. Built with modern React while capturing vintage computing vibes.',
+      title: 'Personal Retro Portfolio Website',
+      tech: 'React, React Router, CSS3, Responsive Design',
+      description: 'A 90s-inspired personal portfolio website featuring retro OS aesthetics, window-based UI components, pixel-perfect styling, and full mobile optimization. Features include navigation system, animated components, and nostalgic design elements.',
       link: '/',
-      tags: ['web', 'design', 'react'],
+      tags: ['web', 'design', 'react', 'frontend'],
       status: 'Live',
       color: '#50B6D1'
     },
     {
       id: 2,
       title: 'Real-Time Chat Application',
-      tech: 'React, Supabase, PostgreSQL',
-      description: 'Full-stack real-time messaging platform with user authentication, live message updates, and persistent chat history. Features secure sessions and database integration using Supabase.',
+      tech: 'React, Supabase, PostgreSQL, Realtime API',
+      description: 'Full-stack real-time messaging platform with user authentication, live message updates, emoji reactions system, and persistent chat history. Features secure sessions, database integration, and real-time synchronization using Supabase.',
       link: '/chat',
-      tags: ['web', 'backend', 'database'],
+      tags: ['web', 'backend', 'database', 'realtime'],
       status: 'Live',
       color: '#FFA0A0'
     },
     {
       id: 3,
-      title: 'Image Gallery with Cloud Storage',
-      tech: 'Supabase Storage, React, RLS Policies',
-      description: 'Dynamic media gallery application with secure image uploads to cloud storage. Implements row-level security policies and real-time database syncing for instant gallery updates.',
+      title: 'Cloud Image Gallery with Lightbox',
+      tech: 'Supabase Storage, React, RLS Policies, Canvas API',
+      description: 'Dynamic media gallery with secure cloud storage, full-screen lightbox viewer, keyboard navigation, and real-time database syncing. Features row-level security policies, image optimization, and responsive grid layout.',
       link: '/view-gallery',
-      tags: ['web', 'backend', 'cloud'],
+      tags: ['web', 'backend', 'cloud', 'ui'],
       status: 'Live',
       color: '#89A8C7'
     },
     {
       id: 4,
-      title: 'Personal Blog System',
-      tech: 'React, Supabase, CRUD Operations',
-      description: 'Content management system for personal blogging with admin dashboard. Features post creation, editing, mood tracking, and public blog display with chronological ordering.',
+      title: 'Personal Blog System with CMS',
+      tech: 'React, Supabase, CRUD Operations, Authentication',
+      description: 'Full-featured content management system for personal blogging with admin dashboard, post creation/editing, mood tracking, rich text support, and chronological display. Includes authentication and protected routes.',
       link: '/blog',
-      tags: ['web', 'cms', 'database'],
+      tags: ['web', 'cms', 'database', 'auth'],
       status: 'Live',
       color: '#50B6D1'
     },
     {
       id: 5,
-      title: 'Tetris Game',
-      tech: 'React, Canvas API, Game Logic',
-      description: 'Classic Tetris implementation using HTML5 Canvas with smooth animations, collision detection, line clearing, and progressive difficulty. Features both keyboard and touch controls for mobile play.',
+      title: 'Retro Arcade - 4 Classic Games',
+      tech: 'React, Canvas API, Game Logic, LocalStorage',
+      description: 'Collection of four fully functional retro games: Tetris (line-clearing puzzle), Snake (classic arcade), Pong (AI opponent), and Pac-Man (maze chase). Features smooth animations, collision detection, high score tracking, and dual control systems for desktop and mobile.',
       link: '/games',
-      tags: ['web', 'game', 'canvas'],
+      tags: ['web', 'game', 'canvas', 'algorithms'],
+      status: 'Live',
+      color: '#FFFF00'
+    },
+    {
+      id: 6,
+      title: 'Tetris Game Engine',
+      tech: 'React, Canvas Rendering, State Management',
+      description: 'Classic Tetris implementation with piece rotation, collision detection, line clearing mechanics, progressive difficulty system, and smooth rendering. Includes keyboard and touch controls with score persistence.',
+      link: '/tetris',
+      tags: ['game', 'canvas', 'algorithms'],
+      status: 'Live',
+      color: '#50B6D1'
+    },
+    {
+      id: 7,
+      title: 'Snake Game with AI Pathfinding',
+      tech: 'React, Canvas API, Game Loop',
+      description: 'Classic snake game with grid-based movement, food generation, self-collision detection, and smooth animations. Features mobile touch controls and high score tracking.',
+      link: '/snake',
+      tags: ['game', 'canvas', 'algorithms'],
+      status: 'Live',
+      color: '#89A8C7'
+    },
+    {
+      id: 8,
+      title: 'Pong with AI Opponent',
+      tech: 'React, Canvas, Physics Engine, AI',
+      description: 'Classic Pong game with AI opponent featuring ball physics, paddle collision detection, scoring system, and smooth 60 FPS rendering. Includes predictive AI movement and mobile controls.',
+      link: '/pong',
+      tags: ['game', 'canvas', 'ai'],
       status: 'Live',
       color: '#FFA0A0'
     },
     {
-      id: 6,
+      id: 9,
+      title: 'Pac-Man Clone with Ghost AI',
+      tech: 'React, Canvas, Pathfinding, Animation',
+      description: 'Full Pac-Man implementation with maze navigation, four ghost enemies with independent AI, pellet collection, lives system, and animated character sprites. Features classic arcade gameplay with modern touch controls.',
+      link: '/pacman',
+      tags: ['game', 'canvas', 'ai', 'algorithms'],
+      status: 'Live',
+      color: '#FFFF00'
+    },
+    {
+      id: 10,
       title: 'Admin Authentication System',
-      tech: 'Supabase Auth, Protected Routes',
-      description: 'Secure admin panel with email-based authentication, role verification, and protected dashboard routes. Implements session management and restricted access control.',
+      tech: 'Supabase Auth, Protected Routes, Role-Based Access',
+      description: 'Secure admin panel with email-based authentication, role verification, session management, and protected dashboard routes. Implements access control and secure content management.',
       link: '/dashboard',
-      tags: ['web', 'security', 'auth'],
+      tags: ['web', 'security', 'auth', 'backend'],
       status: 'Live',
       color: '#89A8C7'
+    },
+    {
+      id: 11,
+      title: 'Visitor Counter Component',
+      tech: 'React, LocalStorage, Session Tracking, CSS Animations',
+      description: 'Retro LED-style visitor counter with flip animations, session-based unique visit tracking, and persistent storage. Features cyan glow effects and 6-digit display.',
+      link: '/',
+      tags: ['web', 'component', 'frontend'],
+      status: 'Live',
+      color: '#50B6D1'
+    },
+    {
+      id: 12,
+      title: 'Interactive Easter Egg System',
+      tech: 'React, DOM Manipulation, CSS Animations',
+      description: 'Hidden interactive easter egg triggered by multi-click sequence. Features floating hearts animation, element transformation, and timed auto-reset functionality.',
+      link: '/',
+      tags: ['web', 'animation', 'ui'],
+      status: 'Live',
+      color: '#FFA0A0'
     }
   ];
 
   const filteredProjects = activeFilter === 'all' 
     ? projects 
     : projects.filter(p => p.tags.includes(activeFilter));
+
+  const allTags = ['all', ...new Set(projects.flatMap(p => p.tags))];
 
   return (
     <div className="portfolio-wrapper">
@@ -107,12 +169,12 @@ function ProjectsPage() {
 
       {/* Main Content */}
       <main>
-        <div className="container" style={{ 
+        <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
           padding: '40px 20px' 
         }}>
-          <section className="content" style={{ width: '100%', maxWidth: '1100px' }}>
+          <section style={{ width: '100%', maxWidth: '1100px' }}>
             
             {/* Window Header */}
             <div className="windowTop" style={{ background: '#03274B' }}>
@@ -132,10 +194,10 @@ function ProjectsPage() {
               boxShadow: '12px 12px 0px #000' 
             }}>
               <h2 style={{ marginTop: 0, fontSize: '2rem', color: '#03274B' }}>
-                PORTFOLIO PROJECTS
+                💼 PORTFOLIO PROJECTS
               </h2>
               <p style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#333' }}>
-                A showcase of web applications I've built while learning full-stack development, focusing on real-time features and modern web technologies.
+                A comprehensive showcase of web applications, games, and features I've built while learning full-stack development, focusing on real-time features, game development, and modern web technologies.
               </p>
 
               {/* Filter Buttons */}
@@ -145,7 +207,7 @@ function ProjectsPage() {
                 marginBottom: '30px',
                 flexWrap: 'wrap'
               }}>
-                {['all', 'web', 'backend', 'react', 'database', 'design', 'game', 'auth', 'cloud', 'cms', 'security', 'canvas'].map(filter => (
+                {allTags.map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
@@ -193,7 +255,7 @@ function ProjectsPage() {
               {/* Projects Grid */}
               <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
                 gap: '25px' 
               }}>
                 {filteredProjects.map((project) => (
@@ -209,7 +271,8 @@ function ProjectsPage() {
                       transform: hoveredProject === project.id ? 'translateY(-5px)' : 'translateY(0)',
                       cursor: 'pointer',
                       position: 'relative',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      maxHeight: 'none'
                     }}
                     onMouseEnter={() => setHoveredProject(project.id)}
                     onMouseLeave={() => setHoveredProject(null)}
@@ -297,7 +360,7 @@ function ProjectsPage() {
                       className="project-link"
                       style={{ fontSize: '1rem' }}
                     >
-                      LAUNCH_PROJECT →
+                      VIEW_PROJECT →
                     </Link>
                   </div>
                 ))}
@@ -352,20 +415,72 @@ function ProjectsPage() {
                     <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#50B6D1' }}>
                       {projects.filter(p => p.status === 'Live').length}
                     </p>
-                    <p style={{ fontSize: '0.9rem' }}>Live</p>
+                    <p style={{ fontSize: '0.9rem' }}>Live Projects</p>
+                  </div>
+                  <div style={{ textAlign: 'center', color: '#fff' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFFF00' }}>
+                      4
+                    </p>
+                    <p style={{ fontSize: '0.9rem' }}>Games Built</p>
                   </div>
                   <div style={{ textAlign: 'center', color: '#fff' }}>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFA0A0' }}>
-                      {new Set(projects.flatMap(p => p.tags)).size}
+                      {allTags.length - 1}
                     </p>
                     <p style={{ fontSize: '0.9rem' }}>Technologies</p>
                   </div>
-                  <div style={{ textAlign: 'center', color: '#fff' }}>
-                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#89A8C7' }}>
-                      2024
-                    </p>
-                    <p style={{ fontSize: '0.9rem' }}>Build Year</p>
-                  </div>
+                </div>
+              </div>
+
+              {/* Tech Stack Summary */}
+              <div className="separate" style={{ marginTop: '30px' }}>
+                <h3 style={{ 
+                  fontSize: '1.4rem', 
+                  marginBottom: '15px',
+                  color: '#03274B'
+                }}>
+                  🛠️ TECHNOLOGIES USED
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '15px'
+                }}>
+                  {[
+                    { name: 'Frontend', tech: 'React, HTML5, CSS3' },
+                    { name: 'Backend', tech: 'Supabase, PostgreSQL' },
+                    { name: 'Graphics', tech: 'Canvas API, Animations' },
+                    { name: 'Storage', tech: 'LocalStorage, Cloud Storage' },
+                    { name: 'Realtime', tech: 'Supabase Realtime API' },
+                    { name: 'Security', tech: 'Authentication, RLS Policies' }
+                  ].map((item, idx) => (
+                    <div 
+                      key={idx}
+                      className="post"
+                      style={{
+                        padding: '15px',
+                        background: '#fff',
+                        border: '2px solid #000',
+                        boxShadow: '3px 3px 0px #000',
+                        maxHeight: 'none'
+                      }}
+                    >
+                      <h4 style={{ 
+                        fontSize: '1rem', 
+                        marginBottom: '5px',
+                        color: '#50B6D1'
+                      }}>
+                        {item.name}
+                      </h4>
+                      <p style={{ 
+                        fontSize: '0.9rem', 
+                        margin: 0,
+                        opacity: 0.8
+                      }}>
+                        {item.tech}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

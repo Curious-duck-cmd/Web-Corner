@@ -1,6 +1,128 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import VisitorCounter from '../components/VisitorCounter';
 import '../App.css';
+
+// Cat GIF Easter Egg Component
+function CatGifEasterEgg() {
+  const [clicks, setClicks] = useState(0);
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleClick = (e) => {
+    const newClicks = clicks + 1;
+    setClicks(newClicks);
+
+    if (newClicks === 5) {
+      // Trigger easter egg after 5 clicks
+      setShowAnimation(true);
+      
+      // Create floating hearts
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          createHeart(e.currentTarget);
+        }, i * 100);
+      }
+
+      // Reset after animation
+      setTimeout(() => {
+        setShowAnimation(false);
+        setClicks(0);
+      }, 3000);
+    } else if (newClicks === 3) {
+      // Shake animation at 3 clicks
+      const img = e.currentTarget;
+      img.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        img.style.animation = '';
+      }, 500);
+    }
+  };
+
+  const createHeart = (element) => {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️';
+    heart.style.position = 'absolute';
+    heart.style.fontSize = '2rem';
+    heart.style.pointerEvents = 'none';
+    heart.style.zIndex = '1000';
+    
+    const rect = element.getBoundingClientRect();
+    heart.style.left = rect.left + rect.width / 2 + 'px';
+    heart.style.top = rect.top + rect.height / 2 + 'px';
+    
+    document.body.appendChild(heart);
+
+    // Animate heart
+    const randomX = (Math.random() - 0.5) * 200;
+    const randomY = -200 - Math.random() * 100;
+    
+    heart.animate([
+      { transform: 'translate(0, 0) scale(0)', opacity: 1 },
+      { transform: `translate(${randomX}px, ${randomY}px) scale(1.5)`, opacity: 0 }
+    ], {
+      duration: 2000,
+      easing: 'ease-out'
+    });
+
+    setTimeout(() => heart.remove(), 2000);
+  };
+
+  return (
+    <>
+      <img 
+        src="/image/cat.gif" 
+        id="blinkies" 
+        alt="cat" 
+        onClick={handleClick}
+        style={{
+          cursor: 'pointer',
+          transition: 'transform 0.3s ease',
+          transform: showAnimation ? 'scale(1.3) rotate(360deg)' : 'scale(1)',
+          filter: showAnimation ? 'brightness(1.3) saturate(1.5)' : 'brightness(1)',
+          position: 'relative'
+        }}
+        title={clicks > 0 && clicks < 5 ? `Click ${5 - clicks} more times!` : 'Click me!'}
+      />
+      
+      {showAnimation && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '3rem',
+          animation: 'bounce 1s infinite',
+          pointerEvents: 'none',
+          zIndex: 999
+        }}>
+          🎉
+        </div>
+      )}
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-10px) rotate(-5deg); }
+          75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes bounce {
+          0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+          50% { transform: translate(-50%, -50%) translateY(-20px); }
+        }
+
+        #blinkies:hover {
+          transform: scale(1.05) !important;
+        }
+
+        #blinkies:active {
+          transform: scale(0.95) !important;
+        }
+      `}</style>
+    </>
+  );
+}
 
 function HomePage() {
   const [isLoginOpen, setLoginOpen] = useState(false);
@@ -51,7 +173,7 @@ function HomePage() {
               <p><b>&gt;&gt; Level: </b>99</p>
               <p><b>&gt;&gt; Special Abilities: </b>gaming, drawing, writing </p>
               <br />
-              <img src="/image/cat.gif" id="blinkies" alt="cat" />
+              <CatGifEasterEgg />
               <p>I am someone who loves to learn and try new things. Come follow me on my side quests!</p>
               <div className="separate">
                 <h1>Other places to find me</h1>
@@ -91,8 +213,8 @@ function HomePage() {
                 <h1>What I'm working on:</h1>
                 <p>Making this website!</p>
                 <div className="progressBar">
-                  <div className="progress" style={{ width: '67%' }}>
-                    <p>67%</p>
+                  <div className="progress" style={{ width: '40%' }}>
+                    <p>40%</p>
                   </div>
                 </div>
               </div>
@@ -220,24 +342,33 @@ function HomePage() {
       </main>
 
       <footer>
-        <p style={{ fontSize: '1.5rem' }}>
-          <i>"At the crossroads, don't turn left"</i>
-        </p>
-        
-        <button 
-          onClick={() => setLoginOpen(true)} 
-          className="project-link" 
-          style={{ 
-            background: 'none', 
-            border: 'none', 
-            cursor: 'pointer', 
-            padding: '5px 10px',
-            textDecoration: 'none',
-            fontStyle: 'normal'
-          }}
-        >
-          ADMIN LOGIN 🔒
-        </button>
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          gap: '20px' 
+        }}>
+          <VisitorCounter />
+          
+          <p style={{ fontSize: '1.5rem', margin: 0 }}>
+            <i>"At the crossroads, don't turn left"</i>
+          </p>
+          
+          <button 
+            onClick={() => setLoginOpen(true)} 
+            className="project-link" 
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              cursor: 'pointer', 
+              padding: '5px 10px',
+              textDecoration: 'none',
+              fontStyle: 'normal'
+            }}
+          >
+            ADMIN LOGIN 🔒
+          </button>
+        </div>
       </footer>
 
       {/* LOGIN POPUP */}

@@ -12,6 +12,10 @@ import BlogPage from './pages/BlogPage';
 import GamesPage from './pages/GamesPage';
 import AdminLogin from './pages/AdminLogin';
 import Tetris from './pages/Tetris';
+import Snake from './pages/Snake';
+import Pong from './pages/Pong';
+import PacMan from './pages/PacMan';
+
 function App() {
   return (
     <Router>
@@ -28,6 +32,9 @@ function App() {
          <Route path="/Tetris" element={<Tetris />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/Adminlogin" element={<AdminLogin />} />
+        <Route path="/snake" element={<Snake />} />
+        <Route path="/pong" element={<Pong />} />
+        <Route path="/pacman" element={<PacMan />} />
       </Routes>
     </Router>
   );
