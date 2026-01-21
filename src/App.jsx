@@ -11,7 +11,7 @@ import ViewGalleryPage from './pages/ViewGalleryPage';
 import BlogPage from './pages/BlogPage';
 import GamesPage from './pages/GamesPage';
 import AdminLogin from './pages/AdminLogin';
-
+import Tetris from './pages/Tetris';
 function App() {
   return (
     <Router>
@@ -25,7 +25,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/view-gallery" element={<ViewGalleryPage />} />
         <Route path="/blog" element={<BlogPage />} />
-        
+         <Route path="/Tetris" element={<Tetris />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/Adminlogin" element={<AdminLogin />} />
       </Routes>

@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #1a1b26;
+  overflow-x: hidden;
 }
 
 #root {
@@ -44,6 +45,8 @@ body {
 .portfolio-wrapper {
     padding: 2% 4%;
     animation: fadeIn 0.6s ease-out;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* --- LINKS & TEXT --- */
@@ -92,11 +95,13 @@ main h1, main h2 {
     padding: 4px;
     display: flex;
     align-items: center;
+    word-break: break-word;
 }
 
 .windowCircle {
     display: flex;
     width: min-content;
+    flex-shrink: 0;
 }
 
 .circle {
@@ -107,6 +112,7 @@ main h1, main h2 {
     border-radius: 50%;
     margin: 4px;
     transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
 .circle:hover {
@@ -150,6 +156,7 @@ main h1, main h2 {
 
 #blinkies {
     width: 200px;
+    max-width: 100%;
     transition: transform 0.1s ease;
 }
 
@@ -160,7 +167,7 @@ main h1, main h2 {
 /* --- NAVIGATION & HEADER --- */
 nav {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
 }
 
@@ -192,18 +199,19 @@ nav a:hover {
     width: 20px;
     height: 20px;
     margin-right: 8px;
+    flex-shrink: 0;
 }
 
 /* --- LAYOUT GRID --- */
 .container {
     display: grid;
-    grid-template-columns: minmax(350px, 450px) 1fr;
+    grid-template-columns: minmax(300px, 450px) 1fr;
     gap: 30px;
     margin-top: 20px;
 }
 
 .sidecontent {
-    min-width: 350px;
+    min-width: 0;
 }
 
 .sidecontent .windowTop {
@@ -216,7 +224,7 @@ nav a:hover {
 
 .content {
     flex-grow: 1;
-    min-width: 400px;
+    min-width: 0;
 }
 
 .content .windowTop {
@@ -288,7 +296,7 @@ footer p {
     color: #FFA0A0;
 }
 
-/* --- OVERLAY POPUP (REACT FIXES) --- */
+/* --- OVERLAY POPUP --- */
 .overlay {
     position: fixed;
     top: 0; 
@@ -302,10 +310,12 @@ footer p {
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease-out;
+    padding: 20px;
 }
 
 .popupContainer {
-    width: 320px;
+    width: 100%;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     animation: popIn 0.4s ease-out;
@@ -350,10 +360,12 @@ footer p {
 .popupButtons {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .loginBtn {
     flex: 1;
+    min-width: 120px;
     padding: 8px;
     cursor: pointer;
     background: #fff;
@@ -389,14 +401,15 @@ footer p {
     max-width: 600px;
     position: relative;
     padding-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .book-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
-    max-width: 140px;
+    flex: 0 1 140px;
+    min-width: 100px;
     animation: bookSlide 0.6s ease-out;
 }
 
@@ -462,14 +475,68 @@ footer p {
     padding-left: 15px;
 }
 
+/* --- ADMIN STATUS BOX --- */
+.admin-status-box {
+  background: #03274B;
+  padding: 15px;
+  margin: 20px 0;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.admin-status-box p {
+  color: #50B6D1;
+  font-family: monospace;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.warning-blink {
+  animation: warningScale 1.5s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes warningScale {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 69, 69, 0)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #FF4545); }
+}
+
 /* --- RESPONSIVE DESIGN --- */
-@media (max-width: 968px) {
+@media (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr;
     }
     
     nav {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+    }
+    
+    .windowContent {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-wrapper {
+        padding: 3% 3%;
+    }
+    
+    .container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    nav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    nav a {
+        font-size: 1rem;
+        padding: 0.7rem;
     }
     
     .sidecontent {
@@ -480,32 +547,13 @@ footer p {
         min-width: 100%;
     }
     
-    .bookshelf {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .book-item {
-        max-width: 120px;
-    }
-}
-
-@media (max-width: 640px) {
-    .portfolio-wrapper {
-        padding: 4% 2%;
+    .windowTop {
+        font-size: 1.2rem;
+        padding: 8px 15px;
     }
     
     .windowContent {
         padding: 20px;
-    }
-    
-    nav {
-        grid-template-columns: 1fr;
-    }
-    
-    .windowTop {
-        font-size: 1.2rem;
-        padding: 8px 15px;
     }
     
     main a, main ul {
@@ -516,8 +564,108 @@ footer p {
         font-size: 1.2rem;
     }
     
+    .bookshelf {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .book-item {
+        flex: 0 1 120px;
+        min-width: 90px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portfolio-wrapper {
+        padding: 2% 2%;
+    }
+    
+    .windowContent {
+        padding: 15px;
+    }
+    
+    nav {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    nav a {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+    }
+    
+    .windowTop {
+        font-size: 1rem;
+        padding: 6px 12px;
+    }
+    
+    main a, main ul {
+        font-size: 1.1rem;
+    }
+    
+    .windowContent p {
+        font-size: 1.1rem;
+    }
+    
     .popupContainer {
-        width: 90%;
+        width: 95%;
+    }
+    
+    .popupBox {
+        padding: 20px !important;
+    }
+    
+    .popupButtons {
+        flex-direction: column;
+    }
+    
+    .loginBtn {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .circle {
+        height: 16px;
+        width: 16px;
+    }
+    
+    .post {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+    
+    .separate {
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .windowTop {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+    
+    .windowContent {
+        padding: 12px;
+    }
+    
+    nav a {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+    
+    main a, main ul, .windowContent p {
+        font-size: 1rem;
+    }
+    
+    .book-item {
+        flex: 0 1 100px;
+        min-width: 80px;
+    }
+    
+    .book-title {
+        font-size: 0.8rem !important;
     }
 }
 
@@ -546,87 +694,31 @@ html {
     background: #FFA0A0;
 }
 
-/* Retro Button Styling */
-/* --- UPDATED POPUP ELEMENTS --- */
-
-/* Change from Beveled to Chunky Flat Shadow */
-.retro-button {
-  text-decoration: none;
-  text-align: center;
-  padding: 12px;
-  font-weight: bold;
-  font-family: monospace;
-  cursor: pointer;
-  background: #e1e2e7; /* Matches your window background */
-  color: #000;
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0px #000; /* Flat shadow matching your nav */
-  transition: all 0.2s ease;
+/* Prevent horizontal scroll on all elements */
+* {
+    max-width: 100%;
 }
 
-.retro-button.primary {
-  background: #50B6D1; /* Your signature blue */
-  color: #000;
+img {
+    max-width: 100%;
+    height: auto;
 }
 
-.retro-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px #000;
-  background: #fff;
+/* Touch-friendly spacing for mobile */
+@media (hover: none) and (pointer: coarse) {
+    button, a, input, select, textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
 }
 
-.retro-button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px #000;
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
 }
 
-/* Redesigned Close Button to match your header circles */
-.close-btn-retro {
-  background: #000;
-  border: 2px solid #000;
-  border-radius: 50%; /* Makes it a circle like your others */
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  transition: transform 0.2s ease;
-}
-
-.close-btn-retro:hover {
-  transform: scale(1.2);
-  background: #FFA0A0; /* Matches your circle hover color */
-}
-
-/* Status Box - Changed to your dark blue/cyan combo */
-.admin-status-box {
-  background: #03274B; /* Your sidebar blue */
-  padding: 15px;
-  margin: 20px 0;
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0px #000;
-}
-
-.admin-status-box p {
-  color: #50B6D1; /* Your site's bright blue */
-  font-family: monospace;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Warning Icon Pulse - Made it slightly more aggressive */
-.warning-blink {
-  animation: warningScale 1.5s infinite ease-in-out;
+.floating-emoji {
   display: inline-block;
-}
-
-@keyframes warningScale {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 69, 69, 0)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #FF4545); }
+  animation: float 3s ease-in-out infinite;
 }

@@ -9,62 +9,62 @@ function ProjectsPage() {
   const projects = [
     {
       id: 1,
-      title: 'Personal OS Portfolio',
-      tech: 'HTML5, CSS3, React',
-      description: 'A high-performance portfolio site designed with a 90s operating system aesthetic featuring retro window components and pixel-perfect styling.',
+      title: 'Personal Retro Portfolio',
+      tech: 'React, React Router, CSS3',
+      description: 'A 90s-inspired personal portfolio website featuring retro OS aesthetics, window-based UI components, and pixel-perfect styling. Built with modern React while capturing vintage computing vibes.',
       link: '/',
-      tags: ['web', 'design'],
+      tags: ['web', 'design', 'react'],
       status: 'Live',
       color: '#50B6D1'
     },
     {
       id: 2,
-      title: 'Retro Chat Hub',
-      tech: 'Supabase Auth, PostgreSQL, Realtime API',
-      description: 'A functional real-time communication platform with secure user sessions, message history, and live updates powered by Supabase.',
+      title: 'Real-Time Chat Application',
+      tech: 'React, Supabase, PostgreSQL',
+      description: 'Full-stack real-time messaging platform with user authentication, live message updates, and persistent chat history. Features secure sessions and database integration using Supabase.',
       link: '/chat',
-      tags: ['web', 'backend'],
+      tags: ['web', 'backend', 'database'],
       status: 'Live',
       color: '#FFA0A0'
     },
     {
       id: 3,
-      title: 'Dynamic Media Gallery',
-      tech: 'Supabase Storage, RLS Policies',
-      description: 'A cloud-connected gallery handling secure image uploads and storage with row-level security and optimized media delivery.',
-      link: '#',
-      tags: ['web', 'backend'],
-      status: 'In Progress',
+      title: 'Image Gallery with Cloud Storage',
+      tech: 'Supabase Storage, React, RLS Policies',
+      description: 'Dynamic media gallery application with secure image uploads to cloud storage. Implements row-level security policies and real-time database syncing for instant gallery updates.',
+      link: '/view-gallery',
+      tags: ['web', 'backend', 'cloud'],
+      status: 'Live',
       color: '#89A8C7'
     },
     {
       id: 4,
-      title: 'Task Manager CLI',
-      tech: 'C++, File I/O',
-      description: 'Command-line task management tool with persistent storage, priority queuing, and efficient data structures.',
-      link: '#',
-      tags: ['systems'],
-      status: 'Completed',
+      title: 'Personal Blog System',
+      tech: 'React, Supabase, CRUD Operations',
+      description: 'Content management system for personal blogging with admin dashboard. Features post creation, editing, mood tracking, and public blog display with chronological ordering.',
+      link: '/blog',
+      tags: ['web', 'cms', 'database'],
+      status: 'Live',
       color: '#50B6D1'
     },
     {
       id: 5,
-      title: 'Weather Dashboard',
-      tech: 'React, API Integration',
-      description: 'Real-time weather application with location-based forecasts, interactive maps, and detailed climate data visualization.',
-      link: '#',
-      tags: ['web', 'api'],
-      status: 'In Progress',
+      title: 'Tetris Game',
+      tech: 'React, Canvas API, Game Logic',
+      description: 'Classic Tetris implementation using HTML5 Canvas with smooth animations, collision detection, line clearing, and progressive difficulty. Features both keyboard and touch controls for mobile play.',
+      link: '/games',
+      tags: ['web', 'game', 'canvas'],
+      status: 'Live',
       color: '#FFA0A0'
     },
     {
       id: 6,
-      title: 'Logic Circuit Simulator',
-      tech: 'Digital Logic, Circuit Design',
-      description: 'Educational tool for designing and testing digital logic circuits with real-time simulation and waveform visualization.',
-      link: '#',
-      tags: ['systems', 'education'],
-      status: 'Completed',
+      title: 'Admin Authentication System',
+      tech: 'Supabase Auth, Protected Routes',
+      description: 'Secure admin panel with email-based authentication, role verification, and protected dashboard routes. Implements session management and restricted access control.',
+      link: '/dashboard',
+      tags: ['web', 'security', 'auth'],
+      status: 'Live',
       color: '#89A8C7'
     }
   ];
@@ -94,14 +94,14 @@ function ProjectsPage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-                      <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
-                      <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
-                      <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
-                      <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
-                      <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
-                      <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
-                      <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
-                    </nav>
+            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+            <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
+            <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
+            <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
+            <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
+            <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+          </nav>
         </div>
       </header>
 
@@ -132,10 +132,10 @@ function ProjectsPage() {
               boxShadow: '12px 12px 0px #000' 
             }}>
               <h2 style={{ marginTop: 0, fontSize: '2rem', color: '#03274B' }}>
-                SELECTED WORKS
+                PORTFOLIO PROJECTS
               </h2>
               <p style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#333' }}>
-                A collection of applications focusing on real-time data, cloud integration, and interactive experiences.
+                A showcase of web applications I've built while learning full-stack development, focusing on real-time features and modern web technologies.
               </p>
 
               {/* Filter Buttons */}
@@ -145,7 +145,7 @@ function ProjectsPage() {
                 marginBottom: '30px',
                 flexWrap: 'wrap'
               }}>
-                {['all', 'web', 'backend', 'systems', 'api', 'design', 'education'].map(filter => (
+                {['all', 'web', 'backend', 'react', 'database', 'design', 'game', 'auth', 'cloud', 'cms', 'security', 'canvas'].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
@@ -175,7 +175,7 @@ function ProjectsPage() {
                       }
                     }}
                   >
-                    {filter === 'all' ? '📁 All' : `#${filter}`}
+                    {filter === 'all' ? '🔍 All' : `#${filter}`}
                   </button>
                 ))}
               </div>
@@ -193,7 +193,7 @@ function ProjectsPage() {
               {/* Projects Grid */}
               <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
                 gap: '25px' 
               }}>
                 {filteredProjects.map((project) => (
@@ -292,26 +292,13 @@ function ProjectsPage() {
                     </div>
 
                     {/* Link */}
-                    {project.link === '#' ? (
-                      <span 
-                        className="project-link"
-                        style={{ 
-                          color: '#999',
-                          cursor: 'not-allowed',
-                          opacity: 0.5
-                        }}
-                      >
-                        COMING_SOON →
-                      </span>
-                    ) : (
-                      <Link 
-                        to={project.link} 
-                        className="project-link"
-                        style={{ fontSize: '1rem' }}
-                      >
-                        LAUNCH_PROJECT →
-                      </Link>
-                    )}
+                    <Link 
+                      to={project.link} 
+                      className="project-link"
+                      style={{ fontSize: '1rem' }}
+                    >
+                      LAUNCH_PROJECT →
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -369,15 +356,15 @@ function ProjectsPage() {
                   </div>
                   <div style={{ textAlign: 'center', color: '#fff' }}>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FFA0A0' }}>
-                      {projects.filter(p => p.status === 'In Progress').length}
+                      {new Set(projects.flatMap(p => p.tags)).size}
                     </p>
-                    <p style={{ fontSize: '0.9rem' }}>In Progress</p>
+                    <p style={{ fontSize: '0.9rem' }}>Technologies</p>
                   </div>
                   <div style={{ textAlign: 'center', color: '#fff' }}>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#89A8C7' }}>
-                      {projects.filter(p => p.status === 'Completed').length}
+                      2024
                     </p>
-                    <p style={{ fontSize: '0.9rem' }}>Completed</p>
+                    <p style={{ fontSize: '0.9rem' }}>Build Year</p>
                   </div>
                 </div>
               </div>

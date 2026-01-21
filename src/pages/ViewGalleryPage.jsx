@@ -54,8 +54,13 @@ function ViewGalleryPage() {
       </header>
 
       <main>
-        <div className="container" style={{ justifyContent: 'center' }}>
-          <section className="content" style={{ width: '100%', maxWidth: '1400px' }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          padding: '40px 20px',
+          width: '100%'
+        }}>
+          <section style={{ width: '100%', maxWidth: '1400px' }}>
             <div className="windowTop" style={{ background: '#03274B' }}>
               <p style={{ color: '#fff' }}>Stored_Images.bin</p>
               <div className="windowCircle">
@@ -65,16 +70,30 @@ function ViewGalleryPage() {
               </div>
             </div>
             <div className="windowContent">
+              <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#03274B' }}>
+                🖼️ Gallery Collection
+              </h1>
+              <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: 0.8 }}>
+                A visual archive of moments, memories, and creative captures.
+              </p>
+
               {isLoading ? (
                 <p style={{ textAlign: 'center', padding: '40px' }}>Accessing storage units...</p>
               ) : images.length === 0 ? (
-                <p style={{ textAlign: 'center', padding: '40px', opacity: 0.6 }}>
-                  No posts found. Add some in the dashboard!
-                </p>
+                <div style={{
+                  textAlign: 'center',
+                  padding: '60px 20px',
+                  background: '#cfd3da',
+                  border: '2px solid #000',
+                  borderRadius: '5px'
+                }}>
+                  <h2 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>No images yet</h2>
+                  <p style={{ opacity: 0.7 }}>Upload some images from the dashboard!</p>
+                </div>
               ) : (
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
                   gap: '30px'
                 }}>
                   {images.map((item) => (
@@ -115,7 +134,9 @@ function ViewGalleryPage() {
                           display: 'flex',
                           justifyContent: 'space-between',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '8px',
+                          flexWrap: 'wrap',
+                          gap: '8px'
                         }}>
                           <span style={{
                             fontWeight: 'bold',
@@ -135,7 +156,8 @@ function ViewGalleryPage() {
                           margin: '0',
                           fontSize: '0.95rem',
                           color: '#333',
-                          lineHeight: '1.4'
+                          lineHeight: '1.4',
+                          wordBreak: 'break-word'
                         }}>
                           {item.caption || ''}
                         </p>
@@ -148,6 +170,12 @@ function ViewGalleryPage() {
           </section>
         </div>
       </main>
+
+      <footer style={{ textAlign: 'center', padding: '40px', marginTop: '20px' }}>
+        <p style={{ color: '#565f89', fontSize: '0.9rem' }}>
+          🖼️ Viewing {images.length} image{images.length !== 1 ? 's' : ''} in the gallery
+        </p>
+      </footer>
     </div>
   );
 }

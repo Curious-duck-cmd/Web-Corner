@@ -42,20 +42,25 @@ function BlogPage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-                      <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
-                      <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
-                      <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
-                      <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
-                      <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
-                      <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
-                      <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
-                    </nav>
+            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+            <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
+            <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
+            <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
+            <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
+            <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+          </nav>
         </div>
       </header>
 
       <main>
-        <div className="container" style={{ justifyContent: 'center' }}>
-          <section className="content" style={{ width: '100%', maxWidth: '1000px' }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          padding: '40px 20px',
+          width: '100%'
+        }}>
+          <section style={{ width: '100%', maxWidth: '1100px' }}>
             <div className="windowTop" style={{ background: '#03274B' }}>
               <p style={{ color: '#fff' }}>Journal_History.db</p>
               <div className="windowCircle">
@@ -66,7 +71,7 @@ function BlogPage() {
             </div>
             <div className="windowContent">
               <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#03274B' }}>
-                📝 Darshan's Life Logs
+                📓 Darshan's Life Logs
               </h1>
               <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: 0.8 }}>
                 A collection of thoughts, experiences, and random musings from my journey.
@@ -100,7 +105,8 @@ function BlogPage() {
                       className="post" 
                       style={{ 
                         marginBottom: '30px',
-                        animation: `slideIn 0.5s ease-out ${index * 0.1}s backwards`
+                        animation: `slideIn 0.5s ease-out ${index * 0.1}s backwards`,
+                        maxHeight: 'none'
                       }}
                     >
                       <div style={{ 

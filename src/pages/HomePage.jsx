@@ -21,14 +21,14 @@ function HomePage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-                      <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
-                      <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
-                      <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
-                      <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
-                      <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
-                      <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
-                      <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
-                    </nav>
+            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+            <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
+            <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
+            <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
+            <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
+            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
+            <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+          </nav>
         </div>
       </header>
 
@@ -46,7 +46,7 @@ function HomePage() {
             </div>
             <div className="windowContent">
               <h1>Darshan, student trying everything ...</h1>
-              <img src="/image/Untitled.png" style={{ width: '275px', margin: '15px 0' }} alt="Darshan" />
+              <img src="/image/Untitled.png" style={{ width: '100%', maxWidth: '275px', margin: '15px 0' }} alt="Darshan" />
               <p><b>&gt;&gt; Class: </b>Student, Gamer </p>
               <p><b>&gt;&gt; Level: </b>99</p>
               <p><b>&gt;&gt; Special Abilities: </b>gaming, drawing, writing </p>
@@ -107,6 +107,64 @@ function HomePage() {
               </div>
             </div>
             <div className="windowContent">
+              {/* Currently Reading Section */}
+              <div style={{ 
+                marginBottom: '30px', 
+                padding: '20px', 
+                background: '#50B6D1',
+                border: '2px solid #000',
+                boxShadow: '6px 6px 0px #000'
+              }}>
+                <h2 style={{ marginTop: 0, marginBottom: '15px', fontSize: '1.5rem' }}>
+                  📖 Currently Reading
+                </h2>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '20px',
+                  flexWrap: 'wrap'
+                }}>
+                  <a 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    href="https://www.goodreads.com/book/show/32277642-the-king-in-yellow"
+                    style={{ flexShrink: 0 }}
+                  >
+                    <div className="book-card" style={{ 
+                      width: '140px',
+                      aspectRatio: '2/3',
+                      background: '#fff',
+                      border: '2px solid #000',
+                      padding: '8px',
+                      boxShadow: '5px 5px 0px #000'
+                    }}>
+                      <img 
+                        src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742853462i/32277642.jpg" 
+                        alt="The King in Yellow"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          border: '1px solid #000'
+                        }}
+                      />
+                    </div>
+                  </a>
+                  <div style={{ flex: 1, minWidth: '200px' }}>
+                    <h3 style={{ margin: '0 0 10px 0', fontSize: '1.3rem' }}>
+                      The King in Yellow
+                    </h3>
+                    <p style={{ margin: '0 0 8px 0', fontSize: '1rem', opacity: 0.8 }}>
+                      <b>by</b> Robert W. Chambers
+                    </p>
+                    <p style={{ margin: 0, fontSize: '0.95rem', lineHeight: '1.5' }}>
+                      A collection of horror stories featuring mysterious references to a forbidden play. 
+                      Exploring themes of madness, art, and the supernatural.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <h1>Darshan's Book Shelf</h1>
               <div className="bookshelf">
                 {/* Book 1 */}
@@ -143,17 +201,17 @@ function HomePage() {
               <div className="separate">
                 <h1>Darshan's Go-To Music</h1>
                 <div className="separate">
-                <iframe
-      data-testid="embed-iframe"
-      style={{ borderRadius: '12px' }}
-      src="https://open.spotify.com/embed/artist/3yY2gUcIsjMr8hjo51PoJ8?utm_source=generator&theme=0"
-      width="100%"
-      height="352"
-      frameBorder="0"
-      allowFullScreen
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-    ></iframe>
+                  <iframe
+                    data-testid="embed-iframe"
+                    style={{ borderRadius: '12px', width: '100%', maxWidth: '100%' }}
+                    src="https://open.spotify.com/embed/artist/3yY2gUcIsjMr8hjo51PoJ8?utm_source=generator&theme=0"
+                    width="100%"
+                    height="352"
+                    frameBorder="0"
+                    allowFullScreen
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  ></iframe>
                 </div>
               </div>
             </div>
@@ -178,84 +236,85 @@ function HomePage() {
             fontStyle: 'normal'
           }}
         >
-          ADMIN LOGIN 🔑
+          ADMIN LOGIN 🔒
         </button>
       </footer>
-{/* LOGIN POPUP */}
+
+      {/* LOGIN POPUP */}
       {isLoginOpen && (
-  <div className="overlay">
-    <div className="popupContainer" style={{ width: '450px' }}>
-      
-      {/* HEADER - Matches your Sidebar/Content headers */}
-      <div className="windowTop" style={{ background: '#f96a6a' }}>
-        <p style={{ color: 'white' }}>
-          <span style={{ marginRight: '8px' }}></span> 
-          System_Alert.exe
-        </p>
-        <div className="windowCircle">
-          <div className="circle" style={{ background: '#fff' }}></div>
-          <div className="circle" style={{ background: '#fff' }}></div>
-          <div className="circle" style={{ background: '#fff' }}></div>
-        </div>
-      </div>
+        <div className="overlay">
+          <div className="popupContainer" style={{ width: '90%', maxWidth: '450px' }}>
+            
+            {/* HEADER - Matches your Sidebar/Content headers */}
+            <div className="windowTop" style={{ background: '#f96a6a' }}>
+              <p style={{ color: 'white' }}>
+                <span style={{ marginRight: '8px' }}></span> 
+                System_Alert.exe
+              </p>
+              <div className="windowCircle">
+                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: '#fff' }}></div>
+              </div>
+            </div>
 
-      {/* BODY - Matches your .windowContent and .post style */}
-      <div className="windowContent popupBox">
-        <div className="warning-blink" style={{ fontSize: '4rem', marginBottom: '10px' }}>⚠️</div>
-        
-        <h1 style={{ fontSize: '1.8rem', color: '#000' }}>RESTRICTED ACCESS</h1>
+            {/* BODY - Matches your .windowContent and .post style */}
+            <div className="windowContent popupBox">
+              <div className="warning-blink" style={{ fontSize: '4rem', marginBottom: '10px' }}>⚠️</div>
+              
+              <h1 style={{ fontSize: '1.8rem', color: '#000' }}>RESTRICTED ACCESS</h1>
 
-        <div className="admin-status-box" style={{ 
-          background: '#03274B', 
-          border: '2px solid #000', 
-          padding: '15px', 
-          margin: '20px 0',
-          boxShadow: '4px 4px 0px #000'
-        }}>
-          <p style={{ color: '#50B6D1', margin: 0, fontWeight: 'bold' }}>
-            [ ! ADMIN PRIVILEGES REQUIRED ! ]
-          </p>
-        </div>
+              <div className="admin-status-box" style={{ 
+                background: '#03274B', 
+                border: '2px solid #000', 
+                padding: '15px', 
+                margin: '20px 0',
+                boxShadow: '4px 4px 0px #000'
+              }}>
+                <p style={{ color: '#50B6D1', margin: 0, fontWeight: 'bold' }}>
+                  [ ! ADMIN PRIVILEGES REQUIRED ! ]
+                </p>
+              </div>
 
-        <p style={{ fontSize: '1.1rem', marginBottom: '30px' }}>
-          This sector is encrypted. Please provide credentials or return to the terminal.
-        </p>
-        
-        <div className="popupButtons" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <Link 
-            to="/AdminLogin" 
-            onClick={() => setLoginOpen(false)} 
-            className="nav-a-style" /* Uses your existing nav styling logic */
-            style={{ 
-              background: '#50B6D1', 
-              color: '#000', 
-              padding: '15px', 
-              border: '2px solid #000',
-              boxShadow: '6px 6px 0px #000',
-              textDecoration: 'none',
-              fontWeight: 'bold',
-              textAlign: 'center'
-            }}
-          >
-            PROCEED TO LOGIN
-          </Link>
-          <button 
-            onClick={() => setLoginOpen(false)} 
-            className="loginBtn cancel"
-            style={{ 
-              width: '100%', 
-              padding: '12px',
-              fontSize: '1rem',
-              backgroundColor: '#FFA0A0'
-            }}
-          >
-            BACK TO SAFETY
-          </button>
+              <p style={{ fontSize: '1.1rem', marginBottom: '30px' }}>
+                This sector is encrypted. Please provide credentials or return to the terminal.
+              </p>
+              
+              <div className="popupButtons" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <Link 
+                  to="/AdminLogin" 
+                  onClick={() => setLoginOpen(false)} 
+                  className="nav-a-style"
+                  style={{ 
+                    background: '#50B6D1', 
+                    color: '#000', 
+                    padding: '15px', 
+                    border: '2px solid #000',
+                    boxShadow: '6px 6px 0px #000',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    textAlign: 'center'
+                  }}
+                >
+                  PROCEED TO LOGIN
+                </Link>
+                <button 
+                  onClick={() => setLoginOpen(false)} 
+                  className="loginBtn cancel"
+                  style={{ 
+                    width: '100%', 
+                    padding: '12px',
+                    fontSize: '1rem',
+                    backgroundColor: '#FFA0A0'
+                  }}
+                >
+                  BACK TO SAFETY
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 }
