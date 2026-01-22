@@ -250,7 +250,7 @@ function ChatPage() {
 
                   }}>
 
-                    {user ? 'â— Online' : 'â—‹ Offline'}
+                    {user ? 'Online' : 'Offline'}
 
                   </span>
 
@@ -280,7 +280,7 @@ function ChatPage() {
 
                     <p style={{ fontSize: '0.8rem', marginBottom: '10px' }}>
 
-                      ðŸ”’ Access Restricted
+                       Access Restricted
 
                     </p>
 
@@ -414,7 +414,7 @@ function ChatPage() {
 
                       }}>
 
-                        <p>No messages yet. Start the conversation! ðŸ’¬</p>
+                        <p>No messages yet. Start the conversation!</p>
 
                       </div>
 
@@ -542,7 +542,7 @@ function ChatPage() {
 
                   <div className="locked-content">
 
-                    <h1 style={{ fontSize: '3rem', margin: '0 0 20px 0' }}>ðŸ”’</h1>
+                    <h1 style={{ fontSize: '3rem', margin: '0 0 20px 0' }}>!</h1>
 
                     <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
 
