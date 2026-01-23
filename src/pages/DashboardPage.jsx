@@ -22,21 +22,38 @@ function DashboardPage() {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    checkUser();
+    checkAdminAuth();
   }, []);
 
-  const checkUser = async () => {
+  const checkAdminAuth = async () => {
     setIsLoading(true);
-    const { data: { user } } = await supabase.auth.getUser();
     
-    if (!user) {
-      // Not logged in, redirect to login
+    // 1. Check if a session exists
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !user) {
+      navigate('/login');
+      return;
+    }
+
+    // 2. Verify admin role from the 'profiles' table we created in SQL
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    // 3. Strict Gatekeeping: If no profile or role is not admin, boot them
+    if (profileError || profile?.role !== 'admin') {
+      console.warn("Unauthorized access attempt blocked.");
+      await supabase.auth.signOut(); // Force clear session
       navigate('/login');
     } else {
+      // User is verified Admin
       setUser(user);
       setUsername(user.email.split('@')[0]);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleLogout = async () => {
@@ -52,6 +69,7 @@ function DashboardPage() {
     }
 
     setIsPublishing(true);
+    // This insert will only succeed if your RLS policies allow 'admin' role
     const { error } = await supabase.from('blog_posts').insert([
       { title: blogTitle, mood: blogMood, content: blogContent }
     ]);
@@ -89,8 +107,9 @@ function DashboardPage() {
     setIsUploading(true);
 
     try {
-      // 1. Upload file to storage
       const fileName = `${Date.now()}-${file.name}`;
+      
+      // 1. Upload to storage
       const { data: storageData, error: storageErr } = await supabase.storage
         .from('chat-pics')
         .upload(fileName, file);
@@ -133,12 +152,15 @@ function DashboardPage() {
         backgroundColor: '#1a1b26',
         minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         color: '#fff',
         fontFamily: 'monospace'
       }}>
-        <p>Loading dashboard...</p>
+        <div className="spinner" style={{ marginBottom: '20px', border: '4px solid #f3f3f3', borderTop: '4px solid #50B6D1', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite' }}></div>
+        <p>VERIFYING ADMIN CREDENTIALS...</p>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
@@ -178,16 +200,7 @@ function DashboardPage() {
                 fontSize: '1rem',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                boxShadow: '4px 4px 0px #000',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '6px 6px 0px #000';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '4px 4px 0px #000';
+                boxShadow: '4px 4px 0px #000'
               }}
             >
               🚪 LOGOUT
@@ -211,7 +224,7 @@ function DashboardPage() {
             <div className="windowContent">
               <div style={{ marginBottom: '15px', padding: '10px', background: '#fff', border: '2px solid #000' }}>
                 <p style={{ fontSize: '0.8rem', margin: 0 }}>
-                  <b>👤 Logged in as:</b> <span style={{ color: '#50B6D1' }}>{user?.email}</span>
+                  <b>👤 ADMIN:</b> <span style={{ color: '#50B6D1' }}>{user?.email}</span>
                 </p>
               </div>
 
@@ -222,13 +235,8 @@ function DashboardPage() {
                   value={blogTitle}
                   onChange={(e) => setBlogTitle(e.target.value)}
                   placeholder="Entry Title..." 
-                  style={{ 
-                    width: '100%', 
-                    padding: '10px', 
-                    border: '2px solid #000',
-                    fontFamily: 'monospace',
-                    fontSize: '1rem'
-                  }}
+                  className="auth-input"
+                  style={{ width: '100%', marginBottom: '10px' }}
                 />
               </div>
 
@@ -239,13 +247,8 @@ function DashboardPage() {
                   value={blogMood}
                   onChange={(e) => setBlogMood(e.target.value)}
                   placeholder="e.g. Coding / Tired" 
-                  style={{ 
-                    width: '100%', 
-                    padding: '10px', 
-                    border: '2px solid #000',
-                    fontFamily: 'monospace',
-                    fontSize: '1rem'
-                  }}
+                  className="auth-input"
+                  style={{ width: '100%', marginBottom: '10px' }}
                 />
               </div>
 
@@ -257,12 +260,10 @@ function DashboardPage() {
                   placeholder="What's happening?"
                   style={{ 
                     width: '100%', 
-                    height: '200px', 
-                    resize: 'vertical',
-                    padding: '10px',
+                    height: '150px', 
                     border: '2px solid #000',
                     fontFamily: 'monospace',
-                    fontSize: '1rem'
+                    padding: '10px'
                   }}
                 />
               </div>
@@ -270,18 +271,10 @@ function DashboardPage() {
               <button 
                 onClick={publishBlog}
                 disabled={isPublishing}
-                className="loginBtn"
-                style={{ 
-                  width: '100%', 
-                  marginTop: '10px', 
-                  background: '#03274B', 
-                  color: 'white',
-                  opacity: isPublishing ? 0.5 : 1,
-                  fontSize: '1.1rem',
-                  padding: '12px'
-                }}
+                className="loginBtn primary"
+                style={{ width: '100%', marginTop: '10px' }}
               >
-                {isPublishing ? '📤 PUBLISHING...' : '📝 PUBLISH BLOG POST'}
+                {isPublishing ? 'PUBLISHING...' : '[ PUBLISH LOG ]'}
               </button>
             </div>
           </aside>
@@ -297,45 +290,20 @@ function DashboardPage() {
               </div>
             </div>
             <div className="windowContent">
-              <h2 style={{ marginTop: 0 }}>📸 Gallery Image Upload</h2>
+              <h2 style={{ marginTop: 0 }}>📸 Gallery Control Panel</h2>
               
-              <div className="separate">
-                <p><b>NAME (optional):</b></p>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Display name"
-                  style={{ 
-                    width: '100%', 
-                    padding: '10px', 
-                    border: '2px solid #000', 
-                    fontFamily: 'monospace',
-                    fontSize: '1rem'
-                  }}
-                />
-              </div>
-
               <div className="separate">
                 <p><b>CAPTION:</b></p>
                 <textarea
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="Write a caption..."
-                  style={{ 
-                    width: '100%', 
-                    height: '100px', 
-                    resize: 'vertical', 
-                    padding: '10px', 
-                    border: '2px solid #000', 
-                    fontFamily: 'monospace',
-                    fontSize: '1rem'
-                  }}
+                  className="auth-input"
+                  style={{ width: '100%', height: '80px' }}
                 />
               </div>
 
-              <div className="separate">
-                <p><b>SELECT IMAGE:</b></p>
+              <div className="separate" style={{ marginTop: '15px' }}>
                 <input
                   type="file"
                   accept="image/*"
@@ -346,41 +314,14 @@ function DashboardPage() {
                 <button
                   onClick={() => document.getElementById('fileInput').click()}
                   className="loginBtn"
-                  style={{ 
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '1.1rem'
-                  }}
+                  style={{ width: '100%' }}
                 >
-                  📁 CHOOSE IMAGE FILE
+                  📁 SELECT IMAGE
                 </button>
 
                 {preview && (
-                  <div style={{ 
-                    marginTop: '15px', 
-                    border: '2px solid #000', 
-                    background: '#fff', 
-                    padding: '10px' 
-                  }}>
-                    <p style={{ 
-                      fontSize: '0.9rem', 
-                      marginBottom: '10px',
-                      fontWeight: 'bold',
-                      color: '#50B6D1'
-                    }}>
-                      ✓ PREVIEW_LOADED.JPG
-                    </p>
-                    <img 
-                      src={preview} 
-                      style={{ 
-                        width: '100%', 
-                        display: 'block', 
-                        border: '2px solid #000',
-                        maxHeight: '400px',
-                        objectFit: 'contain'
-                      }} 
-                      alt="Preview" 
-                    />
+                  <div style={{ marginTop: '15px', border: '2px solid #000', padding: '10px', background: '#fff' }}>
+                    <img src={preview} style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }} alt="Preview" />
                   </div>
                 )}
               </div>
@@ -388,43 +329,19 @@ function DashboardPage() {
               <button
                 onClick={handleUpload}
                 disabled={isUploading || !file}
-                className="loginBtn"
-                style={{
-                  width: '100%',
-                  background: '#50B6D1',
-                  color: '#000',
-                  marginTop: '20px',
-                  border: '2px solid #000',
-                  opacity: (isUploading || !file) ? 0.5 : 1,
-                  fontSize: '1.2rem',
-                  padding: '15px',
-                  fontWeight: 'bold'
-                }}
+                className="loginBtn primary"
+                style={{ width: '100%', marginTop: '20px', background: '#50B6D1' }}
               >
-                {isUploading ? '⏳ UPLOADING...' : '🚀 POST TO GALLERY'}
+                {isUploading ? 'UPLOADING...' : '[ POST TO PUBLIC GALLERY ]'}
               </button>
-
-              {!file && (
-                <p style={{ 
-                  textAlign: 'center', 
-                  marginTop: '15px', 
-                  opacity: 0.6,
-                  fontSize: '0.9rem'
-                }}>
-                  No file selected. Choose an image to upload.
-                </p>
-              )}
             </div>
           </section>
         </div>
       </main>
 
-      <footer style={{ textAlign: 'center', padding: '40px', marginTop: '20px' }}>
-        <p style={{ color: '#565f89', fontSize: '0.9rem' }}>
-          🔒 Admin Dashboard - Authorized Access Only
-        </p>
-        <p style={{ color: '#565f89', fontSize: '0.8rem', marginTop: '10px' }}>
-          All posts are public and visible on the homepage
+      <footer style={{ textAlign: 'center', padding: '40px' }}>
+        <p style={{ color: '#565f89', fontSize: '0.8rem' }}>
+          🔒 SYSTEM STATUS: SECURE | ADMIN SESSION ACTIVE
         </p>
       </footer>
     </div>

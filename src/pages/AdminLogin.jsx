@@ -15,6 +15,7 @@ function AdminLogin() {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        // Optional: You could also verify the role here if you want to be extra strict
         navigate('/dashboard');
       }
     };
@@ -22,38 +23,46 @@ function AdminLogin() {
   }, [navigate]);
 
   const handleSignIn = async () => {
-  if (!email || !password) {
-    setMessage({ text: 'Please fill in all fields', type: 'error' });
-    return;
-  }
+    if (!email || !password) {
+      setMessage({ text: 'Please fill in all fields', type: 'error' });
+      return;
+    }
 
-  setIsLoading(true);
-  setMessage({ text: '', type: '' });
+    setIsLoading(true);
+    setMessage({ text: '', type: '' });
 
-  // 1. Authenticate with Supabase
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  
-  if (error) {
-    setIsLoading(false);
-    setMessage({ text: error.message, type: 'error' });
-    return;
-  }
+    // 1. Authenticate with Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  // 2. Check if the logged-in user is the specific admin
-  const ADMIN_EMAIL = 'admin@gmail.com'; // Change this to your actual email
+    if (error) {
+      setIsLoading(false);
+      setMessage({ text: error.message, type: 'error' });
+      return;
+    }
 
-  if (data.user?.email !== ADMIN_EMAIL) {
-    // If it's the wrong user, sign them out and show error
-    await supabase.auth.signOut();
-    setIsLoading(false);
-    setMessage({ text: 'Access Denied: You are not authorized.', type: 'error' });
-  } else {
-    // If it's the right user, proceed
-    setIsLoading(false);
-    setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
-    setTimeout(() => navigate('/dashboard'), 1000);
-  }
-};
+    // 2. Check user role from database (profiles table)
+    // This assumes you have a table named 'profiles' where 'id' matches the auth user ID
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', data.user.id)
+      .single();
+
+    if (profileError || profile?.role !== 'admin') {
+      // If it's the wrong user or an error occurs, sign them out and show error
+      await supabase.auth.signOut();
+      setIsLoading(false);
+      setMessage({ 
+        text: 'Access Denied: You are not authorized.', 
+        type: 'error' 
+      });
+    } else {
+      // If role is 'admin', proceed
+      setIsLoading(false);
+      setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
+      setTimeout(() => navigate('/dashboard'), 1000);
+    }
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !isLoading) {
@@ -104,7 +113,7 @@ function AdminLogin() {
             placeholder="....@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             disabled={isLoading}
           />
           
@@ -115,7 +124,7 @@ function AdminLogin() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             disabled={isLoading}
           />
 
@@ -123,7 +132,7 @@ function AdminLogin() {
             <button 
               onClick={handleSignIn} 
               className={`loginBtn primary ${isLoading ? 'loading' : ''}`}
-              style={{ width: '100%' }} // Expanded for a cleaner single-button look
+              style={{ width: '100%' }}
               disabled={isLoading}
             >
               {isLoading ? 'LOADING' : '[ ACCESS DASHBOARD ]'}
