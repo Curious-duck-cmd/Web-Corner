@@ -26,8 +26,8 @@ function LoginPage() {
     if (error) {
       setMessage({ text: error.message, type: 'error' });
     } else {
-      setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
-      setTimeout(() => navigate('/chat'), 1000);
+      setMessage({ text: 'Login successful! Redirecting to home...', type: 'success' });
+      setTimeout(() => navigate('/'), 1000);
     }
   };
 
@@ -130,7 +130,7 @@ function LoginPage() {
           </p>
           
           <div className="return-link">
-            <Link to="/chat">← Return to Chat</Link>
+            <Link to="/">← Return to Home</Link>
           </div>
 
           {/* Info Section */}

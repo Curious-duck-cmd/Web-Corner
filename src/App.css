@@ -722,3 +722,13 @@ img {
   display: inline-block;
   animation: float 3s ease-in-out infinite;
 }
+
+/* Pulse animation for login button */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 6px 6px 0px #000;
+  }
+  50% {
+    box-shadow: 6px 6px 0px #000, 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+}
