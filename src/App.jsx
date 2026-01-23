@@ -11,12 +11,13 @@ import ViewGalleryPage from "./pages/ViewGalleryPage";
 import BlogPage from "./pages/BlogPage";
 import GamesPage from "./pages/GamesPage";
 import AdminLogin from "./pages/AdminLogin";
+
 import Tetris from "./pages/Tetris";
 import Snake from "./pages/Snake";
 import Pong from "./pages/Pong";
-
 import SlotMachine from "./pages/SlotMachine";
 import Roulette from "./pages/Roulette";
+
 function App() {
   return (
     <Router>
@@ -32,9 +33,9 @@ function App() {
         <Route path="/Tetris" element={<Tetris />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/Adminlogin" element={<AdminLogin />} />
+
         <Route path="/snake" element={<Snake />} />
         <Route path="/pong" element={<Pong />} />
-
         <Route path="/slotmachine" element={<SlotMachine />} />
         <Route path="/roulette" element={<Roulette />} />
       </Routes>
