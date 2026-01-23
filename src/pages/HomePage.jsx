@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import VisitorCounter from '../components/VisitorCounter';
-import '../App.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import VisitorCounter from "../components/VisitorCounter";
+import "../App.css";
 
 // Cat GIF Easter Egg Component with Cat Rain
 function CatGifEasterEgg() {
@@ -15,7 +15,7 @@ function CatGifEasterEgg() {
     if (newClicks === 3) {
       // Trigger cat rain after 3 clicks
       setShowAnimation(true);
-      
+
       // Create cat rain
       for (let i = 0; i < 30; i++) {
         setTimeout(() => {
@@ -31,77 +31,93 @@ function CatGifEasterEgg() {
     } else if (newClicks === 3) {
       // Shake animation at 3 clicks
       const img = e.currentTarget;
-      img.style.animation = 'shake 0.5s';
+      img.style.animation = "shake 0.5s";
       setTimeout(() => {
-        img.style.animation = '';
+        img.style.animation = "";
       }, 500);
     }
   };
 
   const createFallingCat = () => {
-    const cat = document.createElement('img');
-    cat.src = '/image/cat.gif';
-    cat.style.position = 'fixed';
-    cat.style.width = '100px';
-    cat.style.pointerEvents = 'none';
-    cat.style.zIndex = '9999';
-    cat.style.left = Math.random() * window.innerWidth + 'px';
-    cat.style.top = '-100px';
-    
+    const cat = document.createElement("img");
+    cat.src = "/image/cat.gif";
+    cat.style.position = "fixed";
+    cat.style.width = "100px";
+    cat.style.pointerEvents = "none";
+    cat.style.zIndex = "9999";
+    cat.style.left = Math.random() * window.innerWidth + "px";
+    cat.style.top = "-100px";
+
     document.body.appendChild(cat);
 
     // Animate cat falling
     const fallDuration = 2000 + Math.random() * 1000;
     const rotation = Math.random() * 720 - 360;
-    
-    cat.animate([
-      { 
-        transform: 'translateY(0) rotate(0deg)', 
-        opacity: 1 
+
+    cat.animate(
+      [
+        {
+          transform: "translateY(0) rotate(0deg)",
+          opacity: 1,
+        },
+        {
+          transform: `translateY(${window.innerHeight + 100}px) rotate(${rotation}deg)`,
+          opacity: 0.5,
+        },
+      ],
+      {
+        duration: fallDuration,
+        easing: "ease-in",
       },
-      { 
-        transform: `translateY(${window.innerHeight + 100}px) rotate(${rotation}deg)`, 
-        opacity: 0.5 
-      }
-    ], {
-      duration: fallDuration,
-      easing: 'ease-in'
-    });
+    );
 
     setTimeout(() => cat.remove(), fallDuration);
   };
 
   return (
     <>
-      <img 
-        src="/image/cat.gif" 
-        id="blinkies" 
-        alt="cat" 
+      <img
+        src="/image/cat.gif"
+        id="blinkies"
+        alt="cat"
         onClick={handleClick}
         style={{
-          cursor: 'pointer',
-          transition: 'transform 0.3s ease',
-          transform: showAnimation ? 'scale(1.2) rotate(360deg)' : 'scale(1)',
-         
-          position: 'relative'
+          cursor: "pointer",
+          transition: "transform 0.3s ease",
+          transform: showAnimation ? "scale(1.2) rotate(360deg)" : "scale(1)",
+
+          position: "relative",
         }}
-        title={clicks > 0 && clicks < 5 ? `Click ${5 - clicks} more times for a surprise!` : 'Click me!'}
+        title={
+          clicks > 0 && clicks < 5
+            ? `Click ${5 - clicks} more times for a surprise!`
+            : "Click me!"
+        }
       />
-      
+
       {showAnimation && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          fontSize: '4rem',
-          animation: 'bounce 0.5s infinite',
-          pointerEvents: 'none',
-          zIndex: 9998,
-          textAlign: 'center'
-        }}>
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "4rem",
+            animation: "bounce 0.5s infinite",
+            pointerEvents: "none",
+            zIndex: 9998,
+            textAlign: "center",
+          }}
+        >
           <div></div>
-          <div style={{ fontSize: '2rem', marginTop: '10px', color: '#50B6D1', fontWeight: 'bold' }}>
+          <div
+            style={{
+              fontSize: "2rem",
+              marginTop: "10px",
+              color: "#50B6D1",
+              fontWeight: "bold",
+            }}
+          >
             CAT RAIN!
           </div>
         </div>
@@ -139,7 +155,15 @@ function HomePage() {
       <header>
         <div className="windowTop">
           <p>
-            <img src="/image/Map_Pin_Grub.png" style={{ width: '20px', verticalAlign: 'middle', marginRight: '8px' }} alt="icon" /> 
+            <img
+              src="/image/Map_Pin_Grub.png"
+              style={{
+                width: "20px",
+                verticalAlign: "middle",
+                marginRight: "8px",
+              }}
+              alt="icon"
+            />
             Darshan's_Web.exe
           </p>
           <div className="windowCircle">
@@ -150,13 +174,34 @@ function HomePage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
-            <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
-            <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
-            <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
-            <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
-            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
-            <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+            <Link to="/">
+              <img src="/image/home.png" className="nav-icon" alt="" />{" "}
+              <span>Home</span>
+            </Link>
+            <Link to="/blog">
+              <img src="/image/life.png" className="nav-icon" alt="" />{" "}
+              <span>Life Blog</span>
+            </Link>
+            <Link to="/projects">
+              <img src="/image/made.png" className="nav-icon" alt="" />{" "}
+              <span>Stuff I Made</span>
+            </Link>
+            <Link to="/portfolio">
+              <img src="/image/me.png" className="nav-icon" alt="" />{" "}
+              <span>Who Am I</span>
+            </Link>
+            <Link to="/view-gallery">
+              <img src="/image/frame.png" className="nav-icon" alt="" />{" "}
+              <span>Gallery</span>
+            </Link>
+            <Link to="/games">
+              <img src="/image/joystick.png" className="nav-icon" alt="" />{" "}
+              <span>Games</span>
+            </Link>
+            <Link to="/chat">
+              <img src="/image/babble.png" className="nav-icon" alt="" />{" "}
+              <span>Chat</span>
+            </Link>
           </nav>
         </div>
       </header>
@@ -175,23 +220,44 @@ function HomePage() {
             </div>
             <div className="windowContent">
               <h1>Darshan, student trying everything ...</h1>
-              <img src="/image/Untitled.png" style={{ width: '100%', maxWidth: '275px', margin: '15px 0' }} alt="Darshan" />
-              <p><b>&gt;&gt; Class: </b>Student, Gamer </p>
-              <p><b>&gt;&gt; Level: </b>99</p>
-              <p><b>&gt;&gt; Special Abilities: </b>gaming, drawing, writing </p>
+              <img
+                src="/image/Untitled.png"
+                style={{ width: "100%", maxWidth: "275px", margin: "15px 0" }}
+                alt="Darshan"
+              />
+              <p>
+                <b>&gt;&gt; Class: </b>Student, Gamer{" "}
+              </p>
+              <p>
+                <b>&gt;&gt; Level: </b>99
+              </p>
+              <p>
+                <b>&gt;&gt; Special Abilities: </b>gaming, drawing, writing{" "}
+              </p>
               <br />
               <CatGifEasterEgg />
-              <p>I am someone who loves to learn and try new things. Come follow me on my side quests!</p>
+              <p>
+                I am someone who loves to learn and try new things. Come follow
+                me on my side quests!
+              </p>
               <div className="separate">
                 <h1>Other places to find me</h1>
                 <ul>
                   <li>
-                    <a target="_blank" rel="noreferrer" href="https://www.instagram.com/da.rs.han">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href="https://www.instagram.com/da.rs.han"
+                    >
                       Instagram
                     </a>
                   </li>
                   <li>
-                    <a target="_blank" rel="noreferrer" href="http://www.youtube.com/@xosmic5787">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href="http://www.youtube.com/@xosmic5787"
+                    >
                       YouTube Channel
                     </a>
                   </li>
@@ -213,21 +279,32 @@ function HomePage() {
             <div className="windowContent">
               <div className="post">
                 <h1>What's going on here??</h1>
-                <p>Heyo! Welcome to my website! I decided to create a personal corner in the web for myself to make something fun without the constraints of social media algorithms.</p>
-                <p><b><i>In other words... It's my little space of creativity on the big interweb!</i></b></p>
+                <p>
+                  Heyo! Welcome to my website! I decided to create a personal
+                  corner in the web for myself to make something fun without the
+                  constraints of social media algorithms.
+                </p>
+                <p>
+                  <b>
+                    <i>
+                      In other words... It's my little space of creativity on
+                      the big interweb!
+                    </i>
+                  </b>
+                </p>
               </div>
               <div className="post">
                 <h1>What I'm working on:</h1>
                 <p>Making this website!</p>
                 <div className="progressBar">
-                  <div className="progress" style={{ width: '67%' }}>
+                  <div className="progress" style={{ width: "67%" }}>
                     <p>67%</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="windowTop" style={{ marginTop: '20px' }}>
+            <div className="windowTop" style={{ marginTop: "20px" }}>
               <p>Fun things</p>
               <div className="windowCircle">
                 <div className="circle"></div>
@@ -237,58 +314,84 @@ function HomePage() {
             </div>
             <div className="windowContent">
               {/* Currently Reading Section */}
-              <div style={{ 
-                marginBottom: '30px', 
-                padding: '20px', 
-                background: '#50B6D1',
-                border: '2px solid #000',
-                boxShadow: '6px 6px 0px #000'
-              }}>
-                <h2 style={{ marginTop: 0, marginBottom: '15px', fontSize: '1.5rem' }}>
+              <div
+                style={{
+                  marginBottom: "30px",
+                  padding: "20px",
+                  background: "#50B6D1",
+                  border: "2px solid #000",
+                  boxShadow: "6px 6px 0px #000",
+                }}
+              >
+                <h2
+                  style={{
+                    marginTop: 0,
+                    marginBottom: "15px",
+                    fontSize: "1.5rem",
+                  }}
+                >
                   📖 Currently Reading
                 </h2>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '20px',
-                  flexWrap: 'wrap'
-                }}>
-                  <a 
-                    target="_blank" 
-                    rel="noreferrer" 
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "20px",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
                     href="https://www.goodreads.com/book/show/32277642-the-king-in-yellow"
                     style={{ flexShrink: 0 }}
                   >
-                    <div className="book-card" style={{ 
-                      width: '140px',
-                      aspectRatio: '2/3',
-                      background: '#fff',
-                      border: '2px solid #000',
-                      padding: '8px',
-                      boxShadow: '5px 5px 0px #000'
-                    }}>
-                      <img 
-                        src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742853462i/32277642.jpg" 
+                    <div
+                      className="book-card"
+                      style={{
+                        width: "140px",
+                        aspectRatio: "2/3",
+                        background: "#fff",
+                        border: "2px solid #000",
+                        padding: "8px",
+                        boxShadow: "5px 5px 0px #000",
+                      }}
+                    >
+                      <img
+                        src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742853462i/32277642.jpg"
                         alt="The King in Yellow"
                         style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          border: '1px solid #000'
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          border: "1px solid #000",
                         }}
                       />
                     </div>
                   </a>
-                  <div style={{ flex: 1, minWidth: '200px' }}>
-                    <h3 style={{ margin: '0 0 10px 0', fontSize: '1.3rem' }}>
+                  <div style={{ flex: 1, minWidth: "200px" }}>
+                    <h3 style={{ margin: "0 0 10px 0", fontSize: "1.3rem" }}>
                       The King in Yellow
                     </h3>
-                    <p style={{ margin: '0 0 8px 0', fontSize: '1rem', opacity: 0.8 }}>
+                    <p
+                      style={{
+                        margin: "0 0 8px 0",
+                        fontSize: "1rem",
+                        opacity: 0.8,
+                      }}
+                    >
                       <b>by</b> Robert W. Chambers
                     </p>
-                    <p style={{ margin: 0, fontSize: '0.95rem', lineHeight: '1.5' }}>
-                      A collection of horror stories featuring mysterious references to a forbidden play. 
-                      Exploring themes of madness, art, and the supernatural.
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: "0.95rem",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      A collection of horror stories featuring mysterious
+                      references to a forbidden play. Exploring themes of
+                      madness, art, and the supernatural.
                     </p>
                   </div>
                 </div>
@@ -298,9 +401,16 @@ function HomePage() {
               <div className="bookshelf">
                 {/* Book 1 */}
                 <div className="book-item">
-                  <a target="_blank" rel="noreferrer" href="https://www.goodreads.com/book/show/36278177-record-of-a-spaceborn-few">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.goodreads.com/book/show/36278177-record-of-a-spaceborn-few"
+                  >
                     <div className="book-card">
-                      <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1626027310i/36278177.jpg" alt="Spaceborn Few" />
+                      <img
+                        src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1626027310i/36278177.jpg"
+                        alt="Spaceborn Few"
+                      />
                     </div>
                   </a>
                   <p className="book-title">Spaceborn Few</p>
@@ -308,9 +418,16 @@ function HomePage() {
 
                 {/* Book 2 */}
                 <div className="book-item">
-                  <a target="_blank" rel="noreferrer" href="https://www.goodreads.com/book/show/40189879-the-traitor-baru-cormorant">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.goodreads.com/book/show/40189879-the-traitor-baru-cormorant"
+                  >
                     <div className="book-card">
-                      <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1526945167i/40189879.jpg" alt="Traitor Baru" />
+                      <img
+                        src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1526945167i/40189879.jpg"
+                        alt="Traitor Baru"
+                      />
                     </div>
                   </a>
                   <p className="book-title">Traitor Baru</p>
@@ -318,21 +435,32 @@ function HomePage() {
 
                 {/* Book 3 */}
                 <div className="book-item">
-                  <a target="_blank" rel="noreferrer" href="https://www.goodreads.com/book/show/32277642-the-king-in-yellow">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.goodreads.com/book/show/32277642-the-king-in-yellow"
+                  >
                     <div className="book-card">
-                      <img src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742853462i/32277642.jpg" alt="King in Yellow" />
+                      <img
+                        src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1742853462i/32277642.jpg"
+                        alt="King in Yellow"
+                      />
                     </div>
                   </a>
                   <p className="book-title">King in Yellow</p>
                 </div>
               </div>
-              
+
               <div className="separate">
                 <h1>Darshan's Go-To Music</h1>
                 <div className="separate">
                   <iframe
                     data-testid="embed-iframe"
-                    style={{ borderRadius: '12px', width: '100%', maxWidth: '100%' }}
+                    style={{
+                      borderRadius: "12px",
+                      width: "100%",
+                      maxWidth: "100%",
+                    }}
                     src="https://open.spotify.com/embed/artist/3yY2gUcIsjMr8hjo51PoJ8?utm_source=generator&theme=0"
                     width="100%"
                     height="352"
@@ -349,28 +477,30 @@ function HomePage() {
       </main>
 
       <footer>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          gap: '20px' 
-        }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
           <VisitorCounter />
-          
-          <p style={{ fontSize: '1.5rem', margin: 0 }}>
+
+          <p style={{ fontSize: "1.5rem", margin: 0 }}>
             <i>"At the crossroads, don't turn left"</i>
           </p>
-          
-          <button 
-            onClick={() => setLoginOpen(true)} 
-            className="project-link" 
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              cursor: 'pointer', 
-              padding: '5px 10px',
-              textDecoration: 'none',
-              fontStyle: 'normal'
+
+          <button
+            onClick={() => setLoginOpen(true)}
+            className="project-link"
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "5px 10px",
+              textDecoration: "none",
+              fontStyle: "normal",
             }}
           >
             ADMIN LOGIN 🔒
@@ -381,69 +511,89 @@ function HomePage() {
       {/* LOGIN POPUP */}
       {isLoginOpen && (
         <div className="overlay">
-          <div className="popupContainer" style={{ width: '90%', maxWidth: '450px' }}>
-            
+          <div
+            className="popupContainer"
+            style={{ width: "90%", maxWidth: "450px" }}
+          >
             {/* HEADER - Matches your Sidebar/Content headers */}
-            <div className="windowTop" style={{ background: '#f96a6a' }}>
-              <p style={{ color: 'white' }}>
-                <span style={{ marginRight: '8px' }}></span> 
+            <div className="windowTop" style={{ background: "#f96a6a" }}>
+              <p style={{ color: "white" }}>
+                <span style={{ marginRight: "8px" }}></span>
                 System_Alert.exe
               </p>
               <div className="windowCircle">
-                <div className="circle" style={{ background: '#fff' }}></div>
-                <div className="circle" style={{ background: '#fff' }}></div>
-                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
               </div>
             </div>
 
             {/* BODY - Matches your .windowContent and .post style */}
             <div className="windowContent popupBox">
-              <div className="warning-blink" style={{ fontSize: '4rem', marginBottom: '10px' }}>⚠️</div>
-              
-              <h1 style={{ fontSize: '1.8rem', color: '#000' }}>RESTRICTED ACCESS</h1>
+              <div
+                className="warning-blink"
+                style={{ fontSize: "4rem", marginBottom: "10px" }}
+              >
+                ⚠️
+              </div>
 
-              <div className="admin-status-box" style={{ 
-                background: '#03274B', 
-                border: '2px solid #000', 
-                padding: '15px', 
-                margin: '20px 0',
-                boxShadow: '4px 4px 0px #000'
-              }}>
-                <p style={{ color: '#50B6D1', margin: 0, fontWeight: 'bold' }}>
+              <h1 style={{ fontSize: "1.8rem", color: "#000" }}>
+                RESTRICTED ACCESS
+              </h1>
+
+              <div
+                className="admin-status-box"
+                style={{
+                  background: "#03274B",
+                  border: "2px solid #000",
+                  padding: "15px",
+                  margin: "20px 0",
+                  boxShadow: "4px 4px 0px #000",
+                }}
+              >
+                <p style={{ color: "#50B6D1", margin: 0, fontWeight: "bold" }}>
                   [ ! ADMIN PRIVILEGES REQUIRED ! ]
                 </p>
               </div>
 
-              <p style={{ fontSize: '1.1rem', marginBottom: '30px' }}>
-                This sector is encrypted. Please provide credentials or return to the terminal.
+              <p style={{ fontSize: "1.1rem", marginBottom: "30px" }}>
+                This sector is encrypted. Please provide credentials or return
+                to the terminal.
               </p>
-              
-              <div className="popupButtons" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <Link 
-                  to="/AdminLogin" 
-                  onClick={() => setLoginOpen(false)} 
+
+              <div
+                className="popupButtons"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "15px",
+                }}
+              >
+                <Link
+                  to="/AdminLogin"
+                  onClick={() => setLoginOpen(false)}
                   className="nav-a-style"
-                  style={{ 
-                    background: '#50B6D1', 
-                    color: '#000', 
-                    padding: '15px', 
-                    border: '2px solid #000',
-                    boxShadow: '6px 6px 0px #000',
-                    textDecoration: 'none',
-                    fontWeight: 'bold',
-                    textAlign: 'center'
+                  style={{
+                    background: "#50B6D1",
+                    color: "#000",
+                    padding: "15px",
+                    border: "2px solid #000",
+                    boxShadow: "6px 6px 0px #000",
+                    textDecoration: "none",
+                    fontWeight: "bold",
+                    textAlign: "center",
                   }}
                 >
                   PROCEED TO LOGIN
                 </Link>
-                <button 
-                  onClick={() => setLoginOpen(false)} 
+                <button
+                  onClick={() => setLoginOpen(false)}
                   className="loginBtn cancel"
-                  style={{ 
-                    width: '100%', 
-                    padding: '12px',
-                    fontSize: '1rem',
-                    backgroundColor: '#FFA0A0'
+                  style={{
+                    width: "100%",
+                    padding: "12px",
+                    fontSize: "1rem",
+                    backgroundColor: "#FFA0A0",
                   }}
                 >
                   BACK TO SAFETY
