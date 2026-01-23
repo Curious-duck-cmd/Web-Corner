@@ -709,11 +709,7 @@ function GamesPage() {
         <p style={{ color: '#565f89', fontSize: '1rem', marginBottom: '10px' }}>
           🕹️ Retro Arcade - {games.length + casinoGames.length} Games Available
         </p>
-        {!user && (
-          <p style={{ color: '#50B6D1', fontSize: '0.9rem' }}>
-            💡 <Link to="/login" style={{ color: '#50B6D1', textDecoration: 'underline' }}>Login</Link> to save your high scores!
-          </p>
-        )}
+        
         <p style={{ color: '#565f89', fontSize: '0.8rem', marginTop: '10px', opacity: 0.6 }}>
           More games coming soon!
         </p>
