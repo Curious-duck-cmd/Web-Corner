@@ -1,12 +1,21 @@
+/*  body styles */
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #1a1b26;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1b26;
+    background-image: radial-gradient(
+        circle at 2px 2px,
+        #292e42 2px,
+        transparent 0
+    );
+    background-size: 32px 32px;
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 #root {
-  width: 100%;
+    width: 100%;
 }
 
 /* --- BASE RESET & FONTS --- */
@@ -14,31 +23,37 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: monospace; 
-}
-
-input, button, select, textarea {
     font-family: monospace;
 }
 
-/* Overall Style */
-body {
-    background-color: #1a1b26;
-    background-image: radial-gradient(circle at 2px 2px, #292e42 2px, transparent 0);
-    background-size: 32px 32px;
-    background-attachment: fixed;
-    min-height: 100vh;
+input,
+button,
+select,
+textarea {
+    font-family: monospace;
+}
+
+/* Add focus-visible for accessibility */
+*:focus-visible {
+    outline: 3px solid #50b6d1;
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #50b6d1;
+    outline-offset: 2px;
 }
 
 /* Page Fade In Animation */
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -58,7 +73,7 @@ main a {
 }
 
 main a:hover {
-    color: #50B6D1;
+    color: #50b6d1;
 }
 
 main ul {
@@ -70,7 +85,8 @@ main li {
     padding: 8px 0px;
 }
 
-main h1, main h2 {
+main h1,
+main h2 {
     padding-bottom: 8px;
 }
 
@@ -80,7 +96,7 @@ main h1, main h2 {
 
 /* --- WINDOW COMPONENT STYLING --- */
 .windowTop {
-    background: #50B6D1;
+    background: #50b6d1;
     border: 2px solid #000;
     border-bottom: 0px;
     border-radius: 10px 10px 0 0;
@@ -107,7 +123,7 @@ main h1, main h2 {
 .circle {
     height: 20px;
     width: 20px;
-    background-color: #FFA0A0;
+    background-color: #ffa0a0;
     border: 2px solid #000;
     border-radius: 50%;
     margin: 4px;
@@ -179,7 +195,7 @@ nav a {
     padding: 0.8rem;
     border: 2px solid #000;
     border-radius: 5px;
-    box-shadow: 6px 6px 0px #50B6D1;
+    box-shadow: 6px 6px 0px #50b6d1;
     text-align: center;
     display: flex;
     align-items: center;
@@ -189,10 +205,10 @@ nav a {
 }
 
 nav a:hover {
-    color: #50B6D1;
+    color: #50b6d1;
     background-color: #fff;
     transform: rotate(3deg) translateY(-2px);
-    box-shadow: 8px 8px 0px #50B6D1;
+    box-shadow: 8px 8px 0px #50b6d1;
 }
 
 .nav-icon {
@@ -215,11 +231,11 @@ nav a:hover {
 }
 
 .sidecontent .windowTop {
-    background: #FFA0A0;
+    background: #ffa0a0;
 }
 
 .sidecontent .circle {
-    background: #89A8C7;
+    background: #89a8c7;
 }
 
 .content {
@@ -228,7 +244,7 @@ nav a:hover {
 }
 
 .content .windowTop {
-    background: #03274B;
+    background: #03274b;
 }
 
 .content .windowTop p {
@@ -249,7 +265,7 @@ nav a:hover {
 }
 
 .progress {
-    background-color: #50B6D1;
+    background-color: #50b6d1;
     height: 100%;
     text-align: center;
     border-radius: 3px;
@@ -261,8 +277,13 @@ nav a:hover {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.85; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.85;
+    }
 }
 
 .progress p {
@@ -273,7 +294,7 @@ nav a:hover {
 
 /* --- FOOTER & LOGIN --- */
 footer {
-    text-align: center; 
+    text-align: center;
     padding: 40px;
 }
 
@@ -285,7 +306,7 @@ footer p {
 .login-trigger {
     background: none;
     border: none;
-    color: #50B6D1;
+    color: #50b6d1;
     text-decoration: underline;
     font-size: 1.2rem;
     cursor: pointer;
@@ -293,17 +314,17 @@ footer p {
 }
 
 .login-trigger:hover {
-    color: #FFA0A0;
+    color: #ffa0a0;
 }
 
 /* --- OVERLAY POPUP --- */
 .overlay {
     position: fixed;
-    top: 0; 
+    top: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); 
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
     z-index: 9999;
     display: flex;
@@ -333,7 +354,7 @@ footer p {
 }
 
 .popupBox {
-    background-color: #89A8C7 !important; 
+    background-color: #89a8c7 !important;
     border: 2px solid #000 !important;
     padding: 25px !important;
     text-align: center;
@@ -353,7 +374,7 @@ footer p {
 
 .popupBox input:focus {
     outline: none;
-    border-color: #50B6D1;
+    border-color: #50b6d1;
     box-shadow: 0 0 0 2px rgba(80, 182, 209, 0.3);
 }
 
@@ -386,7 +407,7 @@ footer p {
 }
 
 .cancel {
-    background-color: #FFA0A0;
+    background-color: #ffa0a0;
 }
 
 /* --- BOOKSHELF --- */
@@ -429,7 +450,7 @@ footer p {
     border: 2px solid #000;
     padding: 8px;
     box-shadow: 5px 5px 0px #000;
-    width: 100%; 
+    width: 100%;
     aspect-ratio: 2 / 3;
     transition: all 0.3s ease;
     z-index: 2;
@@ -444,21 +465,21 @@ footer p {
 
 .book-card:hover {
     transform: translateY(-8px) rotate(-2deg);
-    box-shadow: 8px 8px 0px #FFA0A0;
+    box-shadow: 8px 8px 0px #ffa0a0;
 }
 
 .book-title {
     margin-top: 10px;
     font-size: 0.9rem !important;
     font-weight: bold;
-    color: #03274B;
+    color: #03274b;
     text-align: center;
 }
 
 .project-link {
     display: inline-block;
     margin-top: 10px;
-    color: #03274B;
+    color: #03274b;
     text-decoration: none;
     font-weight: bold;
     font-family: monospace;
@@ -470,37 +491,44 @@ footer p {
 
 .project-link:hover {
     text-decoration: none;
-    color: #FFA0A0;
+    color: #ffa0a0;
     background-color: rgba(255, 160, 160, 0.1);
     padding-left: 15px;
 }
 
 /* --- ADMIN STATUS BOX --- */
 .admin-status-box {
-  background: #03274B;
-  padding: 15px;
-  margin: 20px 0;
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0px #000;
+    background: #03274b;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #000;
 }
 
 .admin-status-box p {
-  color: #50B6D1;
-  font-family: monospace;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
+    color: #50b6d1;
+    font-family: monospace;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .warning-blink {
-  animation: warningScale 1.5s infinite ease-in-out;
-  display: inline-block;
+    animation: warningScale 1.5s infinite ease-in-out;
+    display: inline-block;
 }
 
 @keyframes warningScale {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 69, 69, 0)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #FF4545); }
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 69, 69, 0));
+    }
+    50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 15px #ff4545);
+    }
 }
 
 /* --- RESPONSIVE DESIGN --- */
@@ -508,12 +536,12 @@ footer p {
     .container {
         grid-template-columns: 1fr;
     }
-    
+
     nav {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 15px;
     }
-    
+
     .windowContent {
         padding: 30px;
     }
@@ -523,53 +551,54 @@ footer p {
     .portfolio-wrapper {
         padding: 3% 3%;
     }
-    
+
     .container {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     nav {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
-    
+
     nav a {
         font-size: 1rem;
         padding: 0.7rem;
     }
-    
+
     .sidecontent {
         min-width: 100%;
     }
-    
+
     .content {
         min-width: 100%;
     }
-    
+
     .windowTop {
         font-size: 1.2rem;
         padding: 8px 15px;
     }
-    
+
     .windowContent {
         padding: 20px;
     }
-    
-    main a, main ul {
+
+    main a,
+    main ul {
         font-size: 1.2rem;
     }
-    
+
     .windowContent p {
         font-size: 1.2rem;
     }
-    
+
     .bookshelf {
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
     }
-    
+
     .book-item {
         flex: 0 1 120px;
         min-width: 90px;
@@ -580,61 +609,62 @@ footer p {
     .portfolio-wrapper {
         padding: 2% 2%;
     }
-    
+
     .windowContent {
         padding: 15px;
     }
-    
+
     nav {
         grid-template-columns: 1fr;
         gap: 10px;
     }
-    
+
     nav a {
         font-size: 0.95rem;
         padding: 0.6rem;
     }
-    
+
     .windowTop {
         font-size: 1rem;
         padding: 6px 12px;
     }
-    
-    main a, main ul {
+
+    main a,
+    main ul {
         font-size: 1.1rem;
     }
-    
+
     .windowContent p {
         font-size: 1.1rem;
     }
-    
+
     .popupContainer {
         width: 95%;
     }
-    
+
     .popupBox {
         padding: 20px !important;
     }
-    
+
     .popupButtons {
         flex-direction: column;
     }
-    
+
     .loginBtn {
         width: 100%;
         min-width: 100%;
     }
-    
+
     .circle {
         height: 16px;
         width: 16px;
     }
-    
+
     .post {
         padding: 15px;
         margin-bottom: 25px;
     }
-    
+
     .separate {
         margin-top: 25px;
     }
@@ -645,25 +675,27 @@ footer p {
         font-size: 0.9rem;
         padding: 5px 10px;
     }
-    
+
     .windowContent {
         padding: 12px;
     }
-    
+
     nav a {
         font-size: 0.85rem;
         padding: 0.5rem;
     }
-    
-    main a, main ul, .windowContent p {
+
+    main a,
+    main ul,
+    .windowContent p {
         font-size: 1rem;
     }
-    
+
     .book-item {
         flex: 0 1 100px;
         min-width: 80px;
     }
-    
+
     .book-title {
         font-size: 0.8rem !important;
     }
@@ -685,13 +717,13 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #50B6D1;
+    background: #50b6d1;
     border: 2px solid #000;
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #FFA0A0;
+    background: #ffa0a0;
 }
 
 /* Prevent horizontal scroll on all elements */
@@ -706,29 +738,58 @@ img {
 
 /* Touch-friendly spacing for mobile */
 @media (hover: none) and (pointer: coarse) {
-    button, a, input, select, textarea {
+    button,
+    a,
+    input,
+    select,
+    textarea {
         min-height: 44px;
         min-width: 44px;
     }
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .floating-emoji {
-  display: inline-block;
-  animation: float 3s ease-in-out infinite;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
 }
 
 /* Pulse animation for login button */
 @keyframes pulse {
-  0%, 100% {
-    box-shadow: 6px 6px 0px #000;
-  }
-  50% {
-    box-shadow: 6px 6px 0px #000, 0 0 20px rgba(255, 215, 0, 0.6);
-  }
+    0%,
+    100% {
+        box-shadow: 6px 6px 0px #000;
+    }
+    50% {
+        box-shadow:
+            6px 6px 0px #000,
+            0 0 20px rgba(255, 215, 0, 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #f0f0f0;
+        /* adjust colors */
+    }
 }
