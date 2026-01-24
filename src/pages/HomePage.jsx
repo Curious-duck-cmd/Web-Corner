@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import VisitorCounter from "../components/VisitorCounter";
 import "../App.css";
@@ -13,28 +13,16 @@ function CatGifEasterEgg() {
     setClicks(newClicks);
 
     if (newClicks === 3) {
-      // Trigger cat rain after 3 clicks
       setShowAnimation(true);
-
-      // Create cat rain
       for (let i = 0; i < 30; i++) {
         setTimeout(() => {
           createFallingCat();
         }, i * 100);
       }
-
-      // Reset after animation
       setTimeout(() => {
         setShowAnimation(false);
         setClicks(0);
       }, 4000);
-    } else if (newClicks === 3) {
-      // Shake animation at 3 clicks
-      const img = e.currentTarget;
-      img.style.animation = "shake 0.5s";
-      setTimeout(() => {
-        img.style.animation = "";
-      }, 500);
     }
   };
 
@@ -47,30 +35,19 @@ function CatGifEasterEgg() {
     cat.style.zIndex = "9999";
     cat.style.left = Math.random() * window.innerWidth + "px";
     cat.style.top = "-100px";
-
     document.body.appendChild(cat);
-
-    // Animate cat falling
     const fallDuration = 2000 + Math.random() * 1000;
     const rotation = Math.random() * 720 - 360;
-
     cat.animate(
       [
-        {
-          transform: "translateY(0) rotate(0deg)",
-          opacity: 1,
-        },
+        { transform: "translateY(0) rotate(0deg)", opacity: 1 },
         {
           transform: `translateY(${window.innerHeight + 100}px) rotate(${rotation}deg)`,
           opacity: 0.5,
         },
       ],
-      {
-        duration: fallDuration,
-        easing: "ease-in",
-      },
+      { duration: fallDuration, easing: "ease-in" },
     );
-
     setTimeout(() => cat.remove(), fallDuration);
   };
 
@@ -85,16 +62,14 @@ function CatGifEasterEgg() {
           cursor: "pointer",
           transition: "transform 0.3s ease",
           transform: showAnimation ? "scale(1.2) rotate(360deg)" : "scale(1)",
-
           position: "relative",
         }}
         title={
-          clicks > 0 && clicks < 5
-            ? `Click ${5 - clicks} more times for a surprise!`
+          clicks > 0 && clicks < 3
+            ? `Click ${3 - clicks} more times for a surprise!`
             : "Click me!"
         }
       />
-
       {showAnimation && (
         <div
           style={{
@@ -109,7 +84,6 @@ function CatGifEasterEgg() {
             textAlign: "center",
           }}
         >
-          <div></div>
           <div
             style={{
               fontSize: "2rem",
@@ -122,28 +96,327 @@ function CatGifEasterEgg() {
           </div>
         </div>
       )}
-
       <style>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-10px) rotate(-5deg); }
-          75% { transform: translateX(10px) rotate(5deg); }
-        }
-
-        @keyframes bounce {
-          0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-          50% { transform: translate(-50%, -50%) translateY(-20px); }
-        }
-
-        #blinkies:hover {
-          transform: scale(1.05) !important;
-        }
-
-        #blinkies:active {
-          transform: scale(0.95) !important;
-        }
+        @keyframes bounce { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-20px); } }
+        #blinkies:hover { transform: scale(1.05) !important; }
+        #blinkies:active { transform: scale(0.95) !important; }
       `}</style>
     </>
+  );
+}
+
+// F1 Easter Egg Component
+function F1EasterEgg() {
+  const [f1Clicks, setF1Clicks] = useState(0);
+  const [showF1Effect, setShowF1Effect] = useState(false);
+  const [konamiCode, setKonamiCode] = useState([]);
+
+  const targetKonami = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
+
+  useEffect(() => {
+    const handleKonami = (e) => {
+      const newCode = [...konamiCode, e.key].slice(-10);
+      setKonamiCode(newCode);
+      if (JSON.stringify(newCode) === JSON.stringify(targetKonami)) {
+        unlockF1Page();
+        setKonamiCode([]);
+      }
+    };
+    window.addEventListener("keydown", handleKonami);
+    return () => window.removeEventListener("keydown", handleKonami);
+  }, [konamiCode]);
+
+  const unlockF1Page = () => {
+    const audio = new Audio();
+    audio.src =
+      "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZUQ0PVqzn77BfGgs+ltj1xnMpBSp+zPLaizsIHGe57OihUg4NTqPj8bllHAU2jdXzyH0vBSZ1xe/akjwIF2S46+mnVBELTKXh8rpmHgU0i9Lzyn0wBSh5ye3dkj0JGmm97OmjUQ4OUanl8r1oHwc3kdXzy3wxByp9y+/blEAKG2y/7eykUhAOVK3o8sBoIAg5kdX0zH4yByx/zPDbl0MLHW/B7+6lVBIOV7Do8sJrIgo7ldj0zYE0CCuBzu/dnEQMHnLC8O+nVhQPWLLq88RsIws9mNr1z4I2Cix+0PDfnkYOIHTF8/CpWRUSXbXs9MduJAw+m9z1z4Q4DC6Czu7hokYOI3XF8/GrWhUUYLjv9clwJQ5Am9310oU6DS+Dz+7hpUgPJHfH9POsXBYVYrnx9sl0JxBAnd70z4Y7DjGDzuzipUkPJXnI9PSuXRcXZbv09Mt2KRFBn+D10Ig8DzKEz+zjp0oQJnrI9fSwXxgZZ731z4g+DzOF0OzlqU0RKHvJ9feyYRgaab749Mt5KhJCoeH114k/DzSG0evmqk4SIHrJ9vKxYhkaarnz9M16KRNCo+P224tADzSH0ezmq08SIXzK9vKzYxocb7z09cx8LBRDpOT33I1BETaI0uzprFETI33M9/O0ZRwdb7309s+ALRVEpuX33I5CEjaJ0u3qrlIUJH7N+PS2aB0ecL3199CBLxZFqOb43ZBDEjaK0+7rr1MVJYDPefS4ax4fc8H29dGEMBdGqef43pJEEjeL1O/ssVQWJoHQ+fS6bSAhdMH39tOGMxlHrOj64JNFEjiM1fDttVYXJ4LR+vW8byEidcP49tSINRpIrej645RGEjmM1vHvuFgYKIPT+/W+cSMjdsT59tWKOBtKr+r755ZHEzqN1/LwulkaKYTV/PXAcyUkd8X69teNOhxLsev76JhJFDuO2PTxvVwbKoXW/PXDdSYld8b79tiPPB1Ms+356plKFTyP2fTzwF4cK4bY/fXFdygmeM==";
+    audio.play().catch(() => {});
+    setShowF1Effect(true);
+    setTimeout(() => {
+      setShowF1Effect(false);
+      window.location.href = "/f1";
+    }, 2000);
+  };
+
+  const handleF1Click = () => {
+    const newClicks = f1Clicks + 1;
+    setF1Clicks(newClicks);
+    if (newClicks === 20) {
+      triggerF1Sound();
+      setF1Clicks(0);
+    }
+  };
+
+  const triggerF1Sound = () => {
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        createFallingF1();
+      }, i * 150);
+    }
+    const audio = new Audio();
+    audio.src =
+      "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZUQ0PVqzn77BfGgs+ltj1xnMpBSp+zPLaizsIHGe57OihUg4NTqPj8bllHAU2jdXzyH0vBSZ1xe/akjwIF2S46+mnVBELTKXh8rpmHgU0i9Lzyn0wBSh5ye3dkj0JGmm97OmjUQ4OUanl8r1oHwc3kdXzy3wxByp9y+/blEAKG2y/7eykUhAOVK3o8sBoIAg5kdX0zH4yByx/zPDbl0MLHW/B7+6lVBIOV7Do8sJrIgo7ldj0zYE0CCuBzu/dnEQMHnLC8O+nVhQPWLLq88RsIws9mNr1z4I2Cix+0PDfnkYOIHTF8/CpWRUSXbXs9MduJAw+m9z1z4Q4DC6Czu7hokYOI3XF8/GrWhUUYLjv9clwJQ5Am9310oU6DS+Dz+7hpUgPJHfH9POsXBYVYrnx9sl0JxBAnd70z4Y7DjGDzuzipUkPJXnI9PSuXRcXZbv09Mt2KRFBn+D10Ig8DzKEz+zjp0oQJnrI9fSwXxgZZ731z4g+DzOF0OzlqU0RKHvJ9feyYRgaab749Mt5KhJCoeH114k/DzSG0evmqk4SIHrJ9vKxYhkaarnz9M16KRNCo+P224tADzSH0ezmq08SIXzK9vKzYxocb7z09cx8LBRDpOT33I1BETaI0uzprFETI33M9/O0ZRwdb7309s+ALRVEpuX33I5CEjaJ0u3qrlIUJH7N+PS2aB0ecL3199CBLxZFqOb43ZBDEjaK0+7rr1MVJYDPefS4ax4fc8H29dGEMBdGqef43pJEEjeL1O/ssVQWJoHQ+fS6bSAhdMH39tOGMxlHrOj64JNFEjiM1fDttVYXJ4LR+vW8byEidcP49tSINRpIrej645RGEjmM1vHvuFgYKIPT+/W+cSMjdsT59tWKOBtKr+r755ZHEzqN1/LwulkaKYTV/PXAcyUkd8X69teNOhxLsev76JhJFDuO2PTxvVwbKoXW/PXDdSYld8b79tiPPB1Ms+356plKFTyP2fTzwF4cK4bY/fXFdygmeM==";
+    audio.play().catch(() => {});
+    setShowF1Effect(true);
+    setTimeout(() => {
+      setShowF1Effect(false);
+      // Navigate to F1 page for mobile accessibility
+      window.location.href = "/f1";
+    }, 2000);
+  };
+
+  const createFallingF1 = () => {
+    const f1 = document.createElement("div");
+    f1.textContent = "🏎️";
+    f1.style.position = "fixed";
+    f1.style.fontSize = "60px";
+    f1.style.pointerEvents = "none";
+    f1.style.zIndex = "9999";
+    f1.style.left = Math.random() * window.innerWidth + "px";
+    f1.style.top = "-100px";
+    document.body.appendChild(f1);
+    const fallDuration = 1500 + Math.random() * 1000;
+    f1.animate(
+      [
+        { transform: "translateY(0) translateX(0)", opacity: 1 },
+        {
+          transform: `translateY(${window.innerHeight + 100}px) translateX(${(Math.random() - 0.5) * 200}px)`,
+          opacity: 0.5,
+        },
+      ],
+      { duration: fallDuration, easing: "ease-in" },
+    );
+    setTimeout(() => f1.remove(), fallDuration);
+  };
+
+  return (
+    <>
+      <div
+        onClick={handleF1Click}
+        style={{
+          position: "fixed",
+          bottom: "10px",
+          left: "10px",
+          width: "30px",
+          height: "30px",
+          cursor: "pointer",
+          opacity: 0.1,
+          transition: "opacity 0.3s",
+          fontSize: "20px",
+          zIndex: 1000,
+        }}
+        onMouseEnter={(e) => (e.target.style.opacity = 0.3)}
+        onMouseLeave={(e) => (e.target.style.opacity = 0.1)}
+        title={`${f1Clicks}/20 - Click for F1 surprise!`}
+      >
+        🏁
+      </div>
+
+      {showF1Effect && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 10000,
+            textAlign: "center",
+            pointerEvents: "none",
+            animation: "f1Flash 0.5s ease-out",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "5rem",
+              marginBottom: "20px",
+              animation: "checkeredWave 1s infinite",
+            }}
+          >
+            🏁
+          </div>
+          <div
+            style={{
+              fontSize: "2.5rem",
+              color: "#FF0000",
+              fontWeight: "bold",
+              textShadow: "3px 3px 0px #000",
+              fontFamily: "monospace",
+            }}
+          >
+            LIGHTS OUT AND AWAY WE GO!
+          </div>
+        </div>
+      )}
+      <style>{`
+        @keyframes f1Flash { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+          50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); } }
+        @keyframes checkeredWave { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+        @keyframes speedBoost { 0% { filter: blur(0px); } 50% { filter: blur(3px); transform: scale(1.02); } 100% { filter: blur(0px); } }
+        @keyframes drsGlow { 0%, 100% { box-shadow: 4px 4px 0px #000, 0 0 10px #00FF00; } 50% { box-shadow: 4px 4px 0px #000, 0 0 20px #00FF00; } }
+      `}</style>
+    </>
+  );
+}
+
+// F1 Race Calendar Component
+function F1RaceCalendar() {
+  const [nextRace] = useState({
+    name: "Australian Grand Prix",
+    circuit: "Albert Park Circuit",
+    date: new Date("2026-03-06"),
+    round: 1,
+  });
+  const [timeLeft, setTimeLeft] = useState({});
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = nextRace.date - now;
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [nextRace]);
+
+  return (
+    <div style={{ marginBottom: "30px" }}>
+      <div
+        style={{
+          padding: "20px",
+          background: "#cfd3da",
+          border: "2px solid #000",
+          borderRadius: "5px",
+          boxShadow: "4px 4px 0px #000",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.8rem",
+            marginBottom: "15px",
+            textAlign: "center",
+            color: "#03274B",
+          }}
+        >
+          NEXT RACE
+        </h2>
+        <div style={{ textAlign: "center", marginBottom: "15px" }}>
+          <div
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              marginBottom: "5px",
+              color: "#000",
+            }}
+          >
+            {nextRace.name}
+          </div>
+          <div style={{ fontSize: "1.1rem", color: "#333" }}>
+            📍 {nextRace.circuit}
+          </div>
+          <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
+            Round {nextRace.round} of 24
+          </div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "10px",
+            marginTop: "20px",
+          }}
+        >
+          {Object.entries(timeLeft).map(([unit, value]) => (
+            <div
+              key={unit}
+              style={{
+                background: "#fff",
+                border: "2px solid #000",
+                padding: "10px",
+                borderRadius: "5px",
+                textAlign: "center",
+                boxShadow: "3px 3px 0px #000",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "#50B6D1",
+                }}
+              >
+                {value || 0}
+              </div>
+              <div
+                style={{
+                  fontSize: "0.8rem",
+                  textTransform: "uppercase",
+                  color: "#000",
+                  opacity: 0.7,
+                }}
+              >
+                {unit}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          <div
+            style={{
+              background: "#fff",
+              height: "30px",
+              borderRadius: "5px",
+              overflow: "hidden",
+              border: "2px solid #000",
+            }}
+          >
+            <div
+              style={{
+                background: "#50B6D1",
+                height: "100%",
+                width: "0%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "bold",
+                color: "#000",
+                transition: "width 0.5s ease",
+                fontSize: "0.9rem",
+              }}
+            >
+              0%
+            </div>
+          </div>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              textAlign: "center",
+              marginTop: "5px",
+              opacity: 0.7,
+              color: "#000",
+            }}
+          >
+            Season Progress
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -152,6 +425,7 @@ function HomePage() {
 
   return (
     <div className="portfolio-wrapper">
+      <F1EasterEgg />
       <header>
         <div className="windowTop">
           <p>
@@ -208,7 +482,6 @@ function HomePage() {
 
       <main>
         <div className="container">
-          {/* SIDEBAR */}
           <div className="sidecontent">
             <div className="windowTop">
               <p>About me</p>
@@ -236,11 +509,76 @@ function HomePage() {
               </p>
               <br />
               <CatGifEasterEgg />
-              <p>
-                I am someone who loves to learn and try new things. Come follow
-                me on my side quests!
-              </p>
-              <div className="separate">
+<p>
+                 I am someone who loves to learn and try new things. Come follow
+                 me on my side quests!
+               </p>
+
+               <div
+                 className="separate"
+                 style={{
+                   background: "#cfd3da",
+                   padding: "20px",
+                   border: "2px solid #000",
+                   borderRadius: "5px",
+                   boxShadow: "4px 4px 0px #000",
+                   marginTop: "30px",
+                 }}
+               >
+                 <h1
+                   style={{
+                     color: "#03274B",
+                     textAlign: "center",
+                     fontSize: "1.5rem",
+                     marginBottom: "15px",
+                     borderBottom: "2px solid #000",
+                     paddingBottom: "10px",
+                   }}
+                 >
+                   🏎️ MY F1 CORNER
+                 </h1>
+                 <div style={{ color: "#000" }}>
+                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                     <b style={{ color: "#50B6D1" }}>
+                       &gt;&gt; Favorite Driver:
+                     </b>{" "}
+                     <span style={{ marginLeft: "8px" }}>Max Verstappen</span>
+                   </p>
+                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Favorite Team:</b>{" "}
+                     <span style={{ marginLeft: "8px" }}>Red Bull Racing</span>
+                   </p>
+                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Watching Since:</b>{" "}
+                     <span style={{ marginLeft: "8px" }}>2020</span>
+                   </p>
+                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                     <b style={{ color: "#50B6D1" }}>
+                       &gt;&gt; Favorite Circuit:
+                     </b>{" "}
+                     <span style={{ marginLeft: "8px" }}>Spa-Francorchamps</span>
+                   </p>
+                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Dream: </b>{" "}
+                     <span style={{ marginLeft: "8px" }}>Attend Monaco GP</span>
+                   </p>
+                   <p
+                     style={{
+                       fontSize: "0.85rem",
+                       marginTop: "15px",
+                       opacity: 0.7,
+                       fontStyle: "italic",
+                       textAlign: "center",
+                       borderTop: "1px dashed #000",
+                       paddingTop: "10px",
+                     }}
+                   >
+                     "Simply lovely" - The drive for perfection
+                   </p>
+                 </div>
+               </div>
+
+               <div className="separate">
                 <h1>Other places to find me</h1>
                 <ul>
                   <li>
@@ -266,7 +604,8 @@ function HomePage() {
             </div>
           </div>
 
-          {/* MAIN CONTENT AREA */}
+          
+
           <div className="content">
             <div className="windowTop">
               <p>Overview</p>
@@ -303,6 +642,8 @@ function HomePage() {
                 </div>
               </div>
             </div>
+
+            
 
             <div className="windowTop" style={{ marginTop: "20px" }}>
               <p>Fun things</p>
@@ -399,7 +740,6 @@ function HomePage() {
 
               <h1>Darshan's Book Shelf</h1>
               <div className="bookshelf">
-                {/* Book 1 */}
                 <div className="book-item">
                   <a
                     target="_blank"
@@ -416,7 +756,6 @@ function HomePage() {
                   <p className="book-title">Spaceborn Few</p>
                 </div>
 
-                {/* Book 2 */}
                 <div className="book-item">
                   <a
                     target="_blank"
@@ -433,7 +772,6 @@ function HomePage() {
                   <p className="book-title">Traitor Baru</p>
                 </div>
 
-                {/* Book 3 */}
                 <div className="book-item">
                   <a
                     target="_blank"
@@ -470,6 +808,43 @@ function HomePage() {
                     loading="lazy"
                   ></iframe>
                 </div>
+              </div>
+            </div>
+
+            {/* F1 2026 Season Container */}
+            <div
+              className="windowTop"
+              style={{ marginTop: "20px", background: "#50B6D1" }}
+            >
+              <p>🏁 F1 2026 Season</p>
+              <div className="windowCircle">
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+              </div>
+            </div>
+            <div className="windowContent">
+              <F1RaceCalendar />
+              <div
+                style={{
+                  padding: "15px",
+                  background: "#03274B",
+                  border: "2px solid #000",
+                  borderRadius: "5px",
+                  marginTop: "15px",
+                }}
+              >
+                <p
+                  style={{
+                    color: "#50B6D1",
+                    fontSize: "0.9rem",
+                    margin: 0,
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  💡 TIP: Try the Konami code (↑↑↓↓←→←→BA) for a surprise!
+                </p>
               </div>
             </div>
           </div>
@@ -515,10 +890,9 @@ function HomePage() {
             className="popupContainer"
             style={{ width: "90%", maxWidth: "450px" }}
           >
-            {/* HEADER - Matches your Sidebar/Content headers */}
             <div className="windowTop" style={{ background: "#f96a6a" }}>
               <p style={{ color: "white" }}>
-                <span style={{ marginRight: "8px" }}></span>
+                <span style={{ marginRight: "8px" }}>⚠️</span>
                 System_Alert.exe
               </p>
               <div className="windowCircle">
@@ -528,7 +902,6 @@ function HomePage() {
               </div>
             </div>
 
-            {/* BODY - Matches your .windowContent and .post style */}
             <div className="windowContent popupBox">
               <div
                 className="warning-blink"
