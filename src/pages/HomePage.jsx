@@ -152,14 +152,14 @@ function F1EasterEgg() {
   const handleF1Click = () => {
     const newClicks = f1Clicks + 1;
     setF1Clicks(newClicks);
-    if (newClicks === 20) {
+    if (newClicks === 5) {
       triggerF1Sound();
       setF1Clicks(0);
     }
   };
 
   const triggerF1Sound = () => {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 5; i++) {
       setTimeout(() => {
         createFallingF1();
       }, i * 150);
@@ -218,7 +218,7 @@ function F1EasterEgg() {
         }}
         onMouseEnter={(e) => (e.target.style.opacity = 0.3)}
         onMouseLeave={(e) => (e.target.style.opacity = 0.1)}
-        title={`${f1Clicks}/20 - Click for F1 surprise!`}
+        title={`${f1Clicks}/5 - Click for F1 surprise!`}
       >
         🏁
       </div>
@@ -509,76 +509,76 @@ function HomePage() {
               </p>
               <br />
               <CatGifEasterEgg />
-<p>
-                 I am someone who loves to learn and try new things. Come follow
-                 me on my side quests!
-               </p>
+              <p>
+                I am someone who loves to learn and try new things. Come follow
+                me on my side quests!
+              </p>
 
-               <div
-                 className="separate"
-                 style={{
-                   background: "#cfd3da",
-                   padding: "20px",
-                   border: "2px solid #000",
-                   borderRadius: "5px",
-                   boxShadow: "4px 4px 0px #000",
-                   marginTop: "30px",
-                 }}
-               >
-                 <h1
-                   style={{
-                     color: "#03274B",
-                     textAlign: "center",
-                     fontSize: "1.5rem",
-                     marginBottom: "15px",
-                     borderBottom: "2px solid #000",
-                     paddingBottom: "10px",
-                   }}
-                 >
-                   🏎️ MY F1 CORNER
-                 </h1>
-                 <div style={{ color: "#000" }}>
-                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                     <b style={{ color: "#50B6D1" }}>
-                       &gt;&gt; Favorite Driver:
-                     </b>{" "}
-                     <span style={{ marginLeft: "8px" }}>Max Verstappen</span>
-                   </p>
-                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Favorite Team:</b>{" "}
-                     <span style={{ marginLeft: "8px" }}>Red Bull Racing</span>
-                   </p>
-                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Watching Since:</b>{" "}
-                     <span style={{ marginLeft: "8px" }}>2020</span>
-                   </p>
-                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                     <b style={{ color: "#50B6D1" }}>
-                       &gt;&gt; Favorite Circuit:
-                     </b>{" "}
-                     <span style={{ marginLeft: "8px" }}>Spa-Francorchamps</span>
-                   </p>
-                   <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                     <b style={{ color: "#50B6D1" }}>&gt;&gt; Dream: </b>{" "}
-                     <span style={{ marginLeft: "8px" }}>Attend Monaco GP</span>
-                   </p>
-                   <p
-                     style={{
-                       fontSize: "0.85rem",
-                       marginTop: "15px",
-                       opacity: 0.7,
-                       fontStyle: "italic",
-                       textAlign: "center",
-                       borderTop: "1px dashed #000",
-                       paddingTop: "10px",
-                     }}
-                   >
-                     "Simply lovely" - The drive for perfection
-                   </p>
-                 </div>
-               </div>
+              <div
+                className="separate"
+                style={{
+                  background: "#cfd3da",
+                  padding: "20px",
+                  border: "2px solid #000",
+                  borderRadius: "5px",
+                  boxShadow: "4px 4px 0px #000",
+                  marginTop: "30px",
+                }}
+              >
+                <h1
+                  style={{
+                    color: "#03274B",
+                    textAlign: "center",
+                    fontSize: "1.5rem",
+                    marginBottom: "15px",
+                    borderBottom: "2px solid #000",
+                    paddingBottom: "10px",
+                  }}
+                >
+                  🏎️ MY F1 CORNER
+                </h1>
+                <div style={{ color: "#000" }}>
+                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                    <b style={{ color: "#50B6D1" }}>
+                      &gt;&gt; Favorite Driver:
+                    </b>{" "}
+                    <span style={{ marginLeft: "8px" }}>Max Verstappen</span>
+                  </p>
+                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Favorite Team:</b>{" "}
+                    <span style={{ marginLeft: "8px" }}>Red Bull Racing</span>
+                  </p>
+                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Watching Since:</b>{" "}
+                    <span style={{ marginLeft: "8px" }}>2020</span>
+                  </p>
+                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                    <b style={{ color: "#50B6D1" }}>
+                      &gt;&gt; Favorite Circuit:
+                    </b>{" "}
+                    <span style={{ marginLeft: "8px" }}>Spa-Francorchamps</span>
+                  </p>
+                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
+                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Dream: </b>{" "}
+                    <span style={{ marginLeft: "8px" }}>Attend Monaco GP</span>
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      marginTop: "15px",
+                      opacity: 0.7,
+                      fontStyle: "italic",
+                      textAlign: "center",
+                      borderTop: "1px dashed #000",
+                      paddingTop: "10px",
+                    }}
+                  >
+                    "Simply lovely" - The drive for perfection
+                  </p>
+                </div>
+              </div>
 
-               <div className="separate">
+              <div className="separate">
                 <h1>Other places to find me</h1>
                 <ul>
                   <li>
@@ -603,8 +603,6 @@ function HomePage() {
               </div>
             </div>
           </div>
-
-          
 
           <div className="content">
             <div className="windowTop">
@@ -642,8 +640,6 @@ function HomePage() {
                 </div>
               </div>
             </div>
-
-            
 
             <div className="windowTop" style={{ marginTop: "20px" }}>
               <p>Fun things</p>
