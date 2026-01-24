@@ -1,304 +1,35 @@
 import React, { useState, useEffect } from "react";
+import { useF1Data } from "../hooks/useF1Data";
 
 function F1Page() {
   const [selectedTab, setSelectedTab] = useState("standings");
-  const [nextRace, setNextRace] = useState({
-    name: "Australian Grand Prix",
-    circuit: "Albert Park Circuit",
-    date: new Date("2026-03-06"),
-    round: 1,
-    country: "Australia",
-  });
+  const { 
+    nextRace, 
+    seasonProgress, 
+    driverStandings, 
+    constructorStandings, 
+    lastUpdated,
+    loading,
+    error,
+    isLive,
+    refreshData
+  } = useF1Data();
   const [timeLeft, setTimeLeft] = useState({});
-
-  // Driver Standings Data (2026 Season - Pre-season)
-  const driverStandings = [
-    {
-      pos: 1,
-      driver: "Max Verstappen",
-      team: "Red Bull Racing",
-      points: 0,
-      wins: 0,
-      color: "#0600EF",
-    },
-    {
-      pos: 2,
-      driver: "Lando Norris",
-      team: "McLaren",
-      points: 0,
-      wins: 0,
-      color: "#FF8700",
-    },
-    {
-      pos: 3,
-      driver: "Charles Leclerc",
-      team: "Ferrari",
-      points: 0,
-      wins: 0,
-      color: "#DC0000",
-    },
-    {
-      pos: 4,
-      driver: "Lewis Hamilton",
-      team: "Ferrari",
-      points: 0,
-      wins: 0,
-      color: "#DC0000",
-    },
-    {
-      pos: 5,
-      driver: "Oscar Piastri",
-      team: "McLaren",
-      points: 0,
-      wins: 0,
-      color: "#FF8700",
-    },
-    {
-      pos: 6,
-      driver: "George Russell",
-      team: "Mercedes",
-      points: 0,
-      wins: 0,
-      color: "#00D2BE",
-    },
-    {
-      pos: 7,
-      driver: "Kimi Antonelli",
-      team: "Mercedes",
-      points: 0,
-      wins: 0,
-      color: "#00D2BE",
-    },
-    {
-      pos: 8,
-      driver: "Carlos Sainz",
-      team: "Williams",
-      points: 0,
-      wins: 0,
-      color: "#005AFF",
-    },
-    {
-      pos: 9,
-      driver: "Fernando Alonso",
-      team: "Aston Martin",
-      points: 0,
-      wins: 0,
-      color: "#006F62",
-    },
-    {
-      pos: 10,
-      driver: "Lance Stroll",
-      team: "Aston Martin",
-      points: 0,
-      wins: 0,
-      color: "#006F62",
-    },
-  ];
-
-  // Constructor Standings Data (2026 Season - Pre-season)
-  const constructorStandings = [
-    {
-      pos: 1,
-      team: "Red Bull Racing",
-      points: 0,
-      wins: 0,
-      color: "#0600EF",
-    },
-    { pos: 2, team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
-    { pos: 3, team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
-    { pos: 4, team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
-    { pos: 5, team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
-    { pos: 6, team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
-    { pos: 7, team: "Williams", points: 0, wins: 0, color: "#005AFF" },
-    { pos: 8, team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
-    { pos: 9, team: "Audi", points: 0, wins: 0, color: "#C1002B" },
-    { pos: 10, team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
-  ];
-
-  // 2026 Race Calendar
-  const raceCalendar = [
-    {
-      round: 1,
-      race: "Australian Grand Prix",
-      circuit: "Albert Park Circuit",
-      date: "Mar 6-8",
-      country: "🇦🇺",
-    },
-    {
-      round: 2,
-      race: "Chinese Grand Prix",
-      circuit: "Shanghai International Circuit",
-      date: "Mar 13-15",
-      country: "🇨🇳",
-    },
-    {
-      round: 3,
-      race: "Japanese Grand Prix",
-      circuit: "Suzuka Circuit",
-      date: "Mar 27-29",
-      country: "🇯🇵",
-    },
-    {
-      round: 4,
-      race: "Bahrain Grand Prix",
-      circuit: "Bahrain International Circuit",
-      date: "Apr 10-12",
-      country: "🇧🇭",
-    },
-    {
-      round: 5,
-      race: "Saudi Arabian Grand Prix",
-      circuit: "Jeddah Corniche Circuit",
-      date: "Apr 17-19",
-      country: "🇸🇦",
-    },
-    {
-      round: 6,
-      race: "Miami Grand Prix",
-      circuit: "Miami International Autodrome",
-      date: "May 1-3",
-      country: "🇺🇸",
-    },
-    {
-      round: 7,
-      race: "Canadian Grand Prix",
-      circuit: "Circuit Gilles Villeneuve",
-      date: "May 22-24",
-      country: "🇨🇦",
-    },
-    {
-      round: 8,
-      race: "Monaco Grand Prix",
-      circuit: "Circuit de Monaco",
-      date: "Jun 5-7",
-      country: "🇲🇨",
-    },
-    {
-      round: 9,
-      race: "Spanish Grand Prix",
-      circuit: "Circuit de Barcelona-Catalunya",
-      date: "Jun 12-14",
-      country: "🇪🇸",
-    },
-    {
-      round: 10,
-      race: "Austrian Grand Prix",
-      circuit: "Red Bull Ring",
-      date: "Jun 26-28",
-      country: "🇦🇹",
-    },
-    {
-      round: 11,
-      race: "British Grand Prix",
-      circuit: "Silverstone Circuit",
-      date: "Jul 3-5",
-      country: "🇬🇧",
-    },
-    {
-      round: 12,
-      race: "Belgian Grand Prix",
-      circuit: "Circuit de Spa-Francorchamps",
-      date: "Jul 17-19",
-      country: "🇧🇪",
-    },
-    {
-      round: 13,
-      race: "Hungarian Grand Prix",
-      circuit: "Hungaroring",
-      date: "Jul 24-26",
-      country: "🇭🇺",
-    },
-    {
-      round: 14,
-      race: "Dutch Grand Prix",
-      circuit: "Circuit Zandvoort",
-      date: "Aug 21-23",
-      country: "🇳🇱",
-    },
-    {
-      round: 15,
-      race: "Italian Grand Prix",
-      circuit: "Autodromo Nazionale di Monza",
-      date: "Sep 4-6",
-      country: "🇮🇹",
-    },
-    {
-      round: 16,
-      race: "Spanish Grand Prix",
-      circuit: "Circuit de Madrid",
-      date: "Sep 11-13",
-      country: "🇪🇸",
-    },
-    {
-      round: 17,
-      race: "Azerbaijan Grand Prix",
-      circuit: "Baku City Circuit",
-      date: "Sep 24-26",
-      country: "🇦🇿",
-    },
-    {
-      round: 18,
-      race: "Singapore Grand Prix",
-      circuit: "Marina Bay Street Circuit",
-      date: "Oct 9-11",
-      country: "🇸🇬",
-    },
-    {
-      round: 19,
-      race: "United States Grand Prix",
-      circuit: "Circuit of the Americas",
-      date: "Oct 23-25",
-      country: "🇺🇸",
-    },
-    {
-      round: 20,
-      race: "Mexico City Grand Prix",
-      circuit: "Autódromo Hermanos Rodríguez",
-      date: "Oct 30-Nov 1",
-      country: "🇲🇽",
-    },
-    {
-      round: 21,
-      race: "Brazilian Grand Prix",
-      circuit: "Autódromo José Carlos Pace",
-      date: "Nov 6-8",
-      country: "🇧🇷",
-    },
-    {
-      round: 22,
-      race: "Las Vegas Grand Prix",
-      circuit: "Las Vegas Street Circuit",
-      date: "Nov 19-21",
-      country: "🇺🇸",
-    },
-    {
-      round: 23,
-      race: "Qatar Grand Prix",
-      circuit: "Losail International Circuit",
-      date: "Nov 27-29",
-      country: "🇶🇦",
-    },
-    {
-      round: 24,
-      race: "Abu Dhabi Grand Prix",
-      circuit: "Yas Marina Circuit",
-      date: "Dec 4-6",
-      country: "🇦🇪",
-    },
-  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = new Date();
-      const difference = nextRace.date - now;
+      if (nextRace) {
+        const now = new Date();
+        const difference = new Date(nextRace.date) - now;
 
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
+        if (difference > 0) {
+          setTimeLeft({
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+          });
+        }
       }
     }, 1000);
 
@@ -398,10 +129,10 @@ function F1Page() {
           }}
         >
           <section style={{ width: "100%", maxWidth: "1200px" }}>
-            {/* Secret Unlocked Banner */}
+             {/* Secret Unlocked Banner */}
             <div
               style={{
-                background: "#50B6D1",
+                background: isLive ? "#50B6D1" : error ? "#FFA0A0" : loading ? "#FFD700" : "#cfd3da",
                 border: "4px solid #000",
                 padding: "20px",
                 marginBottom: "30px",
@@ -417,7 +148,7 @@ function F1Page() {
                   color: "#000",
                 }}
               >
-                🏁 SECRET F1 ZONE UNLOCKED! 🏁
+                {isLive ? "🏁 LIVE F1 ZONE 🏁" : error ? "❌ API ERROR" : loading ? "⏳ LOADING" : "🏁 SECRET F1 ZONE 🏁"}
               </h1>
               <p
                 style={{
@@ -427,8 +158,25 @@ function F1Page() {
                   opacity: 0.8,
                 }}
               >
-                You found the hidden Formula 1 command center!
+                {isLive ? "Real-time F1 Data Connected!" : error ? `Error: ${error}` : loading ? "Fetching F1 data..." : "You found hidden Formula 1 command center!"}
               </p>
+              {error && (
+                <button
+                  onClick={refreshData}
+                  style={{
+                    marginTop: "15px",
+                    padding: "10px 20px",
+                    background: "#fff",
+                    border: "2px solid #000",
+                    borderRadius: "5px",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    cursor: "pointer"
+                  }}
+                >
+                  🔄 Retry
+                </button>
+              )}
             </div>
 
             {/* Next Race Countdown */}
@@ -442,18 +190,18 @@ function F1Page() {
             </div>
             <div className="windowContent" style={{ marginBottom: "30px" }}>
               <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                <h2
-                  style={{
-                    fontSize: "2rem",
-                    color: "#03274B",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {nextRace.name}
-                </h2>
-                <p style={{ fontSize: "1.2rem", color: "#666" }}>
-                  📍 {nextRace.circuit} • Round {nextRace.round}/24
-                </p>
+                 <h2
+                   style={{
+                     fontSize: "2rem",
+                     color: "#03274B",
+                     marginBottom: "10px",
+                   }}
+                 >
+                   {nextRace?.race || "Loading..."}
+                 </h2>
+                 <p style={{ fontSize: "1.2rem", color: "#666" }}>
+                   📍 {nextRace?.circuit || "Loading..."} • Round {nextRace?.round || 1}/24
+                 </p>
               </div>
 
               <div
@@ -908,14 +656,39 @@ function F1Page() {
                     24 Races • March - December 2026
                   </h2>
                   <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns:
-                        "repeat(auto-fill, minmax(300px, 1fr))",
-                      gap: "20px",
-                    }}
-                  >
-                    {raceCalendar.map((race) => (
+                     style={{
+                       display: "grid",
+                       gridTemplateColumns:
+                         "repeat(auto-fill, minmax(300px, 1fr))",
+                       gap: "20px",
+                     }}
+                   >
+                     {[
+  { round: 1, race: "Australian Grand Prix", circuit: "Albert Park Circuit", date: "Mar 6-8", country: "🇦🇺" },
+  { round: 2, race: "Chinese Grand Prix", circuit: "Shanghai International Circuit", date: "Mar 13-15", country: "🇨🇳" },
+  { round: 3, race: "Japanese Grand Prix", circuit: "Suzuka Circuit", date: "Mar 27-29", country: "🇯🇵" },
+  { round: 4, race: "Bahrain Grand Prix", circuit: "Bahrain International Circuit", date: "Apr 10-12", country: "🇧🇭" },
+  { round: 5, race: "Saudi Arabian Grand Prix", circuit: "Jeddah Corniche Circuit", date: "Apr 17-19", country: "🇸🇦" },
+  { round: 6, race: "Miami Grand Prix", circuit: "Miami International Autodrome", date: "May 1-3", country: "🇺🇸" },
+  { round: 7, race: "Canadian Grand Prix", circuit: "Circuit Gilles Villeneuve", date: "May 22-24", country: "🇨🇦" },
+  { round: 8, race: "Monaco Grand Prix", circuit: "Circuit de Monaco", date: "Jun 5-7", country: "🇲🇨" },
+  { round: 9, race: "Spanish Grand Prix", circuit: "Circuit de Barcelona-Catalunya", date: "Jun 12-14", country: "🇪🇸" },
+  { round: 10, race: "Austrian Grand Prix", circuit: "Red Bull Ring", date: "Jun 26-28", country: "🇦🇹" },
+  { round: 11, race: "British Grand Prix", circuit: "Silverstone Circuit", date: "Jul 3-5", country: "🇬🇧" },
+  { round: 12, race: "Belgian Grand Prix", circuit: "Circuit de Spa-Francorchamps", date: "Jul 17-19", country: "🇧🇪" },
+  { round: 13, race: "Hungarian Grand Prix", circuit: "Hungaroring", date: "Jul 24-26", country: "🇭🇺" },
+  { round: 14, race: "Dutch Grand Prix", circuit: "Circuit Zandvoort", date: "Aug 21-23", country: "🇳🇱" },
+  { round: 15, race: "Italian Grand Prix", circuit: "Autodromo Nazionale di Monza", date: "Sep 4-6", country: "🇮🇹" },
+  { round: 16, race: "Spanish Grand Prix", circuit: "Circuit de Madrid", date: "Sep 11-13", country: "🇪🇸" },
+  { round: 17, race: "Azerbaijan Grand Prix", circuit: "Baku City Circuit", date: "Sep 24-26", country: "🇦🇿" },
+  { round: 18, race: "Singapore Grand Prix", circuit: "Marina Bay Street Circuit", date: "Oct 9-11", country: "🇸🇬" },
+  { round: 19, race: "United States Grand Prix", circuit: "Circuit of the Americas", date: "Oct 23-25", country: "🇺🇸" },
+  { round: 20, race: "Mexico City Grand Prix", circuit: "Autódromo Hermanos Rodríguez", date: "Oct 30-Nov 1", country: "🇲🇽" },
+  { round: 21, race: "Brazilian Grand Prix", circuit: "Autódromo José Carlos Pace", date: "Nov 6-8", country: "🇧🇷" },
+  { round: 22, race: "Las Vegas Grand Prix", circuit: "Las Vegas Street Circuit", date: "Nov 19-21", country: "🇺🇸" },
+  { round: 23, race: "Qatar Grand Prix", circuit: "Losail International Circuit", date: "Nov 27-29", country: "🇶🇦" },
+  { round: 24, race: "Abu Dhabi Grand Prix", circuit: "Yas Marina Circuit", date: "Dec 4-6", country: "🇦🇪" }
+].map((race) => (
                       <div
                         key={race.round}
                         className="post"
@@ -1015,19 +788,19 @@ style={{
       <footer
         style={{ textAlign: "center", padding: "40px", marginTop: "20px" }}
       >
-        <p style={{ color: "#565f89", fontSize: "0.9rem" }}>
-          🏎️ F1 Command Center - Lights Out and Away We Go!
-        </p>
-        <p
-          style={{
-            color: "#565f89",
-            fontSize: "0.8rem",
-            marginTop: "10px",
-            opacity: 0.6,
-          }}
-        >
-          Konami Code Easter Egg • Keep this secret! 🤫
-        </p>
+         <p style={{ color: "#565f89", fontSize: "0.9rem" }}>
+           🏎️ F1 Command Center - Lights Out and Away We Go!
+         </p>
+         <p
+           style={{
+             color: "#565f89",
+             fontSize: "0.8rem",
+             marginTop: "10px",
+             opacity: 0.6,
+           }}
+         >
+           Last updated: {lastUpdated.toLocaleString()} • Konami Code Easter Egg • Keep this secret! 🤫
+         </p>
       </footer>
 
       <style>{`

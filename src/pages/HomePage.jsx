@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import VisitorCounter from "../components/VisitorCounter";
+import { useF1Data } from "../hooks/useF1Data";
 import "../App.css";
 
 // Cat GIF Easter Egg Component with Cat Rain
@@ -96,10 +97,31 @@ function CatGifEasterEgg() {
           </div>
         </div>
       )}
-      <style>{`
+<style>{`
         @keyframes bounce { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-20px); } }
+        @keyframes trackPulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
         #blinkies:hover { transform: scale(1.05) !important; }
         #blinkies:active { transform: scale(0.95) !important; }
+        
+        .loot-item { position: relative; border-bottom: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; }
+        .loot-text { transition: color 0.2s; }
+        .loot-item:hover .loot-text { color: #50B6D1; font-weight: bold; }
+        
+        .loot-hint { 
+          display: none; 
+          position: absolute; 
+          background: #ffffca; 
+          border: 1px solid #000; 
+          padding: 6px 10px; 
+          font-size: 0.75rem; 
+          z-index: 100;
+          bottom: 100%;
+          left: 10px;
+          white-space: nowrap;
+          box-shadow: 3px 3px 0px #000;
+          color: #000;
+        }
+        .loot-item:hover .loot-hint { display: block; }
       `}</style>
     </>
   );
@@ -271,25 +293,22 @@ function F1EasterEgg() {
 
 // F1 Race Calendar Component
 function F1RaceCalendar() {
-  const [nextRace] = useState({
-    name: "Australian Grand Prix",
-    circuit: "Albert Park Circuit",
-    date: new Date("2026-03-06"),
-    round: 1,
-  });
+  const { nextRace, seasonProgress, completedRaces } = useF1Data();
   const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = new Date();
-      const difference = nextRace.date - now;
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
+      if (nextRace) {
+        const now = new Date();
+        const difference = new Date(nextRace.date) - now;
+        if (difference > 0) {
+          setTimeLeft({
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+          });
+        }
       }
     }, 1000);
     return () => clearInterval(timer);
@@ -325,13 +344,13 @@ function F1RaceCalendar() {
               color: "#000",
             }}
           >
-            {nextRace.name}
+            {nextRace?.race || "Loading..."}
           </div>
           <div style={{ fontSize: "1.1rem", color: "#333" }}>
-            📍 {nextRace.circuit}
+            📍 {nextRace?.circuit || "Loading..."}
           </div>
           <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
-            Round {nextRace.round} of 24
+            Round {nextRace?.round || 1} of 24
           </div>
         </div>
         <div
@@ -376,45 +395,46 @@ function F1RaceCalendar() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: "20px" }}>
-          <div
-            style={{
-              background: "#fff",
-              height: "30px",
-              borderRadius: "5px",
-              overflow: "hidden",
-              border: "2px solid #000",
-            }}
-          >
-            <div
-              style={{
-                background: "#50B6D1",
-                height: "100%",
-                width: "0%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
-                color: "#000",
-                transition: "width 0.5s ease",
-                fontSize: "0.9rem",
-              }}
-            >
-              0%
-            </div>
-          </div>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              textAlign: "center",
-              marginTop: "5px",
-              opacity: 0.7,
-              color: "#000",
-            }}
-          >
-            Season Progress
-          </p>
-        </div>
+<div style={{ marginTop: "20px" }}>
+           <div
+             style={{
+               background: "#fff",
+               height: "30px",
+               borderRadius: "5px",
+               overflow: "hidden",
+               border: "2px solid #000",
+               boxShadow: "3px 3px 0px #000",
+             }}
+           >
+             <div
+               style={{
+                 background: "#0600EF",
+                 height: "100%",
+                 width: `${seasonProgress}%`,
+                 display: "flex",
+                 alignItems: "center",
+                 justifyContent: "center",
+                 fontWeight: "bold",
+                 color: "#fff",
+                 transition: "width 0.5s ease",
+                 fontSize: "0.9rem",
+               }}
+             >
+               {seasonProgress}%
+             </div>
+           </div>
+           <p
+             style={{
+               fontSize: "0.8rem",
+               textAlign: "center",
+               marginTop: "5px",
+               opacity: 0.7,
+               color: "#000",
+             }}
+           >
+             Season Progress ({seasonProgress}% complete • {completedRaces}/24 races)
+           </p>
+         </div>
       </div>
     </div>
   );
@@ -507,6 +527,82 @@ function HomePage() {
               <p>
                 <b>&gt;&gt; Special Abilities: </b>gaming, drawing, writing{" "}
               </p>
+
+              {/* --- NEW SECTION: SKILL INVENTORY --- */}
+              <div
+                style={{
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                  padding: "15px",
+                  border: "2px dashed #000",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "4px",
+                }}
+              >
+                <h2
+                  style={{
+                    fontSize: "1.1rem",
+                    marginBottom: "10px",
+                    color: "#03274B",
+                  }}
+                >
+                  🎒 SKILL INVENTORY
+                </h2>
+                <ul
+                  style={{
+                    listStyleType: "none",
+                    padding: 0,
+                    margin: 0,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  {[
+                    {
+                      text: "ZED - +50 Debugging",
+                      icon: "🗡️",
+                      hint: "Legendary Weapon of Code",
+                    },
+                    {
+                      text: "Gaming PC - +100 Stealth",
+                      icon: "🛡️",
+                      hint: "Epic Gaming Rig",
+                    },
+                    {
+                      text: "Sketchbook - Level 5 Artist",
+                      icon: "📜",
+                      hint: "Rare Creative Item",
+                    },
+                    {
+                      text: "React - +30 Logic",
+                      icon: "🧪",
+                      hint: "Magic Framework",
+                    },
+                    {
+                      text: "Coffee - Haste Buff",
+                      icon: "⚡",
+                      hint: "Consumable: Speed Boost",
+                    },
+                    {
+                      text: "F1 Map - Max Speed",
+                      icon: "🗺️",
+                      hint: "Treasure Map: Racing Edition",
+                    },
+                  ].map((item, i) => (
+                    <li
+                      key={i}
+                      className="loot-item"
+                      style={{ marginBottom: "10px", padding: "5px" }}
+                    >
+                      <span style={{ marginRight: "8px" }}>{item.icon}</span>
+                      <span className="loot-text" style={{ cursor: "default" }}>
+                        {item.text}
+                      </span>
+                      <div className="loot-hint">{item.hint}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               <br />
               <CatGifEasterEgg />
               <p>
@@ -514,68 +610,64 @@ function HomePage() {
                 me on my side quests!
               </p>
 
+              {/* --- NEW SECTION: TROPHY ROOM --- */}
               <div
-                className="separate"
                 style={{
-                  background: "#cfd3da",
-                  padding: "20px",
-                  border: "2px solid #000",
-                  borderRadius: "5px",
-                  boxShadow: "4px 4px 0px #000",
-                  marginTop: "30px",
+                  marginTop: "25px",
+                  padding: "15px",
+                  border: "2px dashed #000",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "4px",
                 }}
               >
-                <h1
+                <h2
                   style={{
+                    fontSize: "1.1rem",
+                    marginBottom: "10px",
                     color: "#03274B",
-                    textAlign: "center",
-                    fontSize: "1.5rem",
-                    marginBottom: "15px",
-                    borderBottom: "2px solid #000",
-                    paddingBottom: "10px",
                   }}
                 >
-                  🏎️ MY F1 CORNER
-                </h1>
-                <div style={{ color: "#000" }}>
-                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                    <b style={{ color: "#50B6D1" }}>
-                      &gt;&gt; Favorite Driver:
-                    </b>{" "}
-                    <span style={{ marginLeft: "8px" }}>Max Verstappen</span>
-                  </p>
-                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Favorite Team:</b>{" "}
-                    <span style={{ marginLeft: "8px" }}>Red Bull Racing</span>
-                  </p>
-                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Watching Since:</b>{" "}
-                    <span style={{ marginLeft: "8px" }}>2020</span>
-                  </p>
-                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                    <b style={{ color: "#50B6D1" }}>
-                      &gt;&gt; Favorite Circuit:
-                    </b>{" "}
-                    <span style={{ marginLeft: "8px" }}>Spa-Francorchamps</span>
-                  </p>
-                  <p style={{ marginBottom: "8px", fontSize: "1rem" }}>
-                    <b style={{ color: "#50B6D1" }}>&gt;&gt; Dream: </b>{" "}
-                    <span style={{ marginLeft: "8px" }}>Attend Monaco GP</span>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "0.85rem",
-                      marginTop: "15px",
-                      opacity: 0.7,
-                      fontStyle: "italic",
-                      textAlign: "center",
-                      borderTop: "1px dashed #000",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    "Simply lovely" - The drive for perfection
-                  </p>
-                </div>
+                  🏆 RECENT LOOT (Digital Garden)
+                </h2>
+                <ul
+                  style={{
+                    listStyleType: "none",
+                    padding: 0,
+                    margin: 0,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  {[
+                    {
+                      text: "Finished 30-day drawing challenge",
+                      hint: "Unlocked 'Consistent Artist' perk!",
+                    },
+                    {
+                      text: "Finally beat Elden Ring",
+                      hint: "Patience +100 / Sanity -5",
+                    },
+                    {
+                      text: "Solved complex  bug",
+                      hint: "Effect: 'Simply Lovely' mood boost",
+                    },
+                    {
+                      text: "Speedran Hollow Knight",
+                      hint: "Effect: Ego Boosted",
+                    },
+                  ].map((loot, i) => (
+                    <li
+                      key={i}
+                      className="loot-item"
+                      style={{ marginBottom: "10px", padding: "5px" }}
+                    >
+                      <span style={{ marginRight: "8px" }}>⚜️</span>
+                      <span className="loot-text" style={{ cursor: "default" }}>
+                        {loot.text}
+                      </span>
+                      <div className="loot-hint">{loot.hint}</div>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div className="separate">
@@ -600,6 +692,88 @@ function HomePage() {
                     </a>
                   </li>
                 </ul>
+              </div>
+
+              <div
+                className="separate"
+                style={{
+                  marginTop: "30px",
+                  padding: "15px",
+                  border: "2px dashed #000",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "4px",
+                }}
+              >
+                <h2
+                  style={{
+                    fontSize: "1.1rem",
+                    marginBottom: "10px",
+                    color: "#03274B",
+                  }}
+                >
+                  🏎️ MY F1 CORNER
+                </h2>
+                <ul
+                  style={{
+                    listStyleType: "none",
+                    padding: 0,
+                    margin: 0,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  {[
+                    {
+                      text: "Favorite Driver: Max Verstappen",
+                      icon: "🏎️",
+                      hint: "3x World Champion",
+                    },
+                    {
+                      text: "Favorite Team: Red Bull Racing",
+                      icon: "🏁",
+                      hint: "Energy Drink Powered",
+                    },
+                    {
+                      text: "Watching Since: 2020",
+                      icon: "📅",
+                      hint: "The Covid Era Beginnings",
+                    },
+                    {
+                      text: "Favorite Circuit: Spa-Francorchamps",
+                      icon: "🏔️",
+                      hint: "Eau Rouge is simply lovely",
+                    },
+                    {
+                      text: "Dream: Attend Monaco GP",
+                      icon: "🌟",
+                      hint: "Ultimate F1 Experience",
+                    },
+                  ].map((item, i) => (
+                    <li
+                      key={i}
+                      className="loot-item"
+                      style={{ marginBottom: "10px", padding: "5px" }}
+                    >
+                      <span style={{ marginRight: "8px" }}>{item.icon}</span>
+                      <span className="loot-text" style={{ cursor: "default" }}>
+                        {item.text}
+                      </span>
+                      <div className="loot-hint">{item.hint}</div>
+                    </li>
+                  ))}
+                </ul>
+                <p
+                  style={{
+                    fontSize: "0.85rem",
+                    marginTop: "15px",
+                    opacity: 0.7,
+                    fontStyle: "italic",
+                    textAlign: "center",
+                    borderTop: "1px dashed #000",
+                    paddingTop: "10px",
+                  }}
+                >
+                  "Simply lovely" - The drive for perfection
+                </p>
               </div>
             </div>
           </div>

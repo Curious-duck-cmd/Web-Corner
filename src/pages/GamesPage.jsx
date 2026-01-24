@@ -167,24 +167,14 @@ function GamesPage() {
             
             {/* Hero Section */}
             <div style={{
-              background: 'linear-gradient(135deg, #03274B 0%, #50B6D1 100%)',
-              border: '4px solid #000',
-              borderRadius: '10px',
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: '2px dashed #000',
+              borderRadius: '4px',
               padding: '40px',
               marginBottom: '40px',
-              boxShadow: '12px 12px 0px #000',
-              position: 'relative',
-              overflow: 'hidden'
+              boxShadow: '3px 3px 0px #000',
+              position: 'relative'
             }}>
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.05) 10px, rgba(255,255,255,.05) 20px)',
-                pointerEvents: 'none'
-              }}></div>
               
               <h1 style={{ 
                 marginBottom: '20px',
