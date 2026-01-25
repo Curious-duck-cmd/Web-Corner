@@ -38,6 +38,17 @@ export const useF1Data = () => {
           setIsLive(false);
         }
         
+        // Handle fallback/mock data (when API fails)
+        if (f1Data.apiSuccess === false || f1Data.isFallback) {
+          console.log('🔄 Using fallback/mock F1 data');
+          setDriverStandings(f1Data.driverStandings || []);
+          setConstructorStandings(f1Data.constructorStandings || []);
+          setCompletedRaces(f1Data.completedRaces || 0);
+          setTotalRaces(f1Data.totalRaces || 24);
+          setNextRace(f1Data.nextRace);
+          setIsLive(true);
+        }
+        
         setLastUpdated(f1Data.lastUpdated);
         setLoading(false);
         

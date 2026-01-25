@@ -33,16 +33,57 @@ export const getCurrentSeasonStandings = async () => {
     };
     
   } catch (error) {
-    console.error('Error fetching F1 data:', error);
-    return {
-      driverStandings: [],
-      constructorStandings: [],
-      completedRaces: 0,
-      lastUpdated: new Date(),
-      success: false,
-      error: error.message
-    };
+    console.error('❌ Error fetching F1 data:', error);
+    console.log('🔄 Falling back to mock data');
+    
+    // Fallback to mock data when API fails
+    return getMock2026Data();
   }
+};
+
+// Fallback mock data for 2026 season
+const getMock2026Data = () => {
+  return {
+    driverStandings: [
+      { pos: 1, driver: "Max Verstappen", team: "Red Bull Racing", points: 0, wins: 0, color: "#0600EF" },
+      { pos: 2, driver: "Lando Norris", team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
+      { pos: 3, driver: "Charles Leclerc", team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
+      { pos: 4, driver: "Lewis Hamilton", team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
+      { pos: 5, driver: "Oscar Piastri", team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
+      { pos: 6, driver: "George Russell", team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
+      { pos: 7, driver: "Kimi Antonelli", team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
+      { pos: 8, driver: "Carlos Sainz", team: "Williams", points: 0, wins: 0, color: "#005AFF" },
+      { pos: 9, driver: "Fernando Alonso", team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
+      { pos: 10, driver: "Lance Stroll", team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
+      { pos: 11, driver: "Valtteri Bottas", team: "Kick Sauber", points: 0, wins: 0, color: "#52E252" },
+      { pos: 12, driver: "Zhou Guanyu", team: "Kick Sauber", points: 0, wins: 0, color: "#52E252" },
+      { pos: 13, driver: "Nico Hülkenberg", team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
+      { pos: 14, driver: "Oliver Bearman", team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
+      { pos: 15, driver: "Pierre Gasly", team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
+      { pos: 16, driver: "Jack Doohan", team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
+      { pos: 17, driver: "Yuki Tsunoda", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
+      { pos: 18, driver: "Liam Lawson", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
+      { pos: 19, driver: "Franco Colapinto", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
+      { pos: 20, driver: "Esteban Ocon", team: "Alpine", points: 0, wins: 0, color: "#0090FF" }
+    ],
+    constructorStandings: [
+      { pos: 1, team: "Red Bull Racing", points: 0, wins: 0, color: "#0600EF" },
+      { pos: 2, team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
+      { pos: 3, team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
+      { pos: 4, team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
+      { pos: 5, team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
+      { pos: 6, team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
+      { pos: 7, team: "Williams", points: 0, wins: 0, color: "#005AFF" },
+      { pos: 8, team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
+      { pos: 9, team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
+      { pos: 10, team: "Kick Sauber (Cadillac)", points: 0, wins: 0, color: "#52E252" },
+      { pos: 11, team: "Audi", points: 0, wins: 0, color: "#C1002B" }
+    ],
+    completedRaces: 0,
+    lastUpdated: new Date(),
+    success: true,
+    isFallback: true
+  };
 };
 
 // Get next race information
@@ -68,12 +109,21 @@ export const getNextRace = async () => {
     };
     
   } catch (error) {
-    console.error('Error fetching next race:', error);
+    console.error('❌ Error fetching next race:', error);
+    console.log('🔄 Using fallback next race data');
+    
+    // Fallback next race data
     return {
-      nextRace: null,
-      totalRaces: 0,
-      success: false,
-      error: error.message
+      nextRace: {
+        race: "Australian Grand Prix",
+        circuit: "Albert Park Circuit", 
+        date: "2026-03-06",
+        round: 1,
+        country: "🇦🇺"
+      },
+      totalRaces: 24,
+      success: true,
+      isFallback: true
     };
   }
 };

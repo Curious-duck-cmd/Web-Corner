@@ -158,7 +158,7 @@ function F1Page() {
                   opacity: 0.8,
                 }}
               >
-                {isLive ? "Real-time F1 Data Connected!" : error ? `Error: ${error}` : loading ? "Fetching F1 data..." : "You found hidden Formula 1 command center!"}
+                 {isLive ? "F1 Data Connected (Using Mock Data)" : error ? `Error: ${error}` : loading ? "Fetching F1 data..." : "You found hidden Formula 1 command center!"}
               </p>
               {error && (
                 <button
