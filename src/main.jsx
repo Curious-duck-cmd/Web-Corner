@@ -1,31 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './index.css';
+import React, { lazy, Suspense } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 
-// Performance optimization: Lazy loading for larger bundles
-import { lazy, Suspense } from 'react';
+// Lazy load the main App
+const LazyApp = lazy(() => import("./App.jsx"));
 
-// Lazy load components
-const LazyApp = lazy(() => import('./App.jsx'));
+// A cleaner, more modern Loader Component
+const PageLoader = () => (
+  <div className="loader-container">
+    <div className="loader-content">
+      <div className="spinner"></div>
+      <p>Initializing Experience...</p>
+    </div>
+  </div>
+);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Suspense fallback={
-      <div style={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#03274B',
-        color: '#fff',
-        fontSize: '1.2rem',
-        fontFamily: 'monospace'
-      }}>
-        Loading Portfolio...
-      </div>
-    }>
+    <Suspense fallback={<PageLoader />}>
       <LazyApp />
     </Suspense>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

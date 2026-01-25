@@ -706,6 +706,67 @@ html {
   scroll-behavior: smooth;
 }
 
+
+
+/* --- F1 GIF MODAL STYLES --- */
+.f1-gif-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-out;
+  text-align: center;
+}
+
+.f1-gif-container {
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.f1-gif-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: #1a1b26;
+  border: 2px solid #50B6D1;
+  color: #50B6D1;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-family: monospace;
+  transition: color 0.3s, background-color 0.3s;
+  z-index: 10001;
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f1-gif-close:hover {
+  color: #ffa0a0;
+  background-color: #03274B;
+}
+
 /* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar {
   width: 12px;
@@ -904,3 +965,5 @@ img {
 .loot-item:hover .loot-hint {
   display: block;
 }
+
+

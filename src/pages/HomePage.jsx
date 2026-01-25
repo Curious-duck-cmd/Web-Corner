@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import VisitorCounter from "../components/VisitorCounter";
 import { useF1Data } from "../hooks/useF1Data";
+import TestCenteredGif from "../components/TestCenteredGif";
 import "../App.css";
 
 // Cat GIF Easter Egg Component with Cat Rain
@@ -105,6 +106,8 @@ function CatGifEasterEgg() {
 function F1EasterEgg() {
   const [f1Clicks, setF1Clicks] = useState(0);
   const [showF1Effect, setShowF1Effect] = useState(false);
+  const [showGif, setShowGif] = useState(false);
+
   const [konamiCode, setKonamiCode] = useState([]);
 
   const targetKonami = [
@@ -128,48 +131,56 @@ function F1EasterEgg() {
         unlockF1Page();
         setKonamiCode([]);
       }
+
+      // Close GIF modal with ESC key
+      if (e.key === "Escape" && showGif) {
+        setShowGif(false);
+      }
     };
     window.addEventListener("keydown", handleKonami);
     return () => window.removeEventListener("keydown", handleKonami);
-  }, [konamiCode]);
+  }, [konamiCode, showGif]);
 
   const unlockF1Page = () => {
-    const audio = new Audio();
-    audio.src =
-      "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZUQ0PVqzn77BfGgs+ltj1xnMpBSp+zPLaizsIHGe57OihUg4NTqPj8bllHAU2jdXzyH0vBSZ1xe/akjwIF2S46+mnVBELTKXh8rpmHgU0i9Lzyn0wBSh5ye3dkj0JGmm97OmjUQ4OUanl8r1oHwc3kdXzy3wxByp9y+/blEAKG2y/7eykUhAOVK3o8sBoIAg5kdX0zH4yByx/zPDbl0MLHW/B7+6lVBIOV7Do8sJrIgo7ldj0zYE0CCuBzu/dnEQMHnLC8O+nVhQPWLLq88RsIws9mNr1z4I2Cix+0PDfnkYOIHTF8/CpWRUSXbXs9MduJAw+m9z1z4Q4DC6Czu7hokYOI3XF8/GrWhUUYLjv9clwJQ5Am9310oU6DS+Dz+7hpUgPJHfH9POsXBYVYrnx9sl0JxBAnd70z4Y7DjGDzuzipUkPJXnI9PSuXRcXZbv09Mt2KRFBn+D10Ig8DzKEz+zjp0oQJnrI9fSwXxgZZ731z4g+DzOF0OzlqU0RKHvJ9feyYRgaab749Mt5KhJCoeH114k/DzSG0evmqk4SIHrJ9vKxYhkaarnz9M16KRNCo+P224tADzSH0ezmq08SIXzK9vKzYxocb7z09cx8LBRDpOT33I1BETaI0uzprFETI33M9/O0ZRwdb7309s+ALRVEpuX33I5CEjaJ0u3qrlIUJH7N+PS2aB0ecL3199CBLxZFqOb43ZBDEjaK0+7rr1MVJYDPefS4ax4fc8H29dGEMBdGqef43pJEEjeL1O/ssVQWJoHQ+fS6bSAhdMH39tOGMxlHrOj64JNFEjiM1fDttVYXJ4LR+vW8byEidcP49tSINRpIrej645RGEjmM1vHvuFgYKIPT+/W+cSMjdsT59tWKOBtKr+r755ZHEzqN1/LwulkaKYTV/PXAcyUkd8X69teNOhxLsev76JhJFDuO2PTxvVwbKoXW/PXDdSYld8b79tiPPB1Ms+356plKFTyP2fTzwF4cK4bY/fXFdygmeM==";
-    audio.play().catch(() => {});
-    setShowF1Effect(true);
-    setTimeout(() => {
-      setShowF1Effect(false);
-      window.location.href = "/f1";
-    }, 2000);
+    // Trigger the same effect as 5 clicks
+    triggerF1Effect();
   };
 
   const handleF1Click = () => {
     const newClicks = f1Clicks + 1;
     setF1Clicks(newClicks);
+    
     if (newClicks === 5) {
-      triggerF1Sound();
+      triggerF1Effect();
       setF1Clicks(0);
     }
   };
 
-  const triggerF1Sound = () => {
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => {
-        createFallingF1();
-      }, i * 150);
-    }
+  const triggerF1Effect = () => {
+    // Show GIF modal
+    setShowGif(true);
+    
+    // Play F1 sound
     const audio = new Audio();
     audio.src =
       "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZUQ0PVqzn77BfGgs+ltj1xnMpBSp+zPLaizsIHGe57OihUg4NTqPj8bllHAU2jdXzyH0vBSZ1xe/akjwIF2S46+mnVBELTKXh8rpmHgU0i9Lzyn0wBSh5ye3dkj0JGmm97OmjUQ4OUanl8r1oHwc3kdXzy3wxByp9y+/blEAKG2y/7eykUhAOVK3o8sBoIAg5kdX0zH4yByx/zPDbl0MLHW/B7+6lVBIOV7Do8sJrIgo7ldj0zYE0CCuBzu/dnEQMHnLC8O+nVhQPWLLq88RsIws9mNr1z4I2Cix+0PDfnkYOIHTF8/CpWRUSXbXs9MduJAw+m9z1z4Q4DC6Czu7hokYOI3XF8/GrWhUUYLjv9clwJQ5Am9310oU6DS+Dz+7hpUgPJHfH9POsXBYVYrnx9sl0JxBAnd70z4Y7DjGDzuzipUkPJXnI9PSuXRcXZbv09Mt2KRFBn+D10Ig8DzKEz+zjp0oQJnrI9fSwXxgZZ731z4g+DzOF0OzlqU0RKHvJ9feyYRgaab749Mt5KhJCoeH114k/DzSG0evmqk4SIHrJ9vKxYhkaarnz9M16KRNCo+P224tADzSH0ezmq08SIXzK9vKzYxocb7z09cx8LBRDpOT33I1BETaI0uzprFETI33M9/O0ZRwdb7309s+ALRVEpuX33I5CEjaJ0u3qrlIUJH7N+PS2aB0ecL3199CBLxZFqOb43ZBDEjaK0+7rr1MVJYDPefS4ax4fc8H29dGEMBdGqef43pJEEjeL1O/ssVQWJoHQ+fS6bSAhdMH39tOGMxlHrOj64JNFEjiM1fDttVYXJ4LR+vW8byEidcP49tSINRpIrej645RGEjmM1vHvuFgYKIPT+/W+cSMjdsT59tWKOBtKr+r755ZHEzqN1/LwulkaKYTV/PXAcyUkd8X69teNOhxLsev76JhJFDuO2PTxvVwbKoXW/PXDdSYld8b79tiPPB1Ms+356plKFTyP2fTzwF4cK4bY/fXFdygmeM==";
     audio.play().catch(() => {});
+    
+    // Create lots of F1 emojis falling
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        createFallingF1();
+      }, i * 100);
+    }
+    
     setShowF1Effect(true);
     setTimeout(() => {
       setShowF1Effect(false);
-      // Navigate to F1 page for mobile accessibility
+      // Auto-close GIF modal after 2 seconds
+      setShowGif(false);
+      // Navigate to F1 page
       window.location.href = "/f1";
-    }, 2000);
+    }, 2000); // Show for only 2 seconds
   };
 
   const createFallingF1 = () => {
@@ -202,22 +213,33 @@ function F1EasterEgg() {
         onClick={handleF1Click}
         style={{
           position: "fixed",
-          bottom: "10px",
-          left: "10px",
-          width: "30px",
-          height: "30px",
+          bottom: "20px",
+          left: "1px",
+          width: "60px",
+          height: "60px",
           cursor: "pointer",
-          opacity: 0.1,
-          transition: "opacity 0.3s",
-          fontSize: "20px",
-          zIndex: 1000,
+          opacity: 0.8,
+          transition: "opacity 0.3s, transform 0.2s",
+          zIndex: 9999,
         }}
-        onMouseEnter={(e) => (e.target.style.opacity = 0.3)}
-        onMouseLeave={(e) => (e.target.style.opacity = 0.1)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = "1";
+          e.currentTarget.style.transform = "scale(1.1)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = "0.8";
+          e.currentTarget.style.transform = "scale(1)";
+        }}
         title={`${f1Clicks}/5 - Click for F1 surprise!`}
       >
-        🏁
+        <img
+          src="/image/f1.png"
+          alt="F1 Icon"
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
       </div>
+
+      <TestCenteredGif show={showGif} onClose={() => setShowGif(false)} />
 
       {showF1Effect && (
         <div
@@ -239,7 +261,7 @@ function F1EasterEgg() {
               animation: "checkeredWave 1s infinite",
             }}
           >
-            🏁
+            🏎️
           </div>
           <div
             style={{
@@ -249,9 +271,7 @@ function F1EasterEgg() {
               textShadow: "3px 3px 0px #000",
               fontFamily: "monospace",
             }}
-          >
-            LIGHTS OUT AND AWAY WE GO!
-          </div>
+          ></div>
         </div>
       )}
       <style>{`
@@ -324,7 +344,7 @@ function F1RaceCalendar() {
             📍 {nextRace?.circuit || "Loading..."}
           </div>
           <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
-            Round {nextRace?.round || 1} of 24
+            Round {nextRace?.round || 1} of 24 • 11 Teams • 22 Drivers
           </div>
         </div>
         <div

@@ -8,6 +8,7 @@ function F1Page() {
     seasonProgress, 
     driverStandings, 
     constructorStandings, 
+    schedule,
     lastUpdated,
     loading,
     error,
@@ -148,7 +149,7 @@ function F1Page() {
                   color: "#000",
                 }}
               >
-                {isLive ? "🏁 LIVE F1 ZONE 🏁" : error ? "❌ API ERROR" : loading ? "⏳ LOADING" : "🏁 SECRET F1 ZONE 🏁"}
+                 {isLive ? "🏁 2026 F1 ZONE 🏁" : error ? "❌ ERROR" : loading ? "⏳ LOADING" : "🏁 SECRET F1 ZONE 🏁"}
               </h1>
               <p
                 style={{
@@ -158,7 +159,7 @@ function F1Page() {
                   opacity: 0.8,
                 }}
               >
-                 {isLive ? "F1 Data Connected (Using Mock Data)" : error ? `Error: ${error}` : loading ? "Fetching F1 data..." : "You found hidden Formula 1 command center!"}
+                  {isLive ? "2026 Season Data Connected - Real-time Updates Active" : error ? `Error: ${error}` : loading ? "Loading 2026 F1 data..." : "You found hidden Formula 1 command center!"}
               </p>
               {error && (
                 <button
@@ -646,15 +647,15 @@ function F1Page() {
                   </div>
                 </div>
                 <div className="windowContent">
-                  <h2
-                    style={{
-                      fontSize: "1.8rem",
-                      marginBottom: "20px",
-                      color: "#03274B",
-                    }}
-                  >
-                    24 Races • March - December 2026
-                  </h2>
+            <h2
+              style={{
+                fontSize: "1.8rem",
+                marginBottom: "20px",
+                color: "#03274B",
+              }}
+            >
+              📅 2026 F1 Calendar • 24 Races • 11 Teams • 22 Drivers
+            </h2>
                   <div
                      style={{
                        display: "grid",
@@ -663,43 +664,18 @@ function F1Page() {
                        gap: "20px",
                      }}
                    >
-                     {[
-  { round: 1, race: "Australian Grand Prix", circuit: "Albert Park Circuit", date: "Mar 6-8", country: "🇦🇺" },
-  { round: 2, race: "Chinese Grand Prix", circuit: "Shanghai International Circuit", date: "Mar 13-15", country: "🇨🇳" },
-  { round: 3, race: "Japanese Grand Prix", circuit: "Suzuka Circuit", date: "Mar 27-29", country: "🇯🇵" },
-  { round: 4, race: "Bahrain Grand Prix", circuit: "Bahrain International Circuit", date: "Apr 10-12", country: "🇧🇭" },
-  { round: 5, race: "Saudi Arabian Grand Prix", circuit: "Jeddah Corniche Circuit", date: "Apr 17-19", country: "🇸🇦" },
-  { round: 6, race: "Miami Grand Prix", circuit: "Miami International Autodrome", date: "May 1-3", country: "🇺🇸" },
-  { round: 7, race: "Canadian Grand Prix", circuit: "Circuit Gilles Villeneuve", date: "May 22-24", country: "🇨🇦" },
-  { round: 8, race: "Monaco Grand Prix", circuit: "Circuit de Monaco", date: "Jun 5-7", country: "🇲🇨" },
-  { round: 9, race: "Spanish Grand Prix", circuit: "Circuit de Barcelona-Catalunya", date: "Jun 12-14", country: "🇪🇸" },
-  { round: 10, race: "Austrian Grand Prix", circuit: "Red Bull Ring", date: "Jun 26-28", country: "🇦🇹" },
-  { round: 11, race: "British Grand Prix", circuit: "Silverstone Circuit", date: "Jul 3-5", country: "🇬🇧" },
-  { round: 12, race: "Belgian Grand Prix", circuit: "Circuit de Spa-Francorchamps", date: "Jul 17-19", country: "🇧🇪" },
-  { round: 13, race: "Hungarian Grand Prix", circuit: "Hungaroring", date: "Jul 24-26", country: "🇭🇺" },
-  { round: 14, race: "Dutch Grand Prix", circuit: "Circuit Zandvoort", date: "Aug 21-23", country: "🇳🇱" },
-  { round: 15, race: "Italian Grand Prix", circuit: "Autodromo Nazionale di Monza", date: "Sep 4-6", country: "🇮🇹" },
-  { round: 16, race: "Spanish Grand Prix", circuit: "Circuit de Madrid", date: "Sep 11-13", country: "🇪🇸" },
-  { round: 17, race: "Azerbaijan Grand Prix", circuit: "Baku City Circuit", date: "Sep 24-26", country: "🇦🇿" },
-  { round: 18, race: "Singapore Grand Prix", circuit: "Marina Bay Street Circuit", date: "Oct 9-11", country: "🇸🇬" },
-  { round: 19, race: "United States Grand Prix", circuit: "Circuit of the Americas", date: "Oct 23-25", country: "🇺🇸" },
-  { round: 20, race: "Mexico City Grand Prix", circuit: "Autódromo Hermanos Rodríguez", date: "Oct 30-Nov 1", country: "🇲🇽" },
-  { round: 21, race: "Brazilian Grand Prix", circuit: "Autódromo José Carlos Pace", date: "Nov 6-8", country: "🇧🇷" },
-  { round: 22, race: "Las Vegas Grand Prix", circuit: "Las Vegas Street Circuit", date: "Nov 19-21", country: "🇺🇸" },
-  { round: 23, race: "Qatar Grand Prix", circuit: "Losail International Circuit", date: "Nov 27-29", country: "🇶🇦" },
-  { round: 24, race: "Abu Dhabi Grand Prix", circuit: "Yas Marina Circuit", date: "Dec 4-6", country: "🇦🇪" }
-].map((race) => (
+                     {schedule.map((race) => (
                       <div
                         key={race.round}
                         className="post"
-style={{
-                           padding: "15px",
-                           background: race.round === 1 ? "#50B6D1" : "#cfd3da",
-                           border: "2px solid #000",
-                           boxShadow: "4px 4px 0px #000",
-                           transition: "all 0.3s ease",
-                           maxHeight: "none",
-                         }}
+                            style={{
+                               padding: "15px",
+                               background: race.round === (nextRace?.round || 1) ? "#50B6D1" : "#cfd3da",
+                               border: "2px solid #000",
+                               boxShadow: "4px 4px 0px #000",
+                               transition: "all 0.3s ease",
+                               maxHeight: "none",
+                             }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = "translateY(-5px)";
                           e.currentTarget.style.boxShadow = "6px 6px 0px #000";
@@ -740,7 +716,7 @@ style={{
                             color: "#000",
                           }}
                         >
-                          {race.race}
+                           {race.race} Grand Prix
                         </h3>
                         <p
                           style={{
@@ -758,9 +734,9 @@ style={{
                             color: "#000",
                           }}
                         >
-                          📅 {race.date}
+                           📅 {new Date(race.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </p>
-{race.round === 1 && (
+{race.round === (nextRace?.round || 1) && (
                            <div
                              style={{
                                marginTop: "10px",
