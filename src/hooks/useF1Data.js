@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { getCachedF1Data } from '../services/f1Api';
+import { useState, useEffect } from "react";
+import { getCachedF1Data } from "../services/f1Api";
 
 export const useF1Data = () => {
   const [seasonProgress, setSeasonProgress] = useState(0);
@@ -18,10 +18,10 @@ export const useF1Data = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Fetch real F1 data from API
         const f1Data = await getCachedF1Data();
-        
+
         if (f1Data.apiSuccess) {
           // Set real data
           setDriverStandings(f1Data.driverStandings || []);
@@ -30,17 +30,17 @@ export const useF1Data = () => {
           setTotalRaces(f1Data.totalRaces || 24);
           setNextRace(f1Data.nextRace);
           setIsLive(true);
-          
-          console.log('✅ Live F1 data loaded successfully');
+
+          console.log("✅ Live F1 data loaded successfully");
         } else {
-          console.error('❌ Failed to load F1 data:', f1Data.error);
+          console.error("❌ Failed to load F1 data:", f1Data.error);
           setError(f1Data.error);
           setIsLive(false);
         }
-        
+
         // Handle fallback/mock data (when API fails)
         if (f1Data.apiSuccess === false || f1Data.isFallback) {
-          console.log('🔄 Using fallback/mock F1 data');
+          console.log("🔄 Using fallback/mock F1 data");
           setDriverStandings(f1Data.driverStandings || []);
           setConstructorStandings(f1Data.constructorStandings || []);
           setCompletedRaces(f1Data.completedRaces || 0);
@@ -48,12 +48,11 @@ export const useF1Data = () => {
           setNextRace(f1Data.nextRace);
           setIsLive(true);
         }
-        
+
         setLastUpdated(f1Data.lastUpdated);
         setLoading(false);
-        
       } catch (err) {
-        console.error('🚨 Error in F1 data fetch:', err);
+        console.error("🚨 Error in F1 data fetch:", err);
         setError(err.message);
         setLoading(false);
         setIsLive(false);
@@ -62,25 +61,26 @@ export const useF1Data = () => {
 
     // Initial fetch
     fetchF1Data();
-    
+
     // Refresh data every 5 minutes during race season
     const seasonInterval = setInterval(fetchF1Data, 5 * 60 * 1000);
-    
+
     // Quick refresh every 30 seconds when close to race time
     const raceInterval = setInterval(fetchF1Data, 30 * 1000);
-    
+
     // Cleanup function
     const cleanup = () => {
       clearInterval(seasonInterval);
       clearInterval(raceInterval);
     };
-    
+
     return cleanup;
   }, []);
 
   // Calculate season progress
   useEffect(() => {
-    const progress = totalRaces > 0 ? Math.round((completedRaces / totalRaces) * 100) : 0;
+    const progress =
+      totalRaces > 0 ? Math.round((completedRaces / totalRaces) * 100) : 0;
     setSeasonProgress(progress);
   }, [completedRaces, totalRaces]);
 
@@ -96,7 +96,7 @@ export const useF1Data = () => {
     error,
     isLive,
     refreshData: async () => {
-      console.log('🔄 Manual refresh triggered');
+      console.log("🔄 Manual refresh triggered");
       const f1Data = await getCachedF1Data();
       if (f1Data.apiSuccess) {
         setDriverStandings(f1Data.driverStandings || []);
@@ -106,6 +106,6 @@ export const useF1Data = () => {
         setNextRace(f1Data.nextRace);
         setLastUpdated(f1Data.lastUpdated);
       }
-    }
+    },
   };
 };
