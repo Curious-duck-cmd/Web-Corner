@@ -20,27 +20,29 @@ import Roulette from "./pages/Roulette";
 import F1Page from "./pages/F1Page";
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/view-gallery" element={<ViewGalleryPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/Tetris" element={<Tetris />} />
-        <Route path="/games" element={<GamesPage />} />
-        <Route path="/Adminlogin" element={<AdminLogin />} />
+    <div className="fade-in">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/view-gallery" element={<ViewGalleryPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/Tetris" element={<Tetris />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/Adminlogin" element={<AdminLogin />} />
 
-        <Route path="/snake" element={<Snake />} />
-        <Route path="/pong" element={<Pong />} />
-        <Route path="/slotmachine" element={<SlotMachine />} />
-        <Route path="/roulette" element={<Roulette />} />
-        <Route path="/f1" element={<F1Page />} />
-      </Routes>
-    </Router>
+          <Route path="/snake" element={<Snake />} />
+          <Route path="/pong" element={<Pong />} />
+          <Route path="/slotmachine" element={<SlotMachine />} />
+          <Route path="/roulette" element={<Roulette />} />
+          <Route path="/f1" element={<F1Page />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
