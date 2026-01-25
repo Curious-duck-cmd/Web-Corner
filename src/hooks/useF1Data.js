@@ -1,160 +1,143 @@
-// hooks/useF1Data.js
-// Custom React hook for F1 data with real API integration and fallback
-
-import { useState, useEffect } from 'react';
-import { getCachedF1Data } from '../services/f1Api';
+// hooks/useF1Data.js - Ultra Optimized F1 Data Hook
+import { useState, useEffect, useCallback } from 'react';
+import { getF1Schedule, getF1Standings, getNextRace, clearCache, isValidCache } from '../services/f1Api';
 
 export const useF1Data = () => {
+  // State management with optimized initial values
+  const [schedule, setSchedule] = useState([]);
   const [driverStandings, setDriverStandings] = useState([]);
   const [constructorStandings, setConstructorStandings] = useState([]);
   const [nextRace, setNextRace] = useState(null);
   const [seasonProgress, setSeasonProgress] = useState(0);
   const [completedRaces, setCompletedRaces] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [totalRaces, setTotalRaces] = useState(24);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isLive, setIsLive] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  const loadF1Data = async () => {
+  // Optimized data loading with memoization
+  const loadF1Data = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
     try {
-      setLoading(true);
-      setError(null);
+      console.log('🏎️ Loading F1 data...');
+      
+      // Parallel API calls for maximum performance
+      const [scheduleData, standingsData, nextRaceData] = await Promise.all([
+        getF1Schedule(),
+        getF1Standings(),
+        getNextRace()
+      ]);
 
-      console.log('🏎️ Fetching F1 data...');
-      const data = await getCachedF1Data();
-
-      if (data.apiSuccess) {
-        console.log('✅ F1 API data loaded successfully');
-        setIsLive(true);
-      } else {
-        console.log('⚠️ Using fallback F1 data');
-        setIsLive(false);
+      // Update state in batch for better performance
+      const updates = {};
+      
+      if (scheduleData.races?.length > 0) {
+        updates.schedule = scheduleData.races;
+        updates.totalRaces = scheduleData.totalRaces;
+        
+        // Calculate completed races
+        const completed = scheduleData.races.filter(race => race.completed).length;
+        updates.completedRaces = completed;
+        updates.seasonProgress = Math.round((completed / scheduleData.totalRaces) * 100);
       }
 
-      // Set driver standings
-      if (data.driverStandings && data.driverStandings.length > 0) {
-        setDriverStandings(data.driverStandings);
+      if (standingsData.driverStandings?.length > 0) {
+        updates.driverStandings = standingsData.driverStandings;
+        updates.constructorStandings = standingsData.constructorStandings;
+        updates.isLive = true;
       }
 
-      // Set constructor standings
-      if (data.constructorStandings && data.constructorStandings.length > 0) {
-        setConstructorStandings(data.constructorStandings);
+      if (nextRaceData.nextRace) {
+        updates.nextRace = {
+          race: nextRaceData.nextRace.race || 'Australian Grand Prix',
+          circuit: nextRaceData.nextRace.circuit || 'Albert Park Circuit',
+          date: nextRaceData.nextRace.date || '2026-03-06',
+          round: nextRaceData.nextRace.round || 1,
+          country: nextRaceData.nextRace.country || '🇦🇺'
+        };
       }
 
-      // Set next race info
-      if (data.nextRace) {
-        setNextRace({
-          race: data.nextRace.race || data.nextRace.raceName || 'Australian Grand Prix',
-          circuit: data.nextRace.circuit || data.nextRace.Circuit?.circuitName || 'Albert Park Circuit',
-          date: data.nextRace.date || '2026-03-06T14:00:00',
-          round: data.nextRace.round || 1,
-          country: data.nextRace.country || '🇦🇺'
-        });
-      }
+      updates.lastUpdated = new Date();
+      updates.loading = false;
 
-      // Calculate season progress
-      const totalRaces = data.totalRaces || 24;
-      const completed = data.completedRaces || 0;
-      setCompletedRaces(completed);
-      setSeasonProgress(Math.round((completed / totalRaces) * 100));
+      // Batch state updates
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value !== undefined) {
+          switch (key) {
+            case 'schedule': setSchedule(value); break;
+            case 'totalRaces': setTotalRaces(value); break;
+            case 'completedRaces': setCompletedRaces(value); break;
+            case 'seasonProgress': setSeasonProgress(value); break;
+            case 'driverStandings': setDriverStandings(value); break;
+            case 'constructorStandings': setConstructorStandings(value); break;
+            case 'nextRace': setNextRace(value); break;
+            case 'isLive': setIsLive(value); break;
+            case 'lastUpdated': setLastUpdated(value); break;
+            case 'loading': setLoading(value); break;
+          }
+        }
+      });
 
-      setLastUpdated(new Date());
-      setLoading(false);
-
+      console.log('✅ F1 data loaded successfully');
+      
     } catch (err) {
-      console.error('❌ Error in useF1Data:', err);
+      console.error('❌ F1 data loading failed:', err);
       setError(err.message);
       setIsLive(false);
+      setSchedule([]);
+      setDriverStandings([]);
+      setConstructorStandings([]);
+      setNextRace(null);
+      setSeasonProgress(0);
+      setCompletedRaces(0);
+      setTotalRaces(24);
+      setLastUpdated(new Date());
       setLoading(false);
-      
-      // Set fallback data on error
-      setFallbackData();
     }
-  };
+  }, []);
 
-  const setFallbackData = () => {
-    console.log('📦 Loading fallback F1 data...');
-    
-    setNextRace({
-      race: 'Australian Grand Prix',
-      circuit: 'Albert Park Circuit',
-      date: '2026-03-06T14:00:00',
-      round: 1,
-      country: '🇦🇺'
-    });
-
-    setDriverStandings([
-      { pos: 1, driver: "Max Verstappen", team: "Red Bull Racing", points: 0, wins: 0, color: "#0600EF" },
-      { pos: 2, driver: "Lando Norris", team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
-      { pos: 3, driver: "Charles Leclerc", team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
-      { pos: 4, driver: "Lewis Hamilton", team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
-      { pos: 5, driver: "Oscar Piastri", team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
-      { pos: 6, driver: "George Russell", team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
-      { pos: 7, driver: "Kimi Antonelli", team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
-      { pos: 8, driver: "Carlos Sainz", team: "Williams", points: 0, wins: 0, color: "#005AFF" },
-      { pos: 9, driver: "Fernando Alonso", team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
-      { pos: 10, driver: "Lance Stroll", team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
-      { pos: 11, driver: "Valtteri Bottas", team: "Kick Sauber", points: 0, wins: 0, color: "#52E252" },
-      { pos: 12, driver: "Zhou Guanyu", team: "Kick Sauber", points: 0, wins: 0, color: "#52E252" },
-      { pos: 13, driver: "Nico Hülkenberg", team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
-      { pos: 14, driver: "Oliver Bearman", team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
-      { pos: 15, driver: "Pierre Gasly", team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
-      { pos: 16, driver: "Jack Doohan", team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
-      { pos: 17, driver: "Yuki Tsunoda", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
-      { pos: 18, driver: "Liam Lawson", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
-      { pos: 19, driver: "Franco Colapinto", team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
-      { pos: 20, driver: "Esteban Ocon", team: "Alpine", points: 0, wins: 0, color: "#0090FF" }
-    ]);
-
-    setConstructorStandings([
-      { pos: 1, team: "Red Bull Racing", points: 0, wins: 0, color: "#0600EF" },
-      { pos: 2, team: "McLaren", points: 0, wins: 0, color: "#FF8700" },
-      { pos: 3, team: "Ferrari", points: 0, wins: 0, color: "#DC0000" },
-      { pos: 4, team: "Mercedes", points: 0, wins: 0, color: "#00D2BE" },
-      { pos: 5, team: "Aston Martin", points: 0, wins: 0, color: "#006F62" },
-      { pos: 6, team: "Alpine", points: 0, wins: 0, color: "#0090FF" },
-      { pos: 7, team: "Williams", points: 0, wins: 0, color: "#005AFF" },
-      { pos: 8, team: "Haas", points: 0, wins: 0, color: "#FFFFFF" },
-      { pos: 9, team: "Racing Bulls", points: 0, wins: 0, color: "#2B4562" },
-      { pos: 10, team: "Kick Sauber (Cadillac)", points: 0, wins: 0, color: "#52E252" },
-      { pos: 11, team: "Audi", points: 0, wins: 0, color: "#C1002B" }
-    ]);
-
-    setCompletedRaces(0);
-    setSeasonProgress(0);
-    setLastUpdated(new Date());
-  };
-
-  const refreshData = () => {
-    console.log('🔄 Manually refreshing F1 data...');
-    loadF1Data();
-  };
-
-  // Load data on mount
+  // Optimized effect with proper dependencies
   useEffect(() => {
     loadF1Data();
+  }, []);
 
-    // Auto-refresh every 5 minutes if data is live
-    const interval = setInterval(() => {
-      if (isLive) {
-        console.log('🔄 Auto-refreshing F1 data...');
-        loadF1Data();
-      }
-    }, 5 * 60 * 1000); // 5 minutes
+  // Auto-refresh with smart intervals
+  useEffect(() => {
+    if (!isLive) return;
+
+    const refreshInterval = isValidCache('standings') ? 5 * 60 * 1000 : 30 * 1000;
+    const interval = setInterval(loadF1Data, refreshInterval);
 
     return () => clearInterval(interval);
   }, [isLive]);
 
+  // Manual refresh with cache clearing
+  const refreshData = useCallback(async () => {
+    console.log('🔄 Manual refresh - clearing cache...');
+    clearCache();
+    await loadF1Data();
+  }, []);
+
   return {
+    // Data
+    schedule,
     driverStandings,
     constructorStandings,
     nextRace,
     seasonProgress,
     completedRaces,
+    totalRaces,
+    
+    // Status
     loading,
     error,
     isLive,
     lastUpdated,
+    
+    // Actions
     refreshData
   };
 };
