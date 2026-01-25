@@ -848,3 +848,59 @@ img {
 #blinkies:active {
   transform: scale(0.95) !important;
 }
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-20px);
+  }
+}
+@keyframes trackPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+#blinkies:hover {
+  transform: scale(1.05) !important;
+}
+#blinkies:active {
+  transform: scale(0.95) !important;
+}
+
+.loot-item {
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+.loot-text {
+  transition: color 0.2s;
+}
+.loot-item:hover .loot-text {
+  color: #50b6d1;
+  font-weight: bold;
+}
+
+.loot-hint {
+  display: none;
+  position: absolute;
+  background: #ffffca;
+  border: 1px solid #000;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  z-index: 100;
+  bottom: 100%;
+  left: 10px;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0px #000;
+  color: #000;
+}
+.loot-item:hover .loot-hint {
+  display: block;
+}

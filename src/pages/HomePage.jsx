@@ -97,32 +97,6 @@ function CatGifEasterEgg() {
           </div>
         </div>
       )}
-<style>{`
-        @keyframes bounce { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-20px); } }
-        @keyframes trackPulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
-        #blinkies:hover { transform: scale(1.05) !important; }
-        #blinkies:active { transform: scale(0.95) !important; }
-        
-        .loot-item { position: relative; border-bottom: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; }
-        .loot-text { transition: color 0.2s; }
-        .loot-item:hover .loot-text { color: #50B6D1; font-weight: bold; }
-        
-        .loot-hint { 
-          display: none; 
-          position: absolute; 
-          background: #ffffca; 
-          border: 1px solid #000; 
-          padding: 6px 10px; 
-          font-size: 0.75rem; 
-          z-index: 100;
-          bottom: 100%;
-          left: 10px;
-          white-space: nowrap;
-          box-shadow: 3px 3px 0px #000;
-          color: #000;
-        }
-        .loot-item:hover .loot-hint { display: block; }
-      `}</style>
     </>
   );
 }
@@ -395,46 +369,47 @@ function F1RaceCalendar() {
             </div>
           ))}
         </div>
-<div style={{ marginTop: "20px" }}>
-           <div
-             style={{
-               background: "#fff",
-               height: "30px",
-               borderRadius: "5px",
-               overflow: "hidden",
-               border: "2px solid #000",
-               boxShadow: "3px 3px 0px #000",
-             }}
-           >
-             <div
-               style={{
-                 background: "#0600EF",
-                 height: "100%",
-                 width: `${seasonProgress}%`,
-                 display: "flex",
-                 alignItems: "center",
-                 justifyContent: "center",
-                 fontWeight: "bold",
-                 color: "#fff",
-                 transition: "width 0.5s ease",
-                 fontSize: "0.9rem",
-               }}
-             >
-               {seasonProgress}%
-             </div>
-           </div>
-           <p
-             style={{
-               fontSize: "0.8rem",
-               textAlign: "center",
-               marginTop: "5px",
-               opacity: 0.7,
-               color: "#000",
-             }}
-           >
-             Season Progress ({seasonProgress}% complete • {completedRaces}/24 races)
-           </p>
-         </div>
+        <div style={{ marginTop: "20px" }}>
+          <div
+            style={{
+              background: "#fff",
+              height: "30px",
+              borderRadius: "5px",
+              overflow: "hidden",
+              border: "2px solid #000",
+              boxShadow: "3px 3px 0px #000",
+            }}
+          >
+            <div
+              style={{
+                background: "#0600EF",
+                height: "100%",
+                width: `${seasonProgress}%`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "bold",
+                color: "#fff",
+                transition: "width 0.5s ease",
+                fontSize: "0.9rem",
+              }}
+            >
+              {seasonProgress}%
+            </div>
+          </div>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              textAlign: "center",
+              marginTop: "5px",
+              opacity: 0.7,
+              color: "#000",
+            }}
+          >
+            Season Progress ({seasonProgress}% complete • {completedRaces}/24
+            races)
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -805,11 +780,15 @@ function HomePage() {
                 </p>
               </div>
               <div className="post">
-                <h1>What I'm working on:</h1>
-                <p>Making this website!</p>
+                <h1>Current Focus:</h1>
+                <p>Python & API Integration</p>
                 <div className="progressBar">
-                  <div className="progress" style={{ width: "67%" }}>
-                    <p>67%</p>
+                  {/* You can update this percentage as you clear the milestones below */}
+                  <div
+                    className="progress"
+                    style={{ width: "45%", backgroundColor: "#3776ab" }}
+                  >
+                    <p>45% - Intermediate</p>
                   </div>
                 </div>
               </div>
