@@ -58,7 +58,7 @@ const Screensaver = ({ idleTime = 60000 }) => {
           position: "absolute",
           color: "white",
           bottom: "20px",
-          opacity: 0.3,
+          opacity: 0.4,
         }}
       >
         Press any key to wake up
