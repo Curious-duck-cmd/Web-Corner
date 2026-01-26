@@ -3,17 +3,17 @@ import { useF1Data } from "../hooks/useF1Data";
 
 function F1Page() {
   const [selectedTab, setSelectedTab] = useState("standings");
-  const { 
-    nextRace, 
-    seasonProgress, 
-    driverStandings, 
-    constructorStandings, 
+  const {
+    nextRace,
+    seasonProgress,
+    driverStandings,
+    constructorStandings,
     schedule,
     lastUpdated,
     loading,
     error,
     isLive,
-    refreshData
+    refreshData,
   } = useF1Data();
   const [timeLeft, setTimeLeft] = useState({});
 
@@ -130,10 +130,16 @@ function F1Page() {
           }}
         >
           <section style={{ width: "100%", maxWidth: "1200px" }}>
-             {/* Secret Unlocked Banner */}
+            {/* Secret Unlocked Banner */}
             <div
               style={{
-                background: isLive ? "#50B6D1" : error ? "#FFA0A0" : loading ? "#FFD700" : "#cfd3da",
+                background: isLive
+                  ? "#50B6D1"
+                  : error
+                    ? "#FFA0A0"
+                    : loading
+                      ? "#FFD700"
+                      : "#cfd3da",
                 border: "4px solid #000",
                 padding: "20px",
                 marginBottom: "30px",
@@ -149,7 +155,13 @@ function F1Page() {
                   color: "#000",
                 }}
               >
-                 {isLive ? "🏁 2026 F1 ZONE 🏁" : error ? "❌ ERROR" : loading ? "⏳ LOADING" : "🏁 SECRET F1 ZONE 🏁"}
+                {isLive
+                  ? "🏁 2026 F1 ZONE 🏁"
+                  : error
+                    ? "❌ ERROR"
+                    : loading
+                      ? "⏳ LOADING"
+                      : "🏁 SECRET F1 ZONE 🏁"}
               </h1>
               <p
                 style={{
@@ -159,7 +171,13 @@ function F1Page() {
                   opacity: 0.8,
                 }}
               >
-                  {isLive ? "2026 Season Data Connected - Real-time Updates Active" : error ? `Error: ${error}` : loading ? "Loading 2026 F1 data..." : "You found hidden Formula 1 command center!"}
+                {isLive
+                  ? "2026 Season Data Connected - Real-time Updates Active"
+                  : error
+                    ? `Error: ${error}`
+                    : loading
+                      ? "Loading 2026 F1 data..."
+                      : "You found hidden Formula 1 command center!"}
               </p>
               {error && (
                 <button
@@ -172,7 +190,7 @@ function F1Page() {
                     borderRadius: "5px",
                     fontSize: "1rem",
                     fontWeight: "bold",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   🔄 Retry
@@ -191,18 +209,19 @@ function F1Page() {
             </div>
             <div className="windowContent" style={{ marginBottom: "30px" }}>
               <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                 <h2
-                   style={{
-                     fontSize: "2rem",
-                     color: "#03274B",
-                     marginBottom: "10px",
-                   }}
-                 >
-                   {nextRace?.race || "Loading..."}
-                 </h2>
-                 <p style={{ fontSize: "1.2rem", color: "#666" }}>
-                   📍 {nextRace?.circuit || "Loading..."} • Round {nextRace?.round || 1}/24
-                 </p>
+                <h2
+                  style={{
+                    fontSize: "2rem",
+                    color: "#03274B",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {nextRace?.race || "Loading..."}
+                </h2>
+                <p style={{ fontSize: "1.2rem", color: "#666" }}>
+                  📍 {nextRace?.circuit || "Loading..."} • Round{" "}
+                  {nextRace?.round || 1}/24
+                </p>
               </div>
 
               <div
@@ -647,35 +666,38 @@ function F1Page() {
                   </div>
                 </div>
                 <div className="windowContent">
-            <h2
-              style={{
-                fontSize: "1.8rem",
-                marginBottom: "20px",
-                color: "#03274B",
-              }}
-            >
-              📅 2026 F1 Calendar • 24 Races • 11 Teams • 22 Drivers
-            </h2>
+                  <h2
+                    style={{
+                      fontSize: "1.8rem",
+                      marginBottom: "20px",
+                      color: "#03274B",
+                    }}
+                  >
+                    📅 2026 F1 Calendar • 24 Races • 11 Teams • 22 Drivers
+                  </h2>
                   <div
-                     style={{
-                       display: "grid",
-                       gridTemplateColumns:
-                         "repeat(auto-fill, minmax(300px, 1fr))",
-                       gap: "20px",
-                     }}
-                   >
-                     {schedule.map((race) => (
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fill, minmax(300px, 1fr))",
+                      gap: "20px",
+                    }}
+                  >
+                    {schedule.map((race) => (
                       <div
                         key={race.round}
                         className="post"
-                            style={{
-                               padding: "15px",
-                               background: race.round === (nextRace?.round || 1) ? "#50B6D1" : "#cfd3da",
-                               border: "2px solid #000",
-                               boxShadow: "4px 4px 0px #000",
-                               transition: "all 0.3s ease",
-                               maxHeight: "none",
-                             }}
+                        style={{
+                          padding: "15px",
+                          background:
+                            race.round === (nextRace?.round || 1)
+                              ? "#50B6D1"
+                              : "#cfd3da",
+                          border: "2px solid #000",
+                          boxShadow: "4px 4px 0px #000",
+                          transition: "all 0.3s ease",
+                          maxHeight: "none",
+                        }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = "translateY(-5px)";
                           e.currentTarget.style.boxShadow = "6px 6px 0px #000";
@@ -716,7 +738,7 @@ function F1Page() {
                             color: "#000",
                           }}
                         >
-                           {race.race} Grand Prix
+                          {race.race} Grand Prix
                         </h3>
                         <p
                           style={{
@@ -734,23 +756,27 @@ function F1Page() {
                             color: "#000",
                           }}
                         >
-                           📅 {new Date(race.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          📅{" "}
+                          {new Date(race.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
                         </p>
-{race.round === (nextRace?.round || 1) && (
-                           <div
-                             style={{
-                               marginTop: "10px",
-                               padding: "8px",
-                               background: "#FFD700",
-                               border: "2px solid #000",
-                               textAlign: "center",
-                               fontWeight: "bold",
-                               fontSize: "0.9rem",
-                             }}
-                           >
-                             🏁 NEXT RACE
-                           </div>
-                         )}
+                        {race.round === (nextRace?.round || 1) && (
+                          <div
+                            style={{
+                              marginTop: "10px",
+                              padding: "8px",
+                              background: "#FFD700",
+                              border: "2px solid #000",
+                              textAlign: "center",
+                              fontWeight: "bold",
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            🏁 NEXT RACE
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -764,19 +790,20 @@ function F1Page() {
       <footer
         style={{ textAlign: "center", padding: "40px", marginTop: "20px" }}
       >
-         <p style={{ color: "#565f89", fontSize: "0.9rem" }}>
-           🏎️ F1 Command Center - Lights Out and Away We Go!
-         </p>
-         <p
-           style={{
-             color: "#565f89",
-             fontSize: "0.8rem",
-             marginTop: "10px",
-             opacity: 0.6,
-           }}
-         >
-           Last updated: {lastUpdated.toLocaleString()} • Konami Code Easter Egg • Keep this secret! 🤫
-         </p>
+        <p style={{ color: "#565f89", fontSize: "0.9rem" }}>
+          🏎️ F1 Command Center - Lights Out and Away We Go!
+        </p>
+        <p
+          style={{
+            color: "#565f89",
+            fontSize: "0.8rem",
+            marginTop: "10px",
+            opacity: 0.6,
+          }}
+        >
+          Last updated: {lastUpdated.toLocaleString()} • Konami Code Easter Egg
+          • Keep this secret! 🤫
+        </p>
       </footer>
 
       <style>{`

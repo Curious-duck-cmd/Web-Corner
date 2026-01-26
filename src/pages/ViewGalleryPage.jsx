@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
-import '../App.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { supabase } from "../supabaseClient";
+import "../App.css";
 
 function ViewGalleryPage() {
   const [images, setImages] = useState([]);
@@ -15,12 +15,12 @@ function ViewGalleryPage() {
   const fetchGallery = async () => {
     setIsLoading(true);
     const { data, error } = await supabase
-      .from('gallery')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("gallery")
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) {
-      console.error('Database error:', error.message);
+      console.error("Database error:", error.message);
     } else {
       setImages(data || []);
     }
@@ -29,38 +29,38 @@ function ViewGalleryPage() {
 
   const openLightbox = (image) => {
     setLightboxImage(image);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+    document.body.style.overflow = "hidden"; // Prevent scrolling when lightbox is open
   };
 
   const closeLightbox = () => {
     setLightboxImage(null);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   const navigateLightbox = (direction) => {
-    const currentIndex = images.findIndex(img => img.id === lightboxImage.id);
+    const currentIndex = images.findIndex((img) => img.id === lightboxImage.id);
     let newIndex;
-    
-    if (direction === 'next') {
+
+    if (direction === "next") {
       newIndex = (currentIndex + 1) % images.length;
     } else {
       newIndex = (currentIndex - 1 + images.length) % images.length;
     }
-    
+
     setLightboxImage(images[newIndex]);
   };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!lightboxImage) return;
-      
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') navigateLightbox('next');
-      if (e.key === 'ArrowLeft') navigateLightbox('prev');
+
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") navigateLightbox("next");
+      if (e.key === "ArrowLeft") navigateLightbox("prev");
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxImage]);
 
   return (
@@ -68,7 +68,15 @@ function ViewGalleryPage() {
       <header>
         <div className="windowTop">
           <p>
-            <img src="/image/Map_Pin_Grub.png" style={{ width: '18px', verticalAlign: 'middle', marginRight: '5px' }} alt="" />
+            <img
+              src="/image/Map_Pin_Grub.png"
+              style={{
+                width: "18px",
+                verticalAlign: "middle",
+                marginRight: "5px",
+              }}
+              alt=""
+            />
             The Visual Vault.exe
           </p>
           <div className="windowCircle">
@@ -79,78 +87,127 @@ function ViewGalleryPage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
-            <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
-            <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
-            <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>
-            <Link to="/view-gallery"><img src="/image/frame.png" className="nav-icon" alt="" /> <span>Gallery</span></Link>
-            <Link to="/games"><img src="/image/joystick.png" className="nav-icon" alt="" /> <span>Games</span></Link>
-            <Link to="/chat"><img src="/image/babble.png" className="nav-icon" alt="" /> <span>Chat</span></Link>
+            <Link to="/">
+              <img src="/image/home.png" className="nav-icon" alt="" />{" "}
+              <span>Home</span>
+            </Link>
+            <Link to="/blog">
+              <img src="/image/life.png" className="nav-icon" alt="" />{" "}
+              <span>Life Blog</span>
+            </Link>
+            <Link to="/projects">
+              <img src="/image/made.png" className="nav-icon" alt="" />{" "}
+              <span>Stuff I Made</span>
+            </Link>
+            <Link to="/portfolio">
+              <img src="/image/me.png" className="nav-icon" alt="" />{" "}
+              <span>Who Am I</span>
+            </Link>
+            <Link to="/view-gallery">
+              <img src="/image/frame.png" className="nav-icon" alt="" />{" "}
+              <span>Gallery</span>
+            </Link>
+            <Link to="/games">
+              <img src="/image/joystick.png" className="nav-icon" alt="" />{" "}
+              <span>Games</span>
+            </Link>
+            <Link to="/chat">
+              <img src="/image/babble.png" className="nav-icon" alt="" />{" "}
+              <span>Chat</span>
+            </Link>
           </nav>
         </div>
       </header>
 
       <main>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          padding: '40px 20px',
-          width: '100%'
-        }}>
-          <section style={{ width: '100%', maxWidth: '1400px' }}>
-            <div className="windowTop" style={{ background: '#03274B' }}>
-              <p style={{ color: '#fff' }}>Stored_Images.bin</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "40px 20px",
+            width: "100%",
+          }}
+        >
+          <section style={{ width: "100%", maxWidth: "1400px" }}>
+            <div className="windowTop" style={{ background: "#03274B" }}>
+              <p style={{ color: "#fff" }}>Stored_Images.bin</p>
               <div className="windowCircle">
-                <div className="circle" style={{ background: '#fff' }}></div>
-                <div className="circle" style={{ background: '#fff' }}></div>
-                <div className="circle" style={{ background: '#fff' }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
+                <div className="circle" style={{ background: "#fff" }}></div>
               </div>
             </div>
             <div className="windowContent">
-              <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#03274B' }}>
+              <h1
+                style={{
+                  marginBottom: "20px",
+                  fontSize: "2rem",
+                  color: "#03274B",
+                }}
+              >
                 🖼️ Gallery Collection
               </h1>
-              <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: 0.8 }}>
-                A visual archive of moments, memories, and creative captures. Click any image to view full size.
+              <p
+                style={{
+                  fontSize: "1.1rem",
+                  marginBottom: "30px",
+                  opacity: 0.8,
+                }}
+              >
+                A visual archive of moments, memories, and creative captures.
+                Click any image to view full size.
               </p>
 
               {isLoading ? (
-                <p style={{ textAlign: 'center', padding: '40px' }}>Accessing storage units...</p>
+                <p style={{ textAlign: "center", padding: "40px" }}>
+                  Accessing storage units...
+                </p>
               ) : images.length === 0 ? (
-                <div style={{
-                  textAlign: 'center',
-                  padding: '60px 20px',
-                  background: '#cfd3da',
-                  border: '2px solid #000',
-                  borderRadius: '5px'
-                }}>
-                  <h2 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>No images yet</h2>
-                  <p style={{ opacity: 0.7 }}>Upload some images from the dashboard!</p>
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "60px 20px",
+                    background: "#cfd3da",
+                    border: "2px solid #000",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
+                    No images yet
+                  </h2>
+                  <p style={{ opacity: 0.7 }}>
+                    Upload some images from the dashboard!
+                  </p>
                 </div>
               ) : (
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                  gap: '30px'
-                }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(280px, 1fr))",
+                    gap: "30px",
+                  }}
+                >
                   {images.map((item) => (
                     <div
                       key={item.id}
                       style={{
-                        border: '2px solid #000',
-                        background: '#fff',
-                        boxShadow: '5px 5px 0px #000',
-                        transition: 'all 0.3s ease',
-                        overflow: 'hidden',
-                        cursor: 'pointer'
+                        border: "2px solid #000",
+                        background: "#fff",
+                        boxShadow: "5px 5px 0px #000",
+                        transition: "all 0.3s ease",
+                        overflow: "hidden",
+                        cursor: "pointer",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-8px) rotate(-1deg)';
-                        e.currentTarget.style.boxShadow = '8px 8px 0px #50B6D1';
+                        e.currentTarget.style.transform =
+                          "translateY(-8px) rotate(-1deg)";
+                        e.currentTarget.style.boxShadow = "8px 8px 0px #50B6D1";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0) rotate(0deg)';
-                        e.currentTarget.style.boxShadow = '5px 5px 0px #000';
+                        e.currentTarget.style.transform =
+                          "translateY(0) rotate(0deg)";
+                        e.currentTarget.style.boxShadow = "5px 5px 0px #000";
                       }}
                       onClick={() => openLightbox(item)}
                     >
@@ -158,54 +215,65 @@ function ViewGalleryPage() {
                         src={item.image_url}
                         alt="Gallery"
                         style={{
-                          width: '100%',
-                          height: '280px',
-                          objectFit: 'cover',
-                          display: 'block',
-                          borderBottom: '2px solid #000'
+                          width: "100%",
+                          height: "280px",
+                          objectFit: "cover",
+                          display: "block",
+                          borderBottom: "2px solid #000",
                         }}
                         onError={(e) => {
-                          e.target.src = 'https://placehold.co/400?text=Image+Not+Found';
+                          e.target.src =
+                            "https://placehold.co/400?text=Image+Not+Found";
                         }}
                       />
-                      <div style={{ padding: '15px' }}>
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          marginBottom: '8px',
-                          flexWrap: 'wrap',
-                          gap: '8px'
-                        }}>
-                          <span style={{
-                            fontWeight: 'bold',
-                            color: '#50B6D1',
-                            fontSize: '1rem'
-                          }}>
-                            @{item.username || 'anonymous'}
+                      <div style={{ padding: "15px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: "8px",
+                            flexWrap: "wrap",
+                            gap: "8px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "#50B6D1",
+                              fontSize: "1rem",
+                            }}
+                          >
+                            @{item.username || "anonymous"}
                           </span>
-                          <small style={{
-                            opacity: 0.6,
-                            fontSize: '0.75rem'
-                          }}>
+                          <small
+                            style={{
+                              opacity: 0.6,
+                              fontSize: "0.75rem",
+                            }}
+                          >
                             {new Date(item.created_at).toLocaleDateString()}
                           </small>
                         </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.95rem',
-                          color: '#333',
-                          lineHeight: '1.4',
-                          wordBreak: 'break-word'
-                        }}>
-                          {item.caption || ''}
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "0.95rem",
+                            color: "#333",
+                            lineHeight: "1.4",
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {item.caption || ""}
                         </p>
-                        <p style={{
-                          marginTop: '10px',
-                          fontSize: '0.8rem',
-                          color: '#50B6D1',
-                          fontWeight: 'bold'
-                        }}>
+                        <p
+                          style={{
+                            marginTop: "10px",
+                            fontSize: "0.8rem",
+                            color: "#50B6D1",
+                            fontWeight: "bold",
+                          }}
+                        >
                           🔍 Click to enlarge
                         </p>
                       </div>
@@ -220,21 +288,21 @@ function ViewGalleryPage() {
 
       {/* Lightbox Modal */}
       {lightboxImage && (
-        <div 
+        <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0, 0, 0, 0.95)',
+            background: "rgba(0, 0, 0, 0.95)",
             zIndex: 10000,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '20px',
-            animation: 'fadeIn 0.3s ease-out'
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+            animation: "fadeIn 0.3s ease-out",
           }}
           onClick={closeLightbox}
         >
@@ -242,19 +310,19 @@ function ViewGalleryPage() {
           <button
             onClick={closeLightbox}
             style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              background: '#FFA0A0',
-              border: '2px solid #fff',
-              color: '#000',
-              fontSize: '2rem',
-              width: '50px',
-              height: '50px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              boxShadow: '4px 4px 0px #fff',
-              zIndex: 10001
+              position: "absolute",
+              top: "20px",
+              right: "20px",
+              background: "#FFA0A0",
+              border: "2px solid #fff",
+              color: "#000",
+              fontSize: "2rem",
+              width: "50px",
+              height: "50px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              boxShadow: "4px 4px 0px #fff",
+              zIndex: 10001,
             }}
           >
             ✕
@@ -266,20 +334,20 @@ function ViewGalleryPage() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigateLightbox('prev');
+                  navigateLightbox("prev");
                 }}
                 style={{
-                  position: 'absolute',
-                  left: '20px',
-                  background: '#50B6D1',
-                  border: '2px solid #fff',
-                  color: '#000',
-                  fontSize: '2rem',
-                  width: '50px',
-                  height: '50px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '4px 4px 0px #fff'
+                  position: "absolute",
+                  left: "20px",
+                  background: "#50B6D1",
+                  border: "2px solid #fff",
+                  color: "#000",
+                  fontSize: "2rem",
+                  width: "50px",
+                  height: "50px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  boxShadow: "4px 4px 0px #fff",
                 }}
               >
                 ◄
@@ -287,20 +355,20 @@ function ViewGalleryPage() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigateLightbox('next');
+                  navigateLightbox("next");
                 }}
                 style={{
-                  position: 'absolute',
-                  right: '20px',
-                  background: '#50B6D1',
-                  border: '2px solid #fff',
-                  color: '#000',
-                  fontSize: '2rem',
-                  width: '50px',
-                  height: '50px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '4px 4px 0px #fff'
+                  position: "absolute",
+                  right: "20px",
+                  background: "#50B6D1",
+                  border: "2px solid #fff",
+                  color: "#000",
+                  fontSize: "2rem",
+                  width: "50px",
+                  height: "50px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  boxShadow: "4px 4px 0px #fff",
                 }}
               >
                 ►
@@ -312,22 +380,22 @@ function ViewGalleryPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: '90%',
-              maxHeight: '80vh',
-              background: '#fff',
-              border: '4px solid #fff',
-              boxShadow: '10px 10px 0px #000',
-              overflow: 'hidden'
+              maxWidth: "90%",
+              maxHeight: "80vh",
+              background: "#fff",
+              border: "4px solid #fff",
+              boxShadow: "10px 10px 0px #000",
+              overflow: "hidden",
             }}
           >
             <img
               src={lightboxImage.image_url}
               alt="Full size"
               style={{
-                maxWidth: '100%',
-                maxHeight: '80vh',
-                display: 'block',
-                objectFit: 'contain'
+                maxWidth: "100%",
+                maxHeight: "80vh",
+                display: "block",
+                objectFit: "contain",
               }}
             />
           </div>
@@ -336,47 +404,57 @@ function ViewGalleryPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              marginTop: '20px',
-              background: '#fff',
-              border: '2px solid #fff',
-              padding: '15px 25px',
-              boxShadow: '6px 6px 0px #000',
-              maxWidth: '600px',
-              width: '90%'
+              marginTop: "20px",
+              background: "#fff",
+              border: "2px solid #fff",
+              padding: "15px 25px",
+              boxShadow: "6px 6px 0px #000",
+              maxWidth: "600px",
+              width: "90%",
             }}
           >
-            <p style={{
-              margin: 0,
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              color: '#50B6D1',
-              marginBottom: '5px'
-            }}>
-              @{lightboxImage.username || 'anonymous'}
+            <p
+              style={{
+                margin: 0,
+                fontSize: "1rem",
+                fontWeight: "bold",
+                color: "#50B6D1",
+                marginBottom: "5px",
+              }}
+            >
+              @{lightboxImage.username || "anonymous"}
             </p>
             {lightboxImage.caption && (
-              <p style={{
-                margin: 0,
-                fontSize: '0.95rem',
-                color: '#333'
-              }}>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: "0.95rem",
+                  color: "#333",
+                }}
+              >
                 {lightboxImage.caption}
               </p>
             )}
-            <p style={{
-              margin: '10px 0 0 0',
-              fontSize: '0.8rem',
-              opacity: 0.6
-            }}>
-              {new Date(lightboxImage.created_at).toLocaleDateString()} • Press ESC or click outside to close
+            <p
+              style={{
+                margin: "10px 0 0 0",
+                fontSize: "0.8rem",
+                opacity: 0.6,
+              }}
+            >
+              {new Date(lightboxImage.created_at).toLocaleDateString()} • Press
+              ESC or click outside to close
             </p>
           </div>
         </div>
       )}
 
-      <footer style={{ textAlign: 'center', padding: '40px', marginTop: '20px' }}>
-        <p style={{ color: '#565f89', fontSize: '0.9rem' }}>
-          🖼️ Viewing {images.length} image{images.length !== 1 ? 's' : ''} in the gallery
+      <footer
+        style={{ textAlign: "center", padding: "40px", marginTop: "20px" }}
+      >
+        <p style={{ color: "#565f89", fontSize: "0.9rem" }}>
+          🖼️ Viewing {images.length} image{images.length !== 1 ? "s" : ""} in
+          the gallery
         </p>
       </footer>
     </div>

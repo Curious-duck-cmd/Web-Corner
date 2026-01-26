@@ -17,7 +17,9 @@ import Snake from "./pages/Snake";
 import Pong from "./pages/Pong";
 import SlotMachine from "./pages/SlotMachine";
 import Roulette from "./pages/Roulette";
+
 import F1Page from "./pages/F1Page";
+
 function App() {
   return (
     <div className="fade-in">
@@ -39,6 +41,7 @@ function App() {
           <Route path="/pong" element={<Pong />} />
           <Route path="/slotmachine" element={<SlotMachine />} />
           <Route path="/roulette" element={<Roulette />} />
+
           <Route path="/f1" element={<F1Page />} />
         </Routes>
       </Router>
