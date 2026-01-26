@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Screensaver from "./components/Screensaver";
+
 // Page Imports
 import HomePage from "./pages/HomePage";
 import PortfolioPage from "./pages/PortfolioPage";
@@ -23,6 +25,7 @@ import F1Page from "./pages/F1Page";
 function App() {
   return (
     <div className="fade-in">
+      <Screensaver idleTime={30000} />
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
