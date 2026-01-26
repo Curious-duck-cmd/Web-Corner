@@ -49,7 +49,12 @@ const Screensaver = ({ idleTime = 60000 }) => {
       <img 
         src="/image/redbull.webp" 
         alt="Red Bull Screensaver"
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          objectFit: 'contain',
+          backgroundColor: 'black'
+        }}
       />
       <div
         style={{
