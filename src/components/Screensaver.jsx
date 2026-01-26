@@ -17,6 +17,7 @@ const Screensaver = ({ idleTime = 60000 }) => {
       "mousedown",
       "touchstart",
       "touchmove",
+      "click",
     ];
 
     events.forEach((event) => window.addEventListener(event, resetTimer));
@@ -45,14 +46,11 @@ const Screensaver = ({ idleTime = 60000 }) => {
         alignItems: "center",
       }}
     >
-      <video
-        autoPlay
-        muted
-        loop
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      >
-        <source src="/videos/your-screensaver.mp4" type="video/mp4" />
-      </video>
+      <img 
+        src="/image/redbull.webp" 
+        alt="Red Bull Screensaver"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
       <div
         style={{
           position: "absolute",
