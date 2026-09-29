@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# The build runs against a clean checkout, so an untracked source file
+# (e.g. a stylesheet that main.jsx imports) fails here exactly as it
+# would fail on Vercel. That is the point of this workflow.
+jobs:
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.html || { echo "::error::dist/index.html missing"; exit 1; }
+          test -d dist/assets || { echo "::error::dist/assets missing"; exit 1; }
+          echo "Built $(ls dist/assets | wc -l) asset(s)."
