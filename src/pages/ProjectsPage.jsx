@@ -131,9 +131,9 @@ function ProjectsPage() {
     {
       id: 12,
       title: "F1 Secret Easter Egg Page",
-      tech: "React, Konami Code Detection, State Management, Mock Data API",
+      tech: "React, Konami Code Detection, Web Audio API, Seeded Simulation",
       description:
-        "Hidden Formula 1 command center unlocked via Konami code (↑↑↓↓←→←→BA) or hidden flag clicks. Features live race countdown with days/hours/minutes/seconds, full 2026 season calendar with all 24 rounds, driver championship standings with team colors, constructor standings, season progress bar, and retro sound effects on unlock.",
+        "Hidden Formula 1 command center unlocked via Konami code (↑↑↓↓←→←→BA) or hidden flag clicks. Features a live race countdown with days/hours/minutes/seconds, a five-light start sequence with synthesised F1 beeps that doubles as a reflex tester (tap or press SPACE the instant the lights go out, with jump start penalties and reaction bands), and a strategy simulator where you pick a tyre compound, fuel load and aggression before running 58 laps to get a classified result with fastest lap and 2026 points.",
       link: "/f1",
       tags: ["web", "easteregg", "ui", "animation"],
       status: "Live",
