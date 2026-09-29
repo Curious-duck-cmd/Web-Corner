@@ -364,7 +364,7 @@ function ChatPage() {
 
 
 
-              <Link to="/" className="gif-link" style={{ marginTop: 'auto' }}>
+              <Link to="/webcorner" className="gif-link" style={{ marginTop: 'auto' }}>
 
                 <img src="/image/hornet-hollow-knight.gif" id="blinkies" alt="Retro GIF" />
 

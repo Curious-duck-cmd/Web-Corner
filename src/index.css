@@ -6,61 +6,175 @@ body {
 
 #root {
   width: 100%;
+  min-height: 100vh;
 }
-/* Full screen loader wrapper */
-.loader-container {
-  height: 100vh;
-  width: 100vw;
+
+.lp-boot {
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, #0a192f 0%, #020c1b 100%);
-  color: #64ffda; /* Sophisticated teal/aqua */
-  font-family: "Inter", monospace;
+  background: radial-gradient(ellipse 90% 70% at 50% 40%, #0a1524 0%, #04060c 70%);
+  color: #e6edf6;
+  font-family: var(--lp-mono, "JetBrains Mono", ui-monospace, monospace);
+  overflow: hidden;
 }
 
-.loader-content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+.lp-boot,
+.lp-boot * {
+  font-family: var(--lp-mono, "JetBrains Mono", ui-monospace, monospace);
+  box-sizing: border-box;
 }
 
-/* The Spinner */
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(100, 255, 218, 0.1);
-  border-top: 3px solid #64ffda;
+.lp-boot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(80, 182, 209, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(80, 182, 209, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    #000 30%,
+    transparent 100%
+  );
+}
+
+.lp-boot-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34rem;
+  height: 34rem;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  background: #50b6d1;
+  opacity: 0.1;
+  filter: blur(110px);
+  animation: lp-boot-breathe 3.4s ease-in-out infinite;
 }
 
-/* Subtle pulse for the text */
-.loader-content p {
+.lp-boot-inner {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 88vw);
+}
+
+.lp-boot-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  margin-bottom: 30px;
+}
+
+.lp-boot-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #50b6d1;
+  border-radius: 7px;
+  color: #50b6d1;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 1px rgba(80, 182, 209, 0.24), 0 0 18px rgba(80, 182, 209, 0.18),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.lp-boot-accent {
+  color: #50b6d1;
+}
+
+.lp-boot-lines {
+  min-height: 132px;
+  font-size: 0.84rem;
+  line-height: 1.95;
+  color: #8a97ab;
+}
+
+.lp-boot-line {
+  opacity: 0;
+  animation: lp-boot-line-in 0.25s ease-out forwards;
+}
+
+.lp-boot-line-active {
+  color: #50b6d1;
+}
+
+.lp-boot-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #50b6d1;
+  vertical-align: text-bottom;
+  animation: lp-boot-blink 1s steps(2) infinite;
+}
+
+.lp-boot-progress {
+  margin-top: 28px;
+}
+
+.lp-boot-bar {
+  height: 3px;
+  width: 100%;
+  background: rgba(80, 182, 209, 0.14);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.lp-boot-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #50b6d1, #89a8c7);
+  box-shadow: 0 0 14px rgba(80, 182, 209, 0.75);
+  transition: width 0.35s ease-out;
+}
+
+.lp-boot-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 11px;
+  font-size: 0.64rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  animation: pulse 2s infinite ease-in-out;
+  color: #6b7789;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
+@keyframes lp-boot-breathe {
+  0%,
   100% {
-    transform: rotate(360deg);
+    opacity: 0.08;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.16;
+    transform: translate(-50%, -50%) scale(1.12);
   }
 }
 
-@keyframes pulse {
+@keyframes lp-boot-blink {
   0%,
   100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0;
+  }
+}
+
+@keyframes lp-boot-line-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -76,5 +190,14 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-boot-glow,
+  .lp-boot-caret,
+  .lp-boot-line {
+    animation: none;
+    opacity: 1;
   }
 }

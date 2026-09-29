@@ -254,7 +254,7 @@ function Pong() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <Link to="/"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
+            <Link to="/webcorner"><img src="/image/home.png" className="nav-icon" alt="" /> <span>Home</span></Link>
             <Link to="/blog"><img src="/image/life.png" className="nav-icon" alt="" /> <span>Life Blog</span></Link>
             <Link to="/projects"><img src="/image/made.png" className="nav-icon" alt="" /> <span>Stuff I Made</span></Link>
             <Link to="/portfolio"><img src="/image/me.png" className="nav-icon" alt="" /> <span>Who Am I</span></Link>

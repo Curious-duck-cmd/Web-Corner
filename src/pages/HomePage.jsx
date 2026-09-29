@@ -304,7 +304,7 @@ function HomePage() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <Link to="/">
+            <Link to="/webcorner">
               <img src="/image/home.png" className="nav-icon" alt="" />{" "}
               <span>Home</span>
             </Link>

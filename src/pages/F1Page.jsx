@@ -49,7 +49,7 @@ function F1Page() {
         </div>
         <div className="windowContent header-main">
           <nav>
-            <a href="/">
+            <a href="/webcorner">
               <img
                 src="/image/home.png"
                 className="nav-icon"

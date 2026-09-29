@@ -1,24 +1,15 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./landing.css";
+import BootLoader from "./components/BootLoader";
 
-// Lazy load the main App
-const LazyApp = lazy(() => import("./App.jsx"));
-
-// A cleaner, more modern Loader Component
-const PageLoader = () => (
-  <div className="loader-container">
-    <div className="loader-content">
-      <div className="spinner"></div>
-      <p>Initializing Experience...</p>
-    </div>
-  </div>
-);
+const LazyApp = React.lazy(() => import("./App.jsx"));
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Suspense fallback={<PageLoader />}>
+    <React.Suspense fallback={<BootLoader />}>
       <LazyApp />
-    </Suspense>
+    </React.Suspense>
   </React.StrictMode>,
 );

@@ -162,7 +162,7 @@ function AdminLogin() {
           </p>
 
           <div className="return-link">
-            <Link to="/">← Return to Home</Link>
+            <Link to="/webcorner">← Return to Home</Link>
           </div>
 
           {/* Info Section */}
