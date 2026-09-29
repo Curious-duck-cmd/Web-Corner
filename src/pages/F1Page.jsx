@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useF1Data } from "../hooks/useF1Data";
 
 function F1Page() {
-  const [selectedTab, setSelectedTab] = useState("standings");
   const {
     nextRace,
-    seasonProgress,
     driverStandings,
     constructorStandings,
-    schedule,
     lastUpdated,
     loading,
     error,
@@ -266,523 +263,327 @@ function F1Page() {
               </div>
             </div>
 
-            {/* Tab Navigation */}
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                marginBottom: "20px",
-                flexWrap: "wrap",
-              }}
-            >
-              <button
-                onClick={() => setSelectedTab("standings")}
-                className="loginBtn"
-                style={{
-                  background: selectedTab === "standings" ? "#50B6D1" : "#fff",
-                  padding: "12px 24px",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                }}
-              >
-                🏆 STANDINGS
-              </button>
-              <button
-                onClick={() => setSelectedTab("calendar")}
-                className="loginBtn"
-                style={{
-                  background: selectedTab === "calendar" ? "#50B6D1" : "#fff",
-                  padding: "12px 24px",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                }}
-              >
-                📅 CALENDAR
-              </button>
+            {/* Driver Standings */}
+            <div className="windowTop" style={{ background: "#FFA0A0" }}>
+              <p>🏆 2026 Championship Standings</p>
+              <div className="windowCircle">
+                <div className="circle" style={{ background: "#89A8C7" }}></div>
+                <div className="circle" style={{ background: "#89A8C7" }}></div>
+                <div className="circle" style={{ background: "#89A8C7" }}></div>
+              </div>
             </div>
-
-            {/* Driver Standings Tab */}
-            {selectedTab === "standings" && (
-              <>
-                <div className="windowTop" style={{ background: "#FFA0A0" }}>
-                  <p>🏆 2026 Championship Standings</p>
-                  <div className="windowCircle">
-                    <div
-                      className="circle"
-                      style={{ background: "#89A8C7" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#89A8C7" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#89A8C7" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="windowContent" style={{ marginBottom: "30px" }}>
-                  <h2
-                    style={{
-                      fontSize: "1.8rem",
-                      marginBottom: "20px",
-                      color: "#03274B",
-                    }}
-                  >
-                    Driver Standings
-                  </h2>
-                  <div style={{ overflowX: "auto" }}>
-                    <table
+            <div className="windowContent" style={{ marginBottom: "30px" }}>
+              <h2
+                style={{
+                  fontSize: "1.8rem",
+                  marginBottom: "20px",
+                  color: "#03274B",
+                }}
+              >
+                Driver Standings
+              </h2>
+              <div style={{ overflowX: "auto" }}>
+                <table
+                  style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    fontSize: "1rem",
+                  }}
+                >
+                  <thead>
+                    <tr
                       style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        fontSize: "1rem",
+                        background: "#cfd3da",
+                        borderBottom: "3px solid #000",
                       }}
                     >
-                      <thead>
-                        <tr
-                          style={{
-                            background: "#cfd3da",
-                            borderBottom: "3px solid #000",
-                          }}
-                        >
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "left",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Pos
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "left",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Driver
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "left",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Team
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "center",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Points
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "center",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Wins
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {driverStandings.map((driver) => (
-                          <tr
-                            key={driver.pos}
-                            style={{
-                              background:
-                                driver.pos === 1
-                                  ? "#FFD700"
-                                  : driver.pos % 2 === 0
-                                    ? "#fff"
-                                    : "#f5f5f5",
-                              transition: "all 0.2s ease",
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.currentTarget.style.background = "#50B6D1")
-                            }
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background =
-                                driver.pos === 1
-                                  ? "#FFD700"
-                                  : driver.pos % 2 === 0
-                                    ? "#fff"
-                                    : "#f5f5f5";
-                            }}
-                          >
-                            <td
-                              style={{
-                                padding: "12px",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {driver.pos}
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    width: "4px",
-                                    height: "30px",
-                                    background: driver.color,
-                                    border: "1px solid #000",
-                                  }}
-                                ></div>
-                                {driver.driver}
-                              </div>
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {driver.team}
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                textAlign: "center",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {driver.points}
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                textAlign: "center",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {driver.wins}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                {/* Constructor Standings */}
-                <div className="windowTop" style={{ background: "#89A8C7" }}>
-                  <p>🏗️ Constructor Standings</p>
-                  <div className="windowCircle">
-                    <div
-                      className="circle"
-                      style={{ background: "#FFA0A0" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#FFA0A0" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#FFA0A0" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="windowContent">
-                  <div style={{ overflowX: "auto" }}>
-                    <table
-                      style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        fontSize: "1rem",
-                      }}
-                    >
-                      <thead>
-                        <tr
-                          style={{
-                            background: "#cfd3da",
-                            borderBottom: "3px solid #000",
-                          }}
-                        >
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "left",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Pos
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "left",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Team
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "center",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Points
-                          </th>
-                          <th
-                            style={{
-                              padding: "12px",
-                              textAlign: "center",
-                              border: "2px solid #000",
-                            }}
-                          >
-                            Wins
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {constructorStandings.map((team) => (
-                          <tr
-                            key={team.pos}
-                            style={{
-                              background:
-                                team.pos === 1
-                                  ? "#FFD700"
-                                  : team.pos % 2 === 0
-                                    ? "#fff"
-                                    : "#f5f5f5",
-                              transition: "all 0.2s ease",
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.currentTarget.style.background = "#50B6D1")
-                            }
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background =
-                                team.pos === 1
-                                  ? "#FFD700"
-                                  : team.pos % 2 === 0
-                                    ? "#fff"
-                                    : "#f5f5f5";
-                            }}
-                          >
-                            <td
-                              style={{
-                                padding: "12px",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {team.pos}
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    background: team.color,
-                                    border: "2px solid #000",
-                                  }}
-                                ></div>
-                                {team.team}
-                              </div>
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                textAlign: "center",
-                                fontWeight: "bold",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {team.points}
-                            </td>
-                            <td
-                              style={{
-                                padding: "12px",
-                                textAlign: "center",
-                                border: "1px solid #000",
-                              }}
-                            >
-                              {team.wins}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* Race Calendar Tab */}
-            {selectedTab === "calendar" && (
-              <>
-                <div className="windowTop" style={{ background: "#03274B" }}>
-                  <p style={{ color: "#fff" }}>📅 2026 F1 Race Calendar</p>
-                  <div className="windowCircle">
-                    <div
-                      className="circle"
-                      style={{ background: "#fff" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#fff" }}
-                    ></div>
-                    <div
-                      className="circle"
-                      style={{ background: "#fff" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="windowContent">
-                  <h2
-                    style={{
-                      fontSize: "1.8rem",
-                      marginBottom: "20px",
-                      color: "#03274B",
-                    }}
-                  >
-                    📅 2026 F1 Calendar • 24 Races • 11 Teams • 22 Drivers
-                  </h2>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns:
-                        "repeat(auto-fill, minmax(300px, 1fr))",
-                      gap: "20px",
-                    }}
-                  >
-                    {schedule.map((race) => (
-                      <div
-                        key={race.round}
-                        className="post"
+                      <th
                         style={{
-                          padding: "15px",
-                          background:
-                            race.round === (nextRace?.round || 1)
-                              ? "#50B6D1"
-                              : "#cfd3da",
+                          padding: "12px",
+                          textAlign: "left",
                           border: "2px solid #000",
-                          boxShadow: "4px 4px 0px #000",
-                          transition: "all 0.3s ease",
-                          maxHeight: "none",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = "translateY(-5px)";
-                          e.currentTarget.style.boxShadow = "6px 6px 0px #000";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = "translateY(0)";
-                          e.currentTarget.style.boxShadow = "4px 4px 0px #000";
                         }}
                       >
-                        <div
+                        Pos
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "left",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Driver
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "left",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Team
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "center",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Points
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "center",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Wins
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {driverStandings.map((driver) => (
+                      <tr
+                        key={driver.pos}
+                        style={{
+                          background:
+                            driver.pos === 1
+                              ? "#FFD700"
+                              : driver.pos % 2 === 0
+                                ? "#fff"
+                                : "#f5f5f5",
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.background = "#50B6D1")
+                        }
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background =
+                            driver.pos === 1
+                              ? "#FFD700"
+                              : driver.pos % 2 === 0
+                                ? "#fff"
+                                : "#f5f5f5";
+                        }}
+                      >
+                        <td
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <span style={{ fontSize: "2rem" }}>
-                            {race.country}
-                          </span>
-                          <span
-                            style={{
-                              background: "#000",
-                              color: "#fff",
-                              padding: "4px 12px",
-                              border: "2px solid #000",
-                              fontWeight: "bold",
-                              fontSize: "0.9rem",
-                            }}
-                          >
-                            R{race.round}
-                          </span>
-                        </div>
-                        <h3
-                          style={{
-                            fontSize: "1.3rem",
-                            marginBottom: "8px",
-                            color: "#000",
-                          }}
-                        >
-                          {race.race} Grand Prix
-                        </h3>
-                        <p
-                          style={{
-                            fontSize: "0.95rem",
-                            marginBottom: "8px",
-                            opacity: 0.8,
-                          }}
-                        >
-                          {race.circuit}
-                        </p>
-                        <p
-                          style={{
-                            fontSize: "1.1rem",
+                            padding: "12px",
                             fontWeight: "bold",
-                            color: "#000",
+                            border: "1px solid #000",
                           }}
                         >
-                          📅{" "}
-                          {new Date(race.date).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </p>
-                        {race.round === (nextRace?.round || 1) && (
+                          {driver.pos}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            fontWeight: "bold",
+                            border: "1px solid #000",
+                          }}
+                        >
                           <div
                             style={{
-                              marginTop: "10px",
-                              padding: "8px",
-                              background: "#FFD700",
-                              border: "2px solid #000",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                              fontSize: "0.9rem",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "8px",
                             }}
                           >
-                            🏁 NEXT RACE
+                            <div
+                              style={{
+                                width: "4px",
+                                height: "30px",
+                                background: driver.color,
+                                border: "1px solid #000",
+                              }}
+                            ></div>
+                            {driver.driver}
                           </div>
-                        )}
-                      </div>
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {driver.team}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {driver.points}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            textAlign: "center",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {driver.wins}
+                        </td>
+                      </tr>
                     ))}
-                  </div>
-                </div>
-              </>
-            )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Constructor Standings */}
+            <div className="windowTop" style={{ background: "#89A8C7" }}>
+              <p>🏗️ Constructor Standings</p>
+              <div className="windowCircle">
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+                <div className="circle" style={{ background: "#FFA0A0" }}></div>
+              </div>
+            </div>
+            <div className="windowContent">
+              <div style={{ overflowX: "auto" }}>
+                <table
+                  style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    fontSize: "1rem",
+                  }}
+                >
+                  <thead>
+                    <tr
+                      style={{
+                        background: "#cfd3da",
+                        borderBottom: "3px solid #000",
+                      }}
+                    >
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "left",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Pos
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "left",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Team
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "center",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Points
+                      </th>
+                      <th
+                        style={{
+                          padding: "12px",
+                          textAlign: "center",
+                          border: "2px solid #000",
+                        }}
+                      >
+                        Wins
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {constructorStandings.map((team) => (
+                      <tr
+                        key={team.pos}
+                        style={{
+                          background:
+                            team.pos === 1
+                              ? "#FFD700"
+                              : team.pos % 2 === 0
+                                ? "#fff"
+                                : "#f5f5f5",
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.background = "#50B6D1")
+                        }
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background =
+                            team.pos === 1
+                              ? "#FFD700"
+                              : team.pos % 2 === 0
+                                ? "#fff"
+                                : "#f5f5f5";
+                        }}
+                      >
+                        <td
+                          style={{
+                            padding: "12px",
+                            fontWeight: "bold",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {team.pos}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            fontWeight: "bold",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "8px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                background: team.color,
+                                border: "2px solid #000",
+                              }}
+                            ></div>
+                            {team.team}
+                          </div>
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {team.points}
+                        </td>
+                        <td
+                          style={{
+                            padding: "12px",
+                            textAlign: "center",
+                            border: "1px solid #000",
+                          }}
+                        >
+                          {team.wins}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </section>
         </div>
       </main>
