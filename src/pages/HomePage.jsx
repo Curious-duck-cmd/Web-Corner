@@ -369,62 +369,62 @@ function F1RaceCalendar() {
               </div>
               <div
                 style={{
-                  fontSize: "0.8rem",
-                  textTransform: "uppercase",
-                  color: "#000",
-                  opacity: 0.7,
-                }}
-              >
-                {unit}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <div
-            style={{
-              background: "#fff",
-              height: "30px",
-              borderRadius: "5px",
-              overflow: "hidden",
-              border: "2px solid #000",
-              boxShadow: "3px 3px 0px #000",
-            }}
-          >
-            <div
-              style={{
-                background: "#0600EF",
-                height: "100%",
-                width: `${seasonProgress}%`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
-                color: "#fff",
-                transition: "width 0.5s ease",
-                fontSize: "0.9rem",
-              }}
-            >
-              {seasonProgress}%
-            </div>
-          </div>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              textAlign: "center",
-              marginTop: "5px",
-              opacity: 0.7,
-              color: "#000",
-            }}
-          >
-            Season Progress ({seasonProgress}% complete • {completedRaces}/24
-            races)
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+//                   fontSize: "0.8rem",
+//                   textTransform: "uppercase",
+//                   color: "#000",
+//                   opacity: 0.7,
+//                 }}
+//               >
+//                 {unit}
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//         <div style={{ marginTop: "20px" }}>
+//           <div
+//             style={{
+//               background: "#fff",
+//               height: "30px",
+//               borderRadius: "5px",
+//               overflow: "hidden",
+//               border: "2px solid #000",
+//               boxShadow: "3px 3px 0px #000",
+//             }}
+//           >
+//             <div
+//               style={{
+//                 background: "#0600EF",
+//                 height: "100%",
+//                 width: `${seasonProgress}%`,
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 fontWeight: "bold",
+//                 color: "#fff",
+//                 transition: "width 0.5s ease",
+//                 fontSize: "0.9rem",
+//               }}
+//             >
+//               {seasonProgress}%
+//             </div>
+//           </div>
+//           <p
+//             style={{
+//               fontSize: "0.8rem",
+//               textAlign: "center",
+//               marginTop: "5px",
+//               opacity: 0.7,
+//               color: "#000",
+//             }}
+//           >
+//             Season Progress ({seasonProgress}% complete • {completedRaces}/24
+//             races)
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function HomePage() {
   const [isLoginOpen, setLoginOpen] = useState(false);
