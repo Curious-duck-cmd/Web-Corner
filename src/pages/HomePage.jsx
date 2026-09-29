@@ -282,6 +282,7 @@ function HomePage() {
     <div className="portfolio-wrapper">
       <F1EasterEgg />
       <header>
+
         <div className="windowTop">
           <p>
             <img
