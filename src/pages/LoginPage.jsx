@@ -88,7 +88,6 @@ function LoginPage() {
 
           <label><b>EMAIL:</b></label>
           <input
-
             type="email"
             className="auth-input"
             placeholder="user@example.com"
