@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import VisitorCounter from "../components/VisitorCounter";
-import { useF1Data } from "../hooks/useF1Data";
 import TestCenteredGif from "../components/TestCenteredGif";
 import "../App.css";
 
@@ -273,156 +272,6 @@ function F1EasterEgg() {
         @keyframes drsGlow { 0%, 100% { box-shadow: 4px 4px 0px #000, 0 0 10px #00FF00; } 50% { box-shadow: 4px 4px 0px #000, 0 0 20px #00FF00; } }
       `}</style>
     </>
-  );
-}
-
-// F1 Race Calendar Component
-function F1RaceCalendar() {
-  const { nextRace, seasonProgress, completedRaces } = useF1Data();
-  const [timeLeft, setTimeLeft] = useState({});
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (nextRace) {
-        const now = new Date();
-        const difference = new Date(nextRace.date) - now;
-        if (difference > 0) {
-          setTimeLeft({
-            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((difference / 1000 / 60) % 60),
-            seconds: Math.floor((difference / 1000) % 60),
-          });
-        }
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [nextRace]);
-
-  return (
-    <div style={{ marginBottom: "30px" }}>
-      <div
-        style={{
-          padding: "20px",
-          background: "#cfd3da",
-          border: "2px solid #000",
-          borderRadius: "5px",
-          boxShadow: "4px 4px 0px #000",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "1.8rem",
-            marginBottom: "15px",
-            textAlign: "center",
-            color: "#03274B",
-          }}
-        >
-          NEXT RACE
-        </h2>
-        <div style={{ textAlign: "center", marginBottom: "15px" }}>
-          <div
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "bold",
-              marginBottom: "5px",
-              color: "#000",
-            }}
-          >
-            {nextRace?.race || "Loading..."}
-          </div>
-          <div style={{ fontSize: "1.1rem", color: "#333" }}>
-            📍 {nextRace?.circuit || "Loading..."}
-          </div>
-          <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
-            Round {nextRace?.round || 1} of 24 • 11 Teams • 22 Drivers
-          </div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "10px",
-            marginTop: "20px",
-          }}
-        >
-          {Object.entries(timeLeft).map(([unit, value]) => (
-            <div
-              key={unit}
-              style={{
-                background: "#fff",
-                border: "2px solid #000",
-                padding: "10px",
-                borderRadius: "5px",
-                textAlign: "center",
-                boxShadow: "3px 3px 0px #000",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "2rem",
-                  fontWeight: "bold",
-                  color: "#50B6D1",
-                }}
-              >
-                {value || 0}
-              </div>
-              <div
-                style={{
-                  fontSize: "0.8rem",
-                  textTransform: "uppercase",
-                  color: "#000",
-                  opacity: 0.7,
-                }}
-              >
-                {unit}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <div
-            style={{
-              background: "#fff",
-              height: "30px",
-              borderRadius: "5px",
-              overflow: "hidden",
-              border: "2px solid #000",
-              boxShadow: "3px 3px 0px #000",
-            }}
-          >
-            <div
-              style={{
-                background: "#0600EF",
-                height: "100%",
-                width: `${seasonProgress}%`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold",
-                color: "#fff",
-                transition: "width 0.5s ease",
-                fontSize: "0.9rem",
-              }}
-            >
-              {seasonProgress}%
-            </div>
-          </div>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              textAlign: "center",
-              marginTop: "5px",
-              opacity: 0.7,
-              color: "#000",
-            }}
-          >
-            Season Progress ({seasonProgress}% complete • {completedRaces}/24
-            races)
-          </p>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -968,43 +817,6 @@ function HomePage() {
                     loading="lazy"
                   ></iframe>
                 </div>
-              </div>
-            </div>
-
-            {/* F1 2026 Season Container */}
-            <div
-              className="windowTop"
-              style={{ marginTop: "20px", background: "#50B6D1" }}
-            >
-              <p>🏁 F1 2026 Season</p>
-              <div className="windowCircle">
-                <div className="circle" style={{ background: "#FFA0A0" }}></div>
-                <div className="circle" style={{ background: "#FFA0A0" }}></div>
-                <div className="circle" style={{ background: "#FFA0A0" }}></div>
-              </div>
-            </div>
-            <div className="windowContent">
-              <F1RaceCalendar />
-              <div
-                style={{
-                  padding: "15px",
-                  background: "#03274B",
-                  border: "2px solid #000",
-                  borderRadius: "5px",
-                  marginTop: "15px",
-                }}
-              >
-                <p
-                  style={{
-                    color: "#50B6D1",
-                    fontSize: "0.9rem",
-                    margin: 0,
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  💡 TIP: Try the Konami code (↑↑↓↓←→←→BA) for a surprise!
-                </p>
               </div>
             </div>
           </div>
