@@ -276,7 +276,7 @@ function F1EasterEgg() {
   );
 }
 
-F1 Race Calendar Component
+// F1 Race Calendar Component
 function F1RaceCalendar() {
   const { nextRace, seasonProgress, completedRaces } = useF1Data();
   const [timeLeft, setTimeLeft] = useState({});
