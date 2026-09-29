@@ -20,7 +20,7 @@ function LoginPage() {
     setMessage({ text: '', type: '' });
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    
+
     setIsLoading(false);
 
     if (error) {
@@ -46,7 +46,7 @@ function LoginPage() {
     setMessage({ text: '', type: '' });
 
     const { error } = await supabase.auth.signUp({ email, password });
-    
+
     setIsLoading(false);
 
     if (error) {
@@ -78,29 +78,30 @@ function LoginPage() {
         {/* WINDOW BODY */}
         <div className="auth-content">
           <h1>AUTHENTICATION</h1>
-          
+
           {/* Message Display */}
           {message.text && (
             <div className={`auth-message ${message.type}`}>
               {message.text}
             </div>
           )}
-          
+
           <label><b>EMAIL:</b></label>
-          <input 
-            type="email" 
-            className="auth-input" 
+          <input
+
+            type="email"
+            className="auth-input"
             placeholder="user@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyPress={handleKeyPress}
             disabled={isLoading}
           />
-          
+
           <label><b>PASSWORD:</b></label>
-          <input 
-            type="password" 
-            className="auth-input" 
+          <input
+            type="password"
+            className="auth-input"
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -109,15 +110,15 @@ function LoginPage() {
           />
 
           <div className="auth-buttons">
-            <button 
-              onClick={handleSignIn} 
+            <button
+              onClick={handleSignIn}
               className={`loginBtn primary ${isLoading ? 'loading' : ''}`}
               disabled={isLoading}
             >
               {isLoading ? 'LOADING' : '[ LOGIN ]'}
             </button>
-            <button 
-              onClick={handleSignUp} 
+            <button
+              onClick={handleSignUp}
               className={`loginBtn ${isLoading ? 'loading' : ''}`}
               disabled={isLoading}
             >
@@ -128,7 +129,7 @@ function LoginPage() {
           <p className="auth-footer">
             Access restricted to authorized users only.
           </p>
-          
+
           <div className="return-link">
             <Link to="/webcorner">← Return to Home</Link>
           </div>
@@ -145,8 +146,8 @@ function LoginPage() {
             <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>
               📝 Quick Tips:
             </p>
-            <ul style={{ 
-              marginLeft: '20px', 
+            <ul style={{
+              marginLeft: '20px',
               lineHeight: '1.6',
               fontSize: '0.8rem'
             }}>
