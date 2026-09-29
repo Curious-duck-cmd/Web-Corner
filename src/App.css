@@ -114,6 +114,22 @@ main h2 {
   word-break: break-word;
 }
 
+.windowTitleLink {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.windowTitleLink:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
 .windowCircle {
   display: flex;
   width: min-content;
@@ -247,7 +263,8 @@ nav a:hover {
   background: #03274b;
 }
 
-.content .windowTop p {
+.content .windowTop p,
+.content .windowTop .windowTitleLink {
   color: #fff;
 }
 

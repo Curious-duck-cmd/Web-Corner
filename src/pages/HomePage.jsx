@@ -284,7 +284,7 @@ function HomePage() {
       <header>
 
         <div className="windowTop">
-          <p>
+          <Link to="/" className="windowTitleLink" title="Back to portfolio">
             <img
               src="/image/Map_Pin_Grub.png"
               style={{
@@ -292,10 +292,10 @@ function HomePage() {
                 verticalAlign: "middle",
                 marginRight: "8px",
               }}
-              alt="icon"
+              alt=""
             />
             Darshan's_Web.exe
-          </p>
+          </Link>
           <div className="windowCircle">
             <div className="circle"></div>
             <div className="circle"></div>
