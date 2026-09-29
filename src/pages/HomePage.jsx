@@ -277,98 +277,98 @@ function F1EasterEgg() {
 }
 
 // F1 Race Calendar Component
-function F1RaceCalendar() {
-  const { nextRace, seasonProgress, completedRaces } = useF1Data();
-  const [timeLeft, setTimeLeft] = useState({});
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (nextRace) {
-        const now = new Date();
-        const difference = new Date(nextRace.date) - now;
-        if (difference > 0) {
-          setTimeLeft({
-            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((difference / 1000 / 60) % 60),
-            seconds: Math.floor((difference / 1000) % 60),
-          });
-        }
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [nextRace]);
-
-  return (
-    <div style={{ marginBottom: "30px" }}>
-      <div
-        style={{
-          padding: "20px",
-          background: "#cfd3da",
-          border: "2px solid #000",
-          borderRadius: "5px",
-          boxShadow: "4px 4px 0px #000",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "1.8rem",
-            marginBottom: "15px",
-            textAlign: "center",
-            color: "#03274B",
-          }}
-        >
-          NEXT RACE
-        </h2>
-        <div style={{ textAlign: "center", marginBottom: "15px" }}>
-          <div
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "bold",
-              marginBottom: "5px",
-              color: "#000",
-            }}
-          >
-            {nextRace?.race || "Loading..."}
-          </div>
-          <div style={{ fontSize: "1.1rem", color: "#333" }}>
-            📍 {nextRace?.circuit || "Loading..."}
-          </div>
-          <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
-            Round {nextRace?.round || 1} of 24 • 11 Teams • 22 Drivers
-          </div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "10px",
-            marginTop: "20px",
-          }}
-        >
-          {Object.entries(timeLeft).map(([unit, value]) => (
-            <div
-              key={unit}
-              style={{
-                background: "#fff",
-                border: "2px solid #000",
-                padding: "10px",
-                borderRadius: "5px",
-                textAlign: "center",
-                boxShadow: "3px 3px 0px #000",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "2rem",
-                  fontWeight: "bold",
-                  color: "#50B6D1",
-                }}
-              >
-                {value || 0}
-              </div>
-              <div
-                style={{
+// function F1RaceCalendar() {
+//   const { nextRace, seasonProgress, completedRaces } = useF1Data();
+//   const [timeLeft, setTimeLeft] = useState({});
+//
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       if (nextRace) {
+//         const now = new Date();
+//         const difference = new Date(nextRace.date) - now;
+//         if (difference > 0) {
+//           setTimeLeft({
+//             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+//             hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+//             minutes: Math.floor((difference / 1000 / 60) % 60),
+//             seconds: Math.floor((difference / 1000) % 60),
+//           });
+//         }
+//       }
+//     }, 1000);
+//     return () => clearInterval(timer);
+//   }, [nextRace]);
+//
+//   return (
+//     <div style={{ marginBottom: "30px" }}>
+//       <div
+//         style={{
+//           padding: "20px",
+//           background: "#cfd3da",
+//           border: "2px solid #000",
+//           borderRadius: "5px",
+//           boxShadow: "4px 4px 0px #000",
+//         }}
+//       >
+//         <h2
+//           style={{
+//             fontSize: "1.8rem",
+//             marginBottom: "15px",
+//             textAlign: "center",
+//             color: "#03274B",
+//           }}
+//         >
+//           NEXT RACE
+//         </h2>
+//         <div style={{ textAlign: "center", marginBottom: "15px" }}>
+//           <div
+//             style={{
+//               fontSize: "1.5rem",
+//               fontWeight: "bold",
+//               marginBottom: "5px",
+//               color: "#000",
+//             }}
+//           >
+//             {nextRace?.race || "Loading..."}
+//           </div>
+//           <div style={{ fontSize: "1.1rem", color: "#333" }}>
+//             📍 {nextRace?.circuit || "Loading..."}
+//           </div>
+//           <div style={{ fontSize: "0.9rem", marginTop: "5px", opacity: 0.7 }}>
+//             Round {nextRace?.round || 1} of 24 • 11 Teams • 22 Drivers
+//           </div>
+//         </div>
+//         <div
+//           style={{
+//             display: "grid",
+//             gridTemplateColumns: "repeat(4, 1fr)",
+//             gap: "10px",
+//             marginTop: "20px",
+//           }}
+//         >
+//           {Object.entries(timeLeft).map(([unit, value]) => (
+//             <div
+//               key={unit}
+//               style={{
+//                 background: "#fff",
+//                 border: "2px solid #000",
+//                 padding: "10px",
+//                 borderRadius: "5px",
+//                 textAlign: "center",
+//                 boxShadow: "3px 3px 0px #000",
+//               }}
+//             >
+//               <div
+//                 style={{
+//                   fontSize: "2rem",
+//                   fontWeight: "bold",
+//                   color: "#50B6D1",
+//                 }}
+//               >
+//                 {value || 0}
+//               </div>
+//               <div
+//                 style={{
 //                   fontSize: "0.8rem",
 //                   textTransform: "uppercase",
 //                   color: "#000",
